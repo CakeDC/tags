@@ -7,6 +7,7 @@ class TagableBehavior extends ModelBehavior {
  * @access public
  */
 	public $settings = array();
+
 /**
  * Default settings
  *
@@ -34,6 +35,7 @@ class TagableBehavior extends ModelBehavior {
 		'cacheWeight' => true,
 		'automticTagging' => true,
 		'unsetInAfterFind' => false);
+
 /**
  * Setup
  *
@@ -45,9 +47,10 @@ class TagableBehavior extends ModelBehavior {
 		if (!isset($this->settings[$Model->alias])) {
 			$this->settings[$Model->alias] = $this->_defaults;
 		}
-		$this->settings[$Model->alias] = array_merge($this->settings[$Model->alias], $settings);
 
+		$this->settings[$Model->alias] = array_merge($this->settings[$Model->alias], $settings);
 		$this->settings[$Model->alias]['withModel'] = $this->settings[$Model->alias]['taggedClass'];
+
 		$Model->bindModel(array('hasAndBelongsToMany' => array(
 			'Tag' => array(
 				'className' => $this->settings[$Model->alias]['tagClass'],
@@ -181,16 +184,17 @@ class TagableBehavior extends ModelBehavior {
  * @return string Multibyte safe key string
  * @access public
  */
-		public function multibyteKey(Model $Model, $string = null) {
-			$str = mb_strtolower($string);
-			$str = preg_replace('/\xE3\x80\x80/', ' ', $str);
-			$str = str_replace(array('_', '-'), '', $str);
-			$str = preg_replace( '#[:\#\*"()~$^{}`@+=;,<>!&%\.\]\/\'\\\\|\[]#', "\x20", $str );
-			$str = str_replace('?', '', $str);
-			$str = trim($str);
-			$str = preg_replace('#\x20+#', '', $str);
-			return $str;
-		}
+	public function multibyteKey(Model $Model, $string = null) {
+		$str = mb_strtolower($string);
+		$str = preg_replace('/\xE3\x80\x80/', ' ', $str);
+		$str = str_replace(array('_', '-'), '', $str);
+		$str = preg_replace( '#[:\#\*"()~$^{}`@+=;,<>!&%\.\]\/\'\\\\|\[]#', "\x20", $str );
+		$str = str_replace('?', '', $str);
+		$str = trim($str);
+		$str = preg_replace('#\x20+#', '', $str);
+		return $str;
+	}
+
 /**
  * Generates comma-delimited string of tag names from tag array(), needed for
  * initialization of data for text input
@@ -211,36 +215,6 @@ class TagableBehavior extends ModelBehavior {
 			return join($this->settings[$Model->alias]['separator'].' ', Set::extract($data, '{n}.name'));
 		}
 		return '';
-	}
-
-/*
- * Method to get top X tags of a certain model or all tags
- *
- * @todo refactoring needed, move it to tagged model as find method?
- * @param AppModel $Model
- * @param integer $limit
- * @param boolean $useModel
- * @return array
- */
-	public function topTags(Model $Model, $limit = 10, $useModel = true) {
-		if (!is_numeric($limit)) {
-			trigger_error(__('Invalid input for limit parameter in TagableBehavior::topTags()', true));
-		}
-		$joinModel = null;
-		if ($useModel == true) {
-			$joinModel = "JOIN `".$Model->useTable."` AS `" . $Model->alias . "` ON `tagged`.`foreign_key` = `" . $Model->alias . "`.`id` ";
-		}
-
-		$cloud = $Model->query("SELECT `Tag`.`id` , `Tag`.`name` , `Tag`.`keyname` , COUNT(tagged.foreign_key) `count`
-			FROM `tagged` JOIN `tags` AS `Tag` ON `tagged`.`tag_id` = `Tag`.`id`
-				$joinModel
-			GROUP BY (tag_id) ORDER BY count DESC LIMIT " . $limit);
-
-		foreach ($cloud as $key => $tag) {
-			$cloud[$key]['Tag']['weight'] = $tag[0]['count'];
-			unset($cloud[$key][0]);
-		}
-		return $cloud;
 	}
 
 /**
