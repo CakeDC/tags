@@ -58,11 +58,14 @@ class TagsControllerTest extends CakeTestCase {
  */
 	public function startTest() {
 		$this->Tags = new TestTagsController();
+		$this->Tags->params = array(
+			'named' => array(),
+			'url' => array());
 		$this->Tags->constructClasses();
 	}
 
 /**
- * startTest
+ * endTest
  *
  * @return void
  * @access public
@@ -72,7 +75,7 @@ class TagsControllerTest extends CakeTestCase {
 	}
 
 /**
- * startTest
+ * testTagsControllerInstance
  *
  * @return void
  * @access public
@@ -81,10 +84,43 @@ class TagsControllerTest extends CakeTestCase {
 		$this->assertTrue(is_a($this->Tags, 'TagsController'));
 	}
 
+/**
+ * testIndex
+ *
+ * @return void
+ * @access public
+ */
 	public function testIndex() {
 		$this->Tags->index();
 		$this->assertTrue(!empty($this->Tags->viewVars['tags']));
 	}
 
+/**
+ * testAdminIndex
+ *
+ * @return void
+ * @access public
+ */
+	public function testAdminIndex() {
+		$this->Tags->admin_index();
+		$this->assertTrue(!empty($this->Tags->viewVars['tags']));
+	}
+
+/**
+ * testAdminIndex
+ *
+ * @return void
+ * @access public
+ */
+	public function testAdminDelete() {
+		$this->assertFalse($this->Tags->admin_delete('WRONG-ID'));
+		$this->assertEqual($this->Tags->redirectUrl, array('action' => 'index'));
+
+
+		$this->assertTrue($this->Tags->admin_delete(1));
+		$this->assertEqual($this->Tags->redirectUrl, array('action' => 'index'));
+	}
+
 }
+
 ?>

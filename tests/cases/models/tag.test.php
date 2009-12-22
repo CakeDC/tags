@@ -12,34 +12,58 @@ class TestTag extends Tag {
 
 class TagTestCase extends CakeTestCase {
 /**
+ * Tag Instance
  *
+ * @var instance
+ * @access public
  */
 	public $Tag = null;
 
 /**
+ * startTest
  *
+ * @var array
+ * @access public
  */
 	public $fixtures = array(
 		'plugin.tags.tagged',
 		'plugin.tags.tag');
 
 /**
+ * startTest
  *
+ * @return void
+ * @access public
  */
-	public function start() {
-		parent::start();
+	public function startTest() {
 		$this->Tag = new TestTag();
 	}
 
 /**
+ * endTest
  *
+ * @return void
+ * @access public
+ */
+	public function endTest() {
+		unset($this->Tag);
+	}
+
+/**
+ * testTagInstance
+ *
+ * @return void
+ * @access public
  */
 	public function testTagInstance() {
 		$this->assertTrue(is_a($this->Tag, 'Tag'));
 	}
 
 /**
+ * testTagFind
  *
+ * @return void
+ * @access public
  */
 	public function testTagFind() {
 		$this->Tag->recursive = -1;
