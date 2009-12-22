@@ -1,5 +1,4 @@
 <?php
-
 App::import('Core', 'Model');
 
 class Article extends Model {
@@ -11,7 +10,6 @@ class Article extends Model {
 	public $actsAs = array('Tags.Tagable');
 }
 
-
 class TagableTest extends CakeTestCase {
 /**
  * Plugin name used for fixtures loading
@@ -20,6 +18,7 @@ class TagableTest extends CakeTestCase {
  * @access public
  */
 	public $plugin = 'tags';
+
 /**
  * Holds the instance of the model
  *
@@ -32,6 +31,7 @@ class TagableTest extends CakeTestCase {
  * Fixtures associated with this test case
  *
  * @var array
+ * @return void
  * @access public
  */
 	public $fixtures = array(
@@ -42,6 +42,7 @@ class TagableTest extends CakeTestCase {
 /**
  * Method executed before each test
  *
+ * @return void
  * @access public
  */
 	public function startTest() {
@@ -52,6 +53,7 @@ class TagableTest extends CakeTestCase {
 /**
  * Method executed after each test
  *
+ * @return void
  * @access public
  */
 	public function endTest() {
@@ -62,6 +64,7 @@ class TagableTest extends CakeTestCase {
 /**
  * Testings saving of tags trough the specified field in the tagable model
  *
+ * @return void
  * @access public
  */
 	public function testTagSaving() {
@@ -80,11 +83,28 @@ class TagableTest extends CakeTestCase {
 			'conditions' => array(
 				'id' => 1)));
 		$this->assertTrue(!empty($result['Article']['tags']));
+
+
+		$data['tags'] = 'cakephp:foo, developer, cakephp:developer, cakephp:php';
+		$this->Article->save($data, false);
+		$result = $this->Article->Tag->find('all', array(
+			'recursive' => -1,
+			'order' => 'Tag.identifier DESC',
+			'conditions' => array(
+				'Tag.identifier' => 'cakephp')));
+		$result = Set::extract($result, '{n}.Tag.keyname');
+		$this->assertEqual($result, array(
+			'developer', 'foo', 'php'));
+
+
+		$this->assertFalse($this->Article->saveTags('foo, bar', null));
+		$this->assertFalse($this->Article->saveTags(array('foo', 'bar'), 'something'));
 	}
 
 /**
  * Testings Tagable::tagArrayToString()
  *
+ * @return void
  * @access public
  */
 	public function testTagArrayToString() {
@@ -97,11 +117,17 @@ class TagableTest extends CakeTestCase {
 		$result = $this->Article->tagArrayToString($result['Tag']);
 		$this->assertTrue(!empty($result));
 		$this->assertIsA($result, 'string');
+
+		$result = $this->Article->tagArrayToString();
+		$this->assertTrue(empty($result));
+		$this->assertIsA($result, 'string');
+
 	}
 
 /**
  * Testings Tagable::multibyteKey()
  *
+ * @return void
  * @access public
  */
 	public function testMultibyteKey() {
