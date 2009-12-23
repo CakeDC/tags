@@ -121,7 +121,6 @@ class TagableTest extends CakeTestCase {
 		$result = $this->Article->tagArrayToString();
 		$this->assertTrue(empty($result));
 		$this->assertIsA($result, 'string');
-
 	}
 
 /**

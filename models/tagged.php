@@ -99,4 +99,5 @@ class Tagged extends TagsAppModel {
 	}
 
 }
+
 ?>

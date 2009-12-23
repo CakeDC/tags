@@ -34,7 +34,8 @@ class TagableBehavior extends ModelBehavior {
 		'associationForeignKey' => 'tag_id',
 		'cacheWeight' => true,
 		'automticTagging' => true,
-		'unsetInAfterFind' => false);
+		'unsetInAfterFind' => false,
+		'resetBinding' => false);
 
 /**
  * Setup
@@ -61,7 +62,7 @@ class TagableBehavior extends ModelBehavior {
 					'Tagged.model' => $Model->name),
 				'fields' => '',
 				'dependent' => true,
-				'with' => $this->settings[$Model->alias]['withModel']))), false);
+				'with' => $this->settings[$Model->alias]['withModel']))),  $this->settings[$Model->alias]['resetBinding']);
 	}
 
 /**
