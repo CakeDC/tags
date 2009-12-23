@@ -36,5 +36,24 @@ class Tag extends TagsAppModel {
 	public $validate = array(
 		'name' => array('rule' => 'notEmpty'),
 		'keyname' => array('rule' => 'notEmpty'));
+
+/**
+ * Returns the data for a single tag
+ *
+ * @param string keyname
+ * @return array
+ * @access public
+ */
+	public function view($keyName = null) {
+		$result = $this->find('first', array(
+			'conditions' => array(
+				$this->alias . '.keyname' => $keyName)));
+
+		if (empty($result)) {
+			throw new Exception(__('Invalid Tag', true));
+		}
+		return $result;
+	}
+
 }
 ?>

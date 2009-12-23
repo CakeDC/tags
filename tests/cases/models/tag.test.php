@@ -82,6 +82,14 @@ class TagTestCase extends CakeTestCase {
 		$this->assertEqual($results, $expected);
 	}
 
+	public function testView() {
+		$result = $this->Tag->view('cakephp');
+		$this->assertTrue(is_array($result));
+		$this->assertEqual($result['Tag']['keyname'], 'cakephp');
+
+		$this->expectException('Exception');
+		$this->Tag->view('invalid-key!!!');
+	}
 }
 
 ?>

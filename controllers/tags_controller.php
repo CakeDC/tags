@@ -17,7 +17,10 @@ class TagsController extends TagsAppController {
 	public $helpers = array('Html', 'Form');
 
 /**
- * 
+ * Index
+ *
+ * @return void
+ * @access public
  */
 	public function index() {
 		$this->Tag->recursive = 0;
@@ -25,14 +28,26 @@ class TagsController extends TagsAppController {
 	}
 
 /**
- * 
+ * Index
+ *
+ * @param string
+ * @return void
+ * @access public
  */
 	public function view($keyName = null) {
-		
+		try {
+			$this->set('tag', $this->Tag->view($keyName));
+		} catch (Exception $e) {
+			$this->Session->setFlash($e->getMessage());
+			$this->redirect('/');
+		}
 	}
 
 /**
- * 
+ * Admin Index
+ *
+ * @return void
+ * @access public
  */
 	public function admin_index() {
 		$this->Tag->recursive = 0;
@@ -46,12 +61,13 @@ class TagsController extends TagsAppController {
  * @return void
  * @access public
  */
-	public function admin_view($id = null) {
-		if (!$id) {
-			$this->Session->setFlash(__('Invalid Tag.', true));
-			$this->redirect(array('action'=>'index'));
+	public function admin_view($keyName) {
+		try {
+			$this->set('tag', $this->Tag->view($keyName));
+		} catch (Exception $e) {
+			$this->Session->setFlash($e->getMessage());
+			$this->redirect('/');
 		}
-		$this->set('tag', $this->Tag->read(null, $id));
 	}
 
 /**
