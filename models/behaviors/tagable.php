@@ -77,7 +77,7 @@ class TagableBehavior extends ModelBehavior {
  * @access public
  */
 	public function saveTags(Model $Model, $string = null, $foreignKey = null, $update = true) {
-		if (is_string($string) && !empty($foreignKey)) {
+		if (is_string($string) && !empty($string) && (!empty($foreignKey) || $foreignKey === false)) {
 			$tagClass = $this->settings[$Model->alias]['tagAlias'];
 			$tagModel = $Model->Tag;
 			$array = explode($this->settings[$Model->alias]['separator'], $string);
@@ -134,41 +134,43 @@ class TagableBehavior extends ModelBehavior {
 					$newTagIds[] = $tagModel->id;
 				}
 
-				if (!empty($newTagIds)) {
-					$existingTagIds = array_merge($existingTagIds, $newTagIds);
-				}
+				if ($foreignKey !== false) {
+					if (!empty($newTagIds)) {
+						$existingTagIds = array_merge($existingTagIds, $newTagIds);
+					}
 
-				$tagged = $tagModel->Tagged->find('all', array(
-					'contain' => array(),
-					'conditions' => array(
-						'Tagged.model' => $Model->name,
+					$tagged = $tagModel->Tagged->find('all', array(
+						'contain' => array(),
+						'conditions' => array(
+							'Tagged.model' => $Model->name,
+							'Tagged.foreign_key' => $foreignKey,
+							'Tagged.language' => Configure::read('Config.language'),
+							'Tagged.tag_id' => $existingTagIds),
+						'fields' => 'Tagged.tag_id'));
+
+					$deleteAll = array(
 						'Tagged.foreign_key' => $foreignKey,
-						'Tagged.language' => Configure::read('Config.language'),
-						'Tagged.tag_id' => $existingTagIds),
-					'fields' => 'Tagged.tag_id'));
+						'Tagged.model' => $Model->name);
 
-				$deleteAll = array(
-					'Tagged.foreign_key' => $foreignKey,
-					'Tagged.model' => $Model->name);
+					if (!empty($tagged)) {
+						$alreadyTagged = Set::extract($tagged, '{n}.Tagged.tag_id');
+						$existingTagIds = array_diff($existingTagIds, $alreadyTagged);
 
-				if (!empty($tagged)) {
-					$alreadyTagged = Set::extract($tagged, '{n}.Tagged.tag_id');
-					$existingTagIds = array_diff($existingTagIds, $alreadyTagged);
+						$deleteAll['NOT'] = array('Tagged.tag_id' => $alreadyTagged);
+					}
 
-					$deleteAll['NOT'] = array('Tagged.tag_id' => $alreadyTagged);
-				}
+					if ($update == true) {
+						$tagModel->Tagged->deleteAll($deleteAll, false);
+					}
 
-				if ($update == true) {
-					$tagModel->Tagged->deleteAll($deleteAll, false);
-				}
-
-				foreach ($existingTagIds as $tagId) {
-					$data['Tagged']['tag_id'] = $tagId;
-					$data['Tagged']['model'] = $Model->name;
-					$data['Tagged']['foreign_key'] = $foreignKey;
-					$data['Tagged']['language'] = Configure::read('Config.language');
-					$tagModel->Tagged->create($data);
-					$tagModel->Tagged->save();
+					foreach ($existingTagIds as $tagId) {
+						$data['Tagged']['tag_id'] = $tagId;
+						$data['Tagged']['model'] = $Model->name;
+						$data['Tagged']['foreign_key'] = $foreignKey;
+						$data['Tagged']['language'] = Configure::read('Config.language');
+						$tagModel->Tagged->create($data);
+						$tagModel->Tagged->save();
+					}
 				}
 			}
 			return true;

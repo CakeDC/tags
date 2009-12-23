@@ -82,6 +82,12 @@ class TagTestCase extends CakeTestCase {
 		$this->assertEqual($results, $expected);
 	}
 
+/**
+ * testView
+ *
+ * @return void
+ * @access public
+ */
 	public function testView() {
 		$result = $this->Tag->view('cakephp');
 		$this->assertTrue(is_array($result));
@@ -90,6 +96,51 @@ class TagTestCase extends CakeTestCase {
 		$this->expectException('Exception');
 		$this->Tag->view('invalid-key!!!');
 	}
+
+/**
+ * testAdd
+ *
+ * @return void
+ * @access public
+ */
+	public function testAdd() {
+		$result = $this->Tag->add(
+			array('Tag' => array(
+				'tags' => 'tag1, tag2, tag3')));
+		$this->assertTrue($result);
+		$result = $this->Tag->find('all', array(
+			'recursive' => -1,
+			'fields' => array(
+				'Tag.name')));
+		$result = Set::extract($result, '{n}.Tag.name');
+		$this->assertTrue(in_array('tag1', $result));
+		$this->assertTrue(in_array('tag2', $result));
+		$this->assertTrue(in_array('tag3', $result));
+	}
+
+/**
+ * testAdd
+ *
+ * @return void
+ * @access public
+ */
+	public function testEdit() {
+		$data = array(
+			'Tag' => array(
+				'id' => 1,
+				'name' => 'CAKEPHP'));
+		$this->assertTrue($this->Tag->edit(1, $data));
+
+		$data = array(
+			'Tag' => array(
+				'id' => 1,
+				'name' => 'CAKEPHP111'));
+		$this->assertFalse($this->Tag->edit(1, $data));
+
+		$this->expectException('Exception');
+		$this->assertTrue($this->Tag->edit('invalid-id', array()));
+	}
+
 }
 
 ?>

@@ -78,12 +78,9 @@ class TagsController extends TagsAppController {
  */
 	public function admin_add() {
 		if (!empty($this->data)) {
-			$this->Tag->create();
-			if ($this->Tag->save($this->data)) {
-				$this->Session->setFlash(__('The Tag has been saved', true));
-				$this->redirect(array('action'=>'index'));
-			} else {
-				$this->Session->setFlash(__('The Tag could not be saved. Please, try again.', true));
+			if ($this->Tag->add($this->data)) {
+				$this->Session->setFlash(__('The Tags has been saved', true));
+				$this->redirect(array('action' => 'index'));
 			}
 		}
 	}
@@ -95,21 +92,22 @@ class TagsController extends TagsAppController {
  * @return void
  * @access public
  */
-	public function admin_edit($id = null) {
-		if (!$id && empty($this->data)) {
-			$this->Session->setFlash(__('Invalid Tag', true));
-			$this->redirect(array('action'=>'index'));
-		}
-		if (!empty($this->data)) {
-			if ($this->Tag->save($this->data)) {
-				$this->Session->setFlash(__('The Tag has been saved', true));
-				$this->redirect(array('action'=>'index'));
+	public function admin_edit($tagId = null) {
+		try {
+			$result = $this->Tag->edit($tagId, $this->data);
+			if ($result === true) {
+				$this->Session->setFlash(__d('tags', 'Tag saved', true));
+				$this->redirect(array('action' => 'index'));
 			} else {
-				$this->Session->setFlash(__('The Tag could not be saved. Please, try again.', true));
+				$this->data = $result;
 			}
+		} catch (Exception $e) {
+			$this->Session->setFlash($e->getMessage());
+			$this->redirect(array('action' => 'index'));
 		}
+
 		if (empty($this->data)) {
-			$this->data = $this->Tag->read(null, $id);
+			$this->data = $result;
 		}
 	}
 

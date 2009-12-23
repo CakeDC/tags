@@ -137,7 +137,7 @@ class TagsControllerTest extends CakeTestCase {
 	}
 
 /**
- * testAdminIndex
+ * testAdminDelete
  *
  * @return void
  * @access public
@@ -150,6 +150,35 @@ class TagsControllerTest extends CakeTestCase {
 		$this->Tags->admin_delete(1);
 		$this->assertEqual($this->Tags->redirectUrl, array('action' => 'index'));
 		$this->assertEqual($_SESSION['Message']['flash']['message'], 'Tag deleted');
+	}
+
+/**
+ * testAdminAdd
+ *
+ * @return void
+ * @access public
+ */
+	public function testAdminAdd() {
+		$this->Tags->data = array(
+			'Tag' => array(
+				'tags' => 'tag1, tag2, tag3'));
+		$this->Tags->admin_add();
+		$this->assertEqual($this->Tags->redirectUrl, array('action' => 'index'));
+	}
+
+/**
+ * testAdminEdit
+ *
+ * @return void
+ * @access public
+ */
+	public function testAdminEdit() {
+		$this->Tags->data = array(
+			'Tag' => array(
+				'id' => 1,
+				'name' => 'CAKEPHP'));
+		$this->Tags->admin_edit(1);
+		$this->assertEqual($this->Tags->redirectUrl, array('action' => 'index'));
 	}
 
 }
