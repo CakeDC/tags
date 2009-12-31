@@ -1,6 +1,5 @@
 <?php
-/* SVN FILE: $Id: 001_initialize_tags_schema.php 1596 2009-11-03 00:56:03Z burzum $ */
-class M49ac311a54844a9d87o822502jedc423 {
+class M49ac311a54844a9d87o822502jedc423 extends CakeMigration {
 /**
  * Dependency array. Define what minimum version required for other part of db schema
  *
@@ -10,6 +9,7 @@ class M49ac311a54844a9d87o822502jedc423 {
  * @access public
  */
 	public $dependendOf = array();
+
 /**
  * Migration array
  *
@@ -18,7 +18,7 @@ class M49ac311a54844a9d87o822502jedc423 {
  */
 	public $migration = array(
 		'up' => array(
-			'create_tables' => array(
+			'create_table' => array(
 				'tagged' => array(
 					'id' => array('type'=>'string', 'null' => false, 'default' => NULL, 'length' => 36, 'key' => 'primary'),
 					'foreign_key' => array('type'=>'string', 'null' => false, 'default' => NULL, 'length' => 36),
@@ -48,9 +48,10 @@ class M49ac311a54844a9d87o822502jedc423 {
 			),
 		),
 		'down' => array(
-			'drop_tables' => array('tagged', 'tags'),
+			'drop_table' => array('tagged', 'tags'),
 		)
 	);
+
 /**
  * before migration callback
  *
@@ -60,6 +61,7 @@ class M49ac311a54844a9d87o822502jedc423 {
 	public function before($direction) {
 		return true;
 	}
+
 /**
  * after migration callback
  *
@@ -69,4 +71,6 @@ class M49ac311a54844a9d87o822502jedc423 {
 	public function after($direction) {
 		return true;
 	}
-}?>
+
+}
+?>
