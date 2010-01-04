@@ -125,6 +125,9 @@ class TagTestCase extends CakeTestCase {
  * @access public
  */
 	public function testEdit() {
+		$this->assertNull($this->Tag->edit(1));
+		$this->assertEqual($this->Tag->data['Tag']['id'], 1);
+		
 		$data = array(
 			'Tag' => array(
 				'id' => 1,
@@ -137,6 +140,13 @@ class TagTestCase extends CakeTestCase {
 				'name' => 'CAKEPHP111'));
 		$this->assertFalse($this->Tag->edit(1, $data));
 
+		$data = array(
+			'Tag' => array(
+				'id' => 1,
+				'name' => 'CAKEPHP',
+				'keyname' => ''));
+		$this->assertEqual($this->Tag->edit(1, $data), $data);
+		
 		$this->expectException('Exception');
 		$this->assertTrue($this->Tag->edit('invalid-id', array()));
 	}

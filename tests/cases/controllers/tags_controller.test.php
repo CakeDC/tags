@@ -173,6 +173,19 @@ class TagsControllerTest extends CakeTestCase {
  * @access public
  */
 	public function testAdminEdit() {
+		$this->Tags->admin_edit(1);
+		$tag = array(
+			'Tag' => array(
+				'id'  => 1,
+				'identifier'  => null,
+				'name'  => 'CakePHP',
+				'keyname'  => 'cakephp',
+				'weight' => 2,
+				'created'  => '2008-06-02 18:18:11',
+				'modified'  => '2008-06-02 18:18:37',
+				'tags' => null));
+		$this->assertEqual($this->Tags->data, $tag);
+		
 		$this->Tags->data = array(
 			'Tag' => array(
 				'id' => 1,
