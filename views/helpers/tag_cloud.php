@@ -12,12 +12,18 @@ class TagCloudHelper extends AppHelper {
  * @var public $helpers
  */
 	public $helpers = array('Html');
+
 /**
  * Method to output a tag-cloud formatted based on the weight of the tags
  *
- * @todo find a nice way to create the url and its options like css and id and parse %size% in their values
- *
  * @param array $tags
+ * @param array $options Display options. Valid keys are:
+ * 	- shuffle: true to shuffle the tag list, false to display them in the same order than passed [default: true]
+ *  - extract: Set::extract() compatible format string. Path to extract weight values from the $tags array [default: {n}.Tag.weight]
+ *  - before: string to be displayed before each generated link. "%size%" will be replaced with tag size calculated from the weight [default: empty]
+ *  - after: string to be displayed after each generated link. "%size%" will be replaced with tag size calculated from the weight [default: empty]
+ *  - maxSize: size of the heaviest tag [default: 160]
+ *  - minSize: size of the lightest tag [default: 80]
  * @return string
  */
 	public function display($tags = null, $options = array()) {
@@ -29,7 +35,6 @@ class TagCloudHelper extends AppHelper {
 			'extract' => '{n}.Tag.weight',
 			'before' => '',
 			'after' => '',
-			'link' => false,
 			'maxSize' => 160,
 			'minSize' => 80);
 		$options = array_merge($defaults, $options);
@@ -58,6 +63,7 @@ class TagCloudHelper extends AppHelper {
 		}
 		return $cloud;
 	}
+	
 /**
  * Replaces %size% in strings with the calculated "size" of the tag
  *
@@ -68,4 +74,3 @@ class TagCloudHelper extends AppHelper {
 		return str_replace("%size%", $size, $string);
 	}
 }
-?>
