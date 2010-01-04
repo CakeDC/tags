@@ -107,7 +107,7 @@ class TagsController extends TagsAppController {
 		}
 
 		if (empty($this->data)) {
-			$this->data = $result;
+			$this->data = $this->Tag->data;
 		}
 	}
 
