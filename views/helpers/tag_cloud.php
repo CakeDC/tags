@@ -2,8 +2,8 @@
 /* SVN FILE: $Id: tag_cloud.php 1273 2009-10-06 13:51:44Z burzum $ */
 /*
  * Tag cloud helper
- * 
- * Outputs a formatted tag cloud based on the weight of the tags 
+ *
+ * Outputs a formatted tag cloud based on the weight of the tags
  */
 class TagCloudHelper extends AppHelper {
 /**
@@ -24,6 +24,8 @@ class TagCloudHelper extends AppHelper {
  *  - after: string to be displayed after each generated link. "%size%" will be replaced with tag size calculated from the weight [default: empty]
  *  - maxSize: size of the heaviest tag [default: 160]
  *  - minSize: size of the lightest tag [default: 80]
+ *  - url: an array containing the default url
+ *  - named: the named parameter used to send the tag [default: by]
  * @return string
  */
 	public function display($tags = null, $options = array()) {
@@ -36,7 +38,12 @@ class TagCloudHelper extends AppHelper {
 			'before' => '',
 			'after' => '',
 			'maxSize' => 160,
-			'minSize' => 80);
+			'minSize' => 80,
+			'url' => array(
+				'controller' => 'search'
+			),
+			'named' => 'by'
+		);
 		$options = array_merge($defaults, $options);
 
 		$weights = Set::extract($tags, $options['extract']);
@@ -55,15 +62,18 @@ class TagCloudHelper extends AppHelper {
 
 		$cloud = null;
 		foreach ($tags as $tag) {
+			$options['url'][$options['named']] = $tag['Tag']['keyname'];
+
 			$size = $options['minSize'] + (($tag['Tag']['weight'] - $minWeight) * (($options['maxSize'] - $options['minSize']) / ($spread)));
 			$size = ceil($size);
+
 			$cloud .= $this->_replace($options['before'], $size);
-			$cloud .= $this->Html->link($tag['Tag']['name'], array('controller' => 'search', 'by' => $tag['Tag']['keyname']), array('id' => 'tag-' . $tag['Tag']['id'])).' ';
+			$cloud .= $this->Html->link($tag['Tag']['name'], $options['url'], array('id' => 'tag-' . $tag['Tag']['id'])) . ' ';
 			$cloud .= $this->_replace($options['after'], $size);
 		}
 		return $cloud;
 	}
-	
+
 /**
  * Replaces %size% in strings with the calculated "size" of the tag
  *
@@ -74,3 +84,4 @@ class TagCloudHelper extends AppHelper {
 		return str_replace("%size%", $size, $string);
 	}
 }
+?>
