@@ -137,6 +137,29 @@ class TagableTest extends CakeTestCase {
 		$this->assertEqual('äüüß', $result);
 	}
 
+/**
+ * testAfterFind callback method
+ *
+ * @return void
+ * @access public
+ */
+	public function testAfterFind() {
+		$data['id'] = 1;
+		$data['tags'] = 'foo, bar, test';
+		$this->Article->save($data, false);
+
+		$result = $this->Article->find('first', array(
+			'conditions' => array(
+				'id' => 1)));
+		$this->assertTrue(isset($result['Tag']));
+
+		$this->Article->Behaviors->Tagable->settings['Article']['unsetInAfterFind'] = true;
+		$result = $this->Article->find('first', array(
+			'conditions' => array(
+				'id' => 1)));
+		$this->assertTrue(!isset($result['Tag']));
+	}
+
 }
 
 ?>

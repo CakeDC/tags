@@ -33,7 +33,7 @@ class TagableBehavior extends ModelBehavior {
 		'foreignKey' => 'foreign_key',
 		'associationForeignKey' => 'tag_id',
 		'cacheWeight' => true,
-		'automticTagging' => true,
+		'automaticTagging' => true,
 		'unsetInAfterFind' => false,
 		'resetBinding' => false);
 
@@ -226,7 +226,7 @@ class TagableBehavior extends ModelBehavior {
  * @param AppModel $Model
  */
 	public function afterSave(Model $Model) {
-		if ($this->settings[$Model->alias]['automticTagging'] == true && !empty($Model->data[$Model->alias][$this->settings[$Model->alias]['field']])) {
+		if ($this->settings[$Model->alias]['automaticTagging'] == true && !empty($Model->data[$Model->alias][$this->settings[$Model->alias]['field']])) {
 			$this->saveTags($Model, $Model->data[$Model->alias][$this->settings[$Model->alias]['field']], $Model->id);
 		}
 	}
