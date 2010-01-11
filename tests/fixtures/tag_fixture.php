@@ -24,16 +24,18 @@ class TagFixture extends CakeTestFixture {
  * @access public
  */
 	public $fields = array(
-		'id' => array('type'=>'string', 'null' => false, 'length' => 36, 'key' => 'primary'),
-		'identifier' => array('type'=>'string', 'null' => true, 'default' => NULL, 'length' => 30, 'key' => 'index'),
-		'name' => array('type'=>'string', 'null' => false, 'length' => 30),
-		'keyname' => array('type'=>'string', 'null' => false, 'length' => 30),
-		'weight' => array('type' => 'integer', 'size' => 2),
-		'created' => array('type'=>'datetime', 'null' => true, 'default' => NULL),
-		'modified' => array('type'=>'datetime', 'null' => true, 'default' => NULL),
+		'id' => array('type' => 'string', 'null' => false, 'default' => NULL, 'length' => 36, 'key' => 'primary'),
+		'identifier' => array('type' => 'string', 'null' => true, 'default' => NULL, 'length' => 30, 'key' => 'index'),
+		'name' => array('type' => 'string', 'null' => false, 'default' => NULL, 'length' => 30),
+		'keyname' => array('type' => 'string', 'null' => false, 'default' => NULL, 'length' => 30),
+		'weight' => array('type' => 'integer', 'null' => false, 'default' => 0, 'length' => 2),
+		'created' => array('type' => 'datetime', 'null' => true, 'default' => NULL),
+		'modified' => array('type' => 'datetime', 'null' => true, 'default' => NULL),
 		'indexes' => array(
-			'PRIMARY' => array('column' => 'id', 'unique' => 1), 
-			'UNIQUE_TAG' => array('column' => array('identifier', 'keyname'), 'unique' => 1)));
+			'PRIMARY' => array('column' => 'id', 'unique' => 1),
+			'UNIQUE_TAG' => array('column' => array('identifier', 'keyname'), 'unique' => 1)
+		)
+	);
 
 /**
  * Records

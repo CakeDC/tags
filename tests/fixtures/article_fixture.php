@@ -37,5 +37,4 @@ class ArticleFixture extends CakeTestFixture {
 			'title' => 'Third Article'));
 
 }
-
 ?>
