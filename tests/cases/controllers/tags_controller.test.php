@@ -145,11 +145,11 @@ class TagsControllerTest extends CakeTestCase {
 	public function testAdminDelete() {
 		$this->Tags->admin_delete('WRONG-ID');
 		$this->assertEqual($this->Tags->redirectUrl, array('action' => 'index'));
-		$this->assertEqual($_SESSION['Message']['flash']['message'], 'Invalid Tag');
+		$this->assertEqual($_SESSION['Message']['flash']['message'], 'Invalid Tag.');
 
 		$this->Tags->admin_delete(1);
 		$this->assertEqual($this->Tags->redirectUrl, array('action' => 'index'));
-		$this->assertEqual($_SESSION['Message']['flash']['message'], 'Tag deleted');
+		$this->assertEqual($_SESSION['Message']['flash']['message'], 'Tag deleted.');
 	}
 
 /**
@@ -185,7 +185,7 @@ class TagsControllerTest extends CakeTestCase {
 				'modified'  => '2008-06-02 18:18:37',
 				'tags' => null));
 		$this->assertEqual($this->Tags->data, $tag);
-		
+
 		$this->Tags->data = array(
 			'Tag' => array(
 				'id' => 1,
@@ -193,7 +193,5 @@ class TagsControllerTest extends CakeTestCase {
 		$this->Tags->admin_edit(1);
 		$this->assertEqual($this->Tags->redirectUrl, array('action' => 'index'));
 	}
-
 }
-
 ?>

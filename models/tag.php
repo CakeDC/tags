@@ -50,7 +50,7 @@ class Tag extends TagsAppModel {
 				$this->alias . '.keyname' => $keyName)));
 
 		if (empty($result)) {
-			throw new Exception(__('Invalid Tag', true));
+			throw new Exception(__d('tags', 'Invalid Tag.', true));
 		}
 		return $result;
 	}
@@ -67,7 +67,7 @@ class Tag extends TagsAppModel {
 		if (isset($postData[$this->alias]['tags'])) {
 			$this->Behaviors->attach('Tags.Tagable', array(
 				'resetBinding' => true,
-				'automticTagging' => false));
+				'automaticTagging' => false));
 			$this->Tag = $this;
 			$result = $this->saveTags($postData[$this->alias]['tags'], false, false);
 			unset($this->Tag);
@@ -92,7 +92,7 @@ class Tag extends TagsAppModel {
 
 		$this->set($tag);
 		if (empty($tag)) {
-			throw new Exception(__d('tags', 'Invalid Tag', true));
+			throw new Exception(__d('tags', 'Invalid Tag.', true));
 		}
 
 		if (!empty($postData[$this->alias]['name'])) {
@@ -109,6 +109,5 @@ class Tag extends TagsAppModel {
 			}
 		}
 	}
-
 }
 ?>

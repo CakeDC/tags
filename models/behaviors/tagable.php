@@ -253,6 +253,5 @@ class TagableBehavior extends ModelBehavior {
 		}
 		return $results;
 	}
-
 }
 ?>

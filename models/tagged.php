@@ -97,7 +97,5 @@ class Tagged extends TagsAppModel {
 			return $results;
 		}
 	}
-
 }
-
 ?>
