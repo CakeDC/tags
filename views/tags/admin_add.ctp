@@ -1,21 +1,15 @@
-<?php /* SVN FILE: $Id: admin_add.ctp 1078 2009-09-09 08:50:59Z skie $ */ ?>
 <div class="tags form">
-<?php echo $form->create('Tag');?>
+<?php echo $this->Form->create('Tag');?>
 	<fieldset>
- 		<legend><?php __('Add Tag');?></legend>
+ 		<legend><?php printf(__('Add %s', true), __('Tag', true)); ?></legend>
 	<?php
-		echo $form->input('identifier');
-		echo $form->input('name');
-		echo $form->input('keyname');
-		echo $form->input('User');
+		echo $this->Form->input('tags', array('label' => 'Tags (list of tags separated by comma)'));
 	?>
 	</fieldset>
-<?php echo $form->end('Submit');?>
+<?php echo $this->Form->end(__('Submit', true));?>
 </div>
 <div class="actions">
 	<ul>
-		<li><?php echo $html->link(__('List Tags', true), array('action'=>'index'));?></li>
-		<li><?php echo $html->link(__('List Users', true), array('controller'=> 'users', 'action'=>'index')); ?> </li>
-		<li><?php echo $html->link(__('New User', true), array('controller'=> 'users', 'action'=>'add')); ?> </li>
+		<li><?php echo $this->Html->link(sprintf(__('List %s', true), __('Tags', true)), array('action' => 'index'));?></li>
 	</ul>
 </div>

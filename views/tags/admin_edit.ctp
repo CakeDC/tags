@@ -1,23 +1,19 @@
-<?php /* SVN FILE: $Id: admin_edit.ctp 1078 2009-09-09 08:50:59Z skie $ */ ?>
 <div class="tags form">
-<?php echo $form->create('Tag');?>
+<?php echo $this->Form->create('Tag');?>
 	<fieldset>
- 		<legend><?php __('Edit Tag');?></legend>
+ 		<legend><?php printf(__('Edit %s', true), __('Tag', true)); ?></legend>
 	<?php
-		echo $form->input('id');
-		echo $form->input('identifier');
-		echo $form->input('name');
-		echo $form->input('keyname');
-		echo $form->input('User');
+		echo $this->Form->input('id');
+		echo $this->Form->input('identifier');
+		echo $this->Form->input('name', array('readonly' => 'readonly'));
+		echo $this->Form->input('keyname');
 	?>
 	</fieldset>
-<?php echo $form->end('Submit');?>
+<?php echo $this->Form->end(__('Submit', true));?>
 </div>
 <div class="actions">
 	<ul>
-		<li><?php echo $html->link(__('Delete', true), array('action'=>'delete', $form->value('Tag.id')), null, sprintf(__('Are you sure you want to delete # %s?', true), $form->value('Tag.id'))); ?></li>
-		<li><?php echo $html->link(__('List Tags', true), array('action'=>'index'));?></li>
-		<li><?php echo $html->link(__('List Users', true), array('controller'=> 'users', 'action'=>'index')); ?> </li>
-		<li><?php echo $html->link(__('New User', true), array('controller'=> 'users', 'action'=>'add')); ?> </li>
+		<li><?php echo $this->Html->link(__('Delete', true), array('action' => 'delete', $this->Form->value('Tag.id')), null, sprintf(__('Are you sure you want to delete # %s?', true), $this->Form->value('Tag.id'))); ?></li>
+		<li><?php echo $this->Html->link(sprintf(__('List %s', true), __('Tags', true)), array('action' => 'index'));?></li>
 	</ul>
 </div>
