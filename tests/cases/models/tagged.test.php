@@ -75,6 +75,29 @@ class TaggedTestCase extends CakeTestCase {
 		$this->assertTrue(isset($result[0][0]['occurrence']));
 		$this->assertEqual($result[0][0]['occurrence'], 1);
 	}
+	
+/**
+ * Test custom _findTagged method
+ * 
+ * @return void
+ */
+	public function testFindTagged() {
+		$result = $this->Tagged->find('tagged', array(
+			'by' => 'cakephp',
+			'model' => 'Article'));
+		$this->assertEqual(count($result), 1);
+		$this->assertEqual($result[0]['Article']['id'], 1);
+		
+		$result = $this->Tagged->find('tagged', array(
+			'model' => 'Article'));
+		$this->assertEqual(count($result), 2);
+		
+		// Test call to paginateCount by Controller::pagination()
+		$result = $this->Tagged->paginateCount(array(), 1, array(
+			'model' => 'Article',
+			'type' => 'tagged'));
+		$this->assertEqual($result, 2);
+	}
 
 }
 ?>

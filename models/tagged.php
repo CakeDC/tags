@@ -23,7 +23,8 @@ class Tagged extends TagsAppModel {
  * @access public
  */
 	public $_findMethods = array(
-		'cloud' => true);
+		'cloud' => true,
+		'tagged' => true);
 
 /**
  * belongsTo associations
@@ -93,6 +94,52 @@ class Tagged extends TagsAppModel {
 					$results[$key]['Tag']['occurrence'] = $result[0]['occurrence'];
 					$results[$key]['Tag']['weight'] = ceil($size);
 				}
+			}
+			return $results;
+		}
+	}
+	
+/**
+ * Find all the Model entries tagged with a given tag
+ * 
+ * The query must contain a Model name, and can contain a 'by' key with the Tag keyname to filter the results
+ * <code>
+ * $this->Article->Tagged
+ * </code
+ * 
+ */
+	public function _findTagged($state, $query, $results = array()) {
+		if ($state == 'before') {
+			if (isset($query['model']) && $Model = ClassRegistry::init($query['model'])) {
+				$belongsTo = array(
+					$Model->alias => array(
+						'className' => $Model->name,
+						'foreignKey' => 'foreign_key',
+						'conditions' => array(
+							$this->alias . '.model' => $Model->alias
+						),
+					)
+				);
+				$this->bindModel(compact('belongsTo'));
+				
+				if (isset($query['operation']) && $query['operation'] == 'count') {
+					$query['fields'][] = "COUNT(DISTINCT $Model->alias.$Model->primaryKey)";
+				} else {
+					$query['fields'][] = "DISTINCT $Model->alias.*";
+				}
+				
+				if (!empty($query['by'])) {
+					$query['conditions'] = array(
+						$this->Tag->alias . '.keyname' => $query['by']);
+				}
+			}
+			return $query;
+		} elseif ($state == 'after') {
+			if (isset($query['operation']) && $query['operation'] == 'count') {
+				if (isset($query['group']) && is_array($query['group']) && !empty($query['group'])) {
+					return count($results);
+				}
+				return array_shift($results[0][0]);
 			}
 			return $results;
 		}
