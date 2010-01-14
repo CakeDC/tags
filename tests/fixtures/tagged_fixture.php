@@ -48,7 +48,7 @@ class TaggedFixture extends CakeTestFixture {
 	public $records = array(
 		array(
 			'id' => '49357f3f-c464-461f-86ac-a85d4a35e6b6',
-			'foreign_key' => 'a12cc22a-d022-11dd-8f06-00e018bfb339',
+			'foreign_key' => 1,
 			'tag_id' => 1, //cakephp
 			'model' => 'Article',
 			'language' => 'eng',
@@ -57,7 +57,7 @@ class TaggedFixture extends CakeTestFixture {
 		),
 		array(
 			'id' => '49357f3f-c66c-4300-a128-a85d4a35e6b6',
-			'foreign_key' => '6e2e7698-d022-11dd-b0a9-00e018bfb339',
+			'foreign_key' => 1,
 			'tag_id' => 2, //cakedc
 			'model' => 'Article',
 			'language' => 'eng',
