@@ -104,9 +104,16 @@ class Tagged extends TagsAppModel {
  * 
  * The query must contain a Model name, and can contain a 'by' key with the Tag keyname to filter the results
  * <code>
- * $this->Article->Tagged
+ * $this->Article->Tagged->find('tagged', array(
+ *		'by' => 'cakephp',
+ *		'model' => 'Article'));
  * </code
- * 
+ *
+ * @TODO Find a way to populate the "magic" field Article.tags
+ * @param string $state
+ * @param array $query
+ * @param array $results
+ * @return mixed Query array if state is before, array of results or integer (count) if state is after
  */
 	public function _findTagged($state, $query, $results = array()) {
 		if ($state == 'before') {
@@ -136,9 +143,6 @@ class Tagged extends TagsAppModel {
 			return $query;
 		} elseif ($state == 'after') {
 			if (isset($query['operation']) && $query['operation'] == 'count') {
-				if (isset($query['group']) && is_array($query['group']) && !empty($query['group'])) {
-					return count($results);
-				}
 				return array_shift($results[0][0]);
 			}
 			return $results;
