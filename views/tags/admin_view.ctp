@@ -1,3 +1,13 @@
+<?php
+/*
+ * Copyright 2009 - 2010, Cake Development Corporation
+ *                        1785 E. Sahara Avenue, Suite 490-423
+ *                        Las Vegas, Nevada 89104
+ *
+ * Licensed under The MIT License
+ * Redistributions of files must retain the above copyright notice.
+ */
+?>
 <div class="tags view">
 <h2><?php  __('Tag');?></h2>
 	<dl><?php $i = 0; $class = ' class="altrow"';?>
