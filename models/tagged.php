@@ -1,5 +1,29 @@
 <?php
+/**
+ * CakePHP Tags
+ *
+ * Copyright 2009 - 2010, Cake Development Corporation
+ *                        1785 E. Sahara Avenue, Suite 490-423
+ *                        Las Vegas, Nevada 89104
+ *
+ * Licensed under The MIT License
+ * Redistributions of files must retain the above copyright notice.
+ *
+ * @copyright 2009 - 2010, Cake Development Corporation
+ * @link      http://codaset.com/cakedc/migrations/
+ * @package   plugins.tags
+ * @license   MIT License (http://www.opensource.org/licenses/mit-license.php)
+ */
+
+/**
+ * Short description for class.
+ *
+ * @package		tags
+ * @subpackage	models
+ */
+
 class Tagged extends TagsAppModel {
+
 /**
  * Name
  *
@@ -98,7 +122,7 @@ class Tagged extends TagsAppModel {
 			return $results;
 		}
 	}
-	
+
 /**
  * Find all the Model entries tagged with a given tag
  * 
@@ -128,13 +152,13 @@ class Tagged extends TagsAppModel {
 					)
 				);
 				$this->bindModel(compact('belongsTo'));
-				
+
 				if (isset($query['operation']) && $query['operation'] == 'count') {
 					$query['fields'][] = "COUNT(DISTINCT $Model->alias.$Model->primaryKey)";
 				} else {
 					$query['fields'][] = "DISTINCT $Model->alias.*";
 				}
-				
+
 				if (!empty($query['by'])) {
 					$query['conditions'] = array(
 						$this->Tag->alias . '.keyname' => $query['by']);
@@ -148,5 +172,6 @@ class Tagged extends TagsAppModel {
 			return $results;
 		}
 	}
+
 }
 ?>

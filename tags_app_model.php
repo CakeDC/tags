@@ -1,20 +1,29 @@
 <?php
-/* SVN FILE: $Id: tags_app_model.php 1027 2009-08-28 18:50:51Z renan.saddam $ */
+/**
+ * CakePHP Tags
+ *
+ * Copyright 2009 - 2010, Cake Development Corporation
+ *                        1785 E. Sahara Avenue, Suite 490-423
+ *                        Las Vegas, Nevada 89104
+ *
+ * Licensed under The MIT License
+ * Redistributions of files must retain the above copyright notice.
+ *
+ * @copyright 2009 - 2010, Cake Development Corporation
+ * @link      http://codaset.com/cakedc/migrations/
+ * @package   plugins.tags
+ * @license   MIT License (http://www.opensource.org/licenses/mit-license.php)
+ */
+
 /**
  * Short description for class.
  *
- * @package		converge.plugins
- * @subpackage	converge.plugins.tags
+ * @package		tags
+ * @subpackage	
  */
+
 class TagsAppModel extends AppModel {
-/**
- * Plugin name
- *
- * @var string $plugin
- * @access public
- */
-	public $plugin = 'Tags';
-	
+
 /**
  * Customized paginateCount method
  *

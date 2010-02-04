@@ -1,15 +1,34 @@
 <?php
-/* SVN FILE: $Id: tag_cloud.php 1273 2009-10-06 13:51:44Z burzum $ */
-/*
+/**
+ * CakePHP Tags
+ *
+ * Copyright 2009 - 2010, Cake Development Corporation
+ *                        1785 E. Sahara Avenue, Suite 490-423
+ *                        Las Vegas, Nevada 89104
+ *
+ * Licensed under The MIT License
+ * Redistributions of files must retain the above copyright notice.
+ *
+ * @copyright 2009 - 2010, Cake Development Corporation
+ * @link      http://codaset.com/cakedc/migrations/
+ * @package   plugins.tags
+ * @license   MIT License (http://www.opensource.org/licenses/mit-license.php)
+ */
+
+/**
  * Tag cloud helper
  *
- * Outputs a formatted tag cloud based on the weight of the tags
+ * @package		tags
+ * @subpackage	views.helpers
  */
+
 class TagCloudHelper extends AppHelper {
+
 /**
  * Other helpers to load
  *
  * @var public $helpers
+ * @access public
  */
 	public $helpers = array('Html');
 
@@ -27,6 +46,7 @@ class TagCloudHelper extends AppHelper {
  *  - url: an array containing the default url
  *  - named: the named parameter used to send the tag [default: by]
  * @return string
+ * @access public
  */
 	public function display($tags = null, $options = array()) {
 		if (empty($tags) || !is_array($tags)) {
@@ -83,5 +103,6 @@ class TagCloudHelper extends AppHelper {
 	protected function _replace($string, $size) {
 		return str_replace("%size%", $size, $string);
 	}
+
 }
 ?>

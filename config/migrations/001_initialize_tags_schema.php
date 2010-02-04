@@ -1,4 +1,27 @@
 <?php
+/**
+ * CakePHP Tags
+ *
+ * Copyright 2009 - 2010, Cake Development Corporation
+ *                        1785 E. Sahara Avenue, Suite 490-423
+ *                        Las Vegas, Nevada 89104
+ *
+ * Licensed under The MIT License
+ * Redistributions of files must retain the above copyright notice.
+ *
+ * @copyright 2009 - 2010, Cake Development Corporation
+ * @link      http://codaset.com/cakedc/migrations/
+ * @package   plugins.tags
+ * @license   MIT License (http://www.opensource.org/licenses/mit-license.php)
+ */
+
+/**
+ * Short description for class.
+ *
+ * @package		tags
+ * @subpackage	config.migrations
+ */
+
 class M49ac311a54844a9d87o822502jedc423 extends CakeMigration {
 
 /**
@@ -7,7 +30,7 @@ class M49ac311a54844a9d87o822502jedc423 extends CakeMigration {
  * @var string
  * @access public
  */
-	var $description = 'Initialize Tags Schema';
+	public $description = 'Initialize Tags Schema';
 
 /**
  * Actions to be performed
@@ -15,7 +38,7 @@ class M49ac311a54844a9d87o822502jedc423 extends CakeMigration {
  * @var array $migration
  * @access public
  */
-	var $migration = array(
+	public $migration = array(
 		'up' => array(
 			'create_table' => array(
 				'tagged' => array(
@@ -60,7 +83,7 @@ class M49ac311a54844a9d87o822502jedc423 extends CakeMigration {
  * @return boolean Should process continue
  * @access public
  */
-	function before($direction) {
+	public function before($direction) {
 		return true;
 	}
 
@@ -71,8 +94,9 @@ class M49ac311a54844a9d87o822502jedc423 extends CakeMigration {
  * @return boolean Should process continue
  * @access public
  */
-	function after($direction) {
+	public function after($direction) {
 		return true;
 	}
+
 }
 ?>

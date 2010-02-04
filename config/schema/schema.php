@@ -1,17 +1,66 @@
 <?php 
-/* SVN FILE: $Id$ */
-/* App schema generated on: 2010-01-12 14:01:13 : 1263313633*/
-class AppSchema extends CakeSchema {
-	var $name = 'App';
+/**
+ * CakePHP Tags
+ *
+ * Copyright 2009 - 2010, Cake Development Corporation
+ *                        1785 E. Sahara Avenue, Suite 490-423
+ *                        Las Vegas, Nevada 89104
+ *
+ * Licensed under The MIT License
+ * Redistributions of files must retain the above copyright notice.
+ *
+ * @copyright 2009 - 2010, Cake Development Corporation
+ * @link      http://codaset.com/cakedc/migrations/
+ * @package   plugins.tags
+ * @license   MIT License (http://www.opensource.org/licenses/mit-license.php)
+ */
 
-	function before($event = array()) {
+/**
+ * Short description for class.
+ *
+ * @package		tags
+ * @subpackage	config
+ */
+
+class AppSchema extends CakeSchema {
+
+/**
+ * Name
+ *
+ * @var string
+ * @access public
+ */
+	public $name = 'App';
+
+/**
+ * Before callback
+ *
+ * @param string Event
+ * @return boolean
+ * @access public
+ */
+	public function before($event = array()) {
 		return true;
 	}
 
-	function after($event = array()) {
+/**
+ * After callback
+ *
+ * @param string Event
+ * @return boolean
+ * @access public
+ */
+	public function after($event = array()) {
+		return true;
 	}
 
-	var $tagged = array(
+/**
+ * Schema for taggeds table
+ *
+ * @var array
+ * @access public
+ */
+	public $tagged = array(
 		'id' => array('type' => 'string', 'null' => false, 'default' => NULL, 'length' => 36, 'key' => 'primary'),
 		'foreign_key' => array('type' => 'string', 'null' => false, 'default' => NULL, 'length' => 36),
 		'tag_id' => array('type' => 'string', 'null' => false, 'default' => NULL, 'length' => 36),
@@ -26,7 +75,14 @@ class AppSchema extends CakeSchema {
 			'INDEX_LANGUAGE' => array('column' => 'language', 'unique' => 0)
 		)
 	);
-	var $tags = array(
+
+/**
+ * Schema for tags table
+ *
+ * @var array
+ * @access public
+ */
+	public $tags = array(
 		'id' => array('type' => 'string', 'null' => false, 'default' => NULL, 'length' => 36, 'key' => 'primary'),
 		'identifier' => array('type' => 'string', 'null' => true, 'default' => NULL, 'length' => 30, 'key' => 'index'),
 		'name' => array('type' => 'string', 'null' => false, 'default' => NULL, 'length' => 30),
@@ -39,5 +95,6 @@ class AppSchema extends CakeSchema {
 			'UNIQUE_TAG' => array('column' => array('identifier', 'keyname'), 'unique' => 1)
 		)
 	);
+
 }
 ?>
