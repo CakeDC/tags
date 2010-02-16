@@ -133,5 +133,6 @@ class Tag extends TagsAppModel {
 			}
 		}
 	}
+
 }
 ?>
