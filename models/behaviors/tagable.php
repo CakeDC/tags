@@ -10,7 +10,7 @@
  * Redistributions of files must retain the above copyright notice.
  *
  * @copyright 2009 - 2010, Cake Development Corporation
- * @link      http://github.com/CakeDC/Tags
+ * @link      http://codaset.com/cakedc/migrations/
  * @package   plugins.tags
  * @license   MIT License (http://www.opensource.org/licenses/mit-license.php)
  */

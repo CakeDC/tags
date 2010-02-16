@@ -19,7 +19,7 @@ To make something tagable you just need to do two things:
 The tagable behavior can be configured using the following parameters
  * separator				- sperator used to enter a lot of tags, comma by default
  * tagAlias					- model alias for Tag model
- * tagClass					- class name of the table storing the tags
+ * tagClass					- class name of the model storing the tags
  * taggedClass				- class name of the habtm association table between tags and models
  * field					- the fieldname that contains the raw tags as string
  * foreignKey				- foreignKey used in the HABTM association
