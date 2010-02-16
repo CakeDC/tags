@@ -22,7 +22,7 @@
  * @subpackage	plugins.tags.models.behaviors
  */
 
-class TagableBehavior extends ModelBehavior {
+class TaggableBehavior extends ModelBehavior {
 
 /**
  * Settings array
@@ -35,15 +35,15 @@ class TagableBehavior extends ModelBehavior {
 /**
  * Default settings
  *
- * separator				- sperator used to enter a lot of tags, comma by default
+ * separator				- separator used to enter a lot of tags, comma by default
  * tagAlias					- model alias for Tag model
  * tagClass					- class name of the table storing the tags
- * taggedClass				- class name of the habtm association table between tags and models
+ * taggedClass				- class name of the HABTM association table between tags and models
  * field					- the fieldname that contains the raw tags as string
  * foreignKey				- foreignKey used in the HABTM association
  * associationForeignKey	- associationForeignKey used in the HABTM association
- * automaticTagging			- if set to true you dont need to use saveTags() manualy
- * language					- only tages in a certain language, string or array
+ * automaticTagging			- if set to true you don't need to use saveTags() manually
+ * language					- only tags in a certain language, string or array
  *
  * @var array
  * @access protected

@@ -89,13 +89,13 @@ class Tag extends TagsAppModel {
  */
 	public function add($postData = null) {
 		if (isset($postData[$this->alias]['tags'])) {
-			$this->Behaviors->attach('Tags.Tagable', array(
+			$this->Behaviors->attach('Tags.Taggable', array(
 				'resetBinding' => true,
 				'automaticTagging' => false));
 			$this->Tag = $this;
 			$result = $this->saveTags($postData[$this->alias]['tags'], false, false);
 			unset($this->Tag);
-			$this->Behaviors->detach('Tags.Tagable');
+			$this->Behaviors->detach('Tags.Taggable');
 			return $result;
 		}
 	}

@@ -30,10 +30,10 @@ class Article extends Model {
 	public $hasAndBelongsToMany = array();
 	public $hasMany = array();
 	public $hasOne = array();
-	public $actsAs = array('Tags.Tagable');
+	public $actsAs = array('Tags.Taggable');
 }
 
-class TagableTest extends CakeTestCase {
+class TaggableTest extends CakeTestCase {
 /**
  * Plugin name used for fixtures loading
  *
@@ -70,7 +70,7 @@ class TagableTest extends CakeTestCase {
  */
 	public function startTest() {
 		$this->Article = ClassRegistry::init('Article');
-		$this->Article->Behaviors->attach('Tags.Tagable', array());
+		$this->Article->Behaviors->attach('Tags.Taggable', array());
 	}
 
 /**
@@ -125,7 +125,7 @@ class TagableTest extends CakeTestCase {
 	}
 
 /**
- * Testings Tagable::tagArrayToString()
+ * Testings Taggable::tagArrayToString()
  *
  * @return void
  * @access public
@@ -147,7 +147,7 @@ class TagableTest extends CakeTestCase {
 	}
 
 /**
- * Testings Tagable::multibyteKey()
+ * Testings Taggable::multibyteKey()
  *
  * @return void
  * @access public
@@ -176,7 +176,7 @@ class TagableTest extends CakeTestCase {
 				'id' => 1)));
 		$this->assertTrue(isset($result['Tag']));
 
-		$this->Article->Behaviors->Tagable->settings['Article']['unsetInAfterFind'] = true;
+		$this->Article->Behaviors->Taggable->settings['Article']['unsetInAfterFind'] = true;
 		$result = $this->Article->find('first', array(
 			'conditions' => array(
 				'id' => 1)));
