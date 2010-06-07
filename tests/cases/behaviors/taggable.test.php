@@ -125,6 +125,28 @@ class TaggableTest extends CakeTestCase {
 	}
 
 /**
+ * Tests that toggling taggedCounter will update the time_tagged counter in the tagged table 
+ *
+ * @return void
+ * @access public
+ */
+	function testSaveTimesTagged() {
+		$this->Article->Behaviors->Taggable->settings['Article']['taggedCounter'] = true;
+		$tags = 'foo, test';
+		$this->assertTrue($this->Article->saveTags($tags, 1, false));
+		$this->assertTrue($this->Article->saveTags($tags, 1, false));
+
+		$result =  $this->Article->Tagged->find('all', array(
+			'conditions' => array('model' => 'Article')));
+		
+		$fooCount = Set::extract('/Tag[keyname=foo]/../Tagged/times_tagged', $result);
+		$this->assertEqual($fooCount, array(2));
+
+		$testCount = Set::extract('/Tag[keyname=test]/../Tagged/times_tagged', $result);
+		$this->assertEqual($testCount, array(2));
+	}
+
+/**
  * Testings Taggable::tagArrayToString()
  *
  * @return void

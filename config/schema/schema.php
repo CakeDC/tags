@@ -65,7 +65,8 @@ class AppSchema extends CakeSchema {
 		'foreign_key' => array('type' => 'string', 'null' => false, 'default' => NULL, 'length' => 36),
 		'tag_id' => array('type' => 'string', 'null' => false, 'default' => NULL, 'length' => 36),
 		'model' => array('type' => 'string', 'null' => false, 'default' => NULL, 'key' => 'index'),
-		'language' => array('type' => 'string', 'null' => true, 'default' => NULL, 'length' => 6),
+		'language' => array('type' => 'string', 'null' => true, 'default' => NULL, 'length' => 6, 'key' => 'index'),
+		'times_tagged' => array('type' => 'integer', 'null' => false, 'default' => '1'),
 		'created' => array('type' => 'datetime', 'null' => true, 'default' => NULL),
 		'modified' => array('type' => 'datetime', 'null' => true, 'default' => NULL),
 		'indexes' => array(

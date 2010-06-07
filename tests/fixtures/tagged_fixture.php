@@ -52,6 +52,7 @@ class TaggedFixture extends CakeTestFixture {
 		'tag_id' => array('type' => 'string', 'null' => false, 'default' => NULL, 'length' => 36),
 		'model' => array('type' => 'string', 'null' => false, 'default' => NULL, 'key' => 'index'),
 		'language' => array('type' => 'string', 'null' => true, 'default' => NULL, 'length' => 6),
+		'times_tagged' => array('type' => 'integer', 'null' => false, 'default' => 1),
 		'created' => array('type' => 'datetime', 'null' => true, 'default' => NULL),
 		'modified' => array('type' => 'datetime', 'null' => true, 'default' => NULL),
 		'indexes' => array(

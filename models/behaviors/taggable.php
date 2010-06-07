@@ -59,7 +59,8 @@ class TaggableBehavior extends ModelBehavior {
 		'cacheWeight' => true,
 		'automaticTagging' => true,
 		'unsetInAfterFind' => false,
-		'resetBinding' => false);
+		'resetBinding' => false,
+		'taggedCounter' => false);
 
 /**
  * Setup
@@ -193,6 +194,8 @@ class TaggableBehavior extends ModelBehavior {
 
 					if ($update == true) {
 						$tagModel->Tagged->deleteAll($deleteAll, false);
+					} elseif ($this->settings[$Model->alias]['taggedCounter'] && !empty($alreadyTagged)) {
+						$tagModel->Tagged->updateAll(array('times_tagged' => 'times_tagged + 1'), array('Tagged.tag_id' => $alreadyTagged));
 					}
 
 					foreach ($existingTagIds as $tagId) {
