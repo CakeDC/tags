@@ -44,6 +44,7 @@ class TaggableBehavior extends ModelBehavior {
  * associationForeignKey	- associationForeignKey used in the HABTM association
  * automaticTagging			- if set to true you don't need to use saveTags() manually
  * language					- only tags in a certain language, string or array
+ * taggedCounter			- true to update the number of times a particular tag was used for a specific record
  *
  * @var array
  * @access protected
@@ -94,7 +95,9 @@ class TaggableBehavior extends ModelBehavior {
  * Saves a string of tags
  *
  * @param AppModel $Model
- * @param string $string comma separeted list of tgas to be saved
+ * @param string $string comma separeted list of tags to be saved
+ *		Tags can contain special tokens called `identifiers´ to namespace tags or classify them into catageories.
+ *		A valid string is "foo, bar, cakephp:special". The token `cakephp´ will end up as the identifier or category for the tag `special´
  * @param mixed $foreignKey the identifier for the record to associate the tags with
  * @param boolean $update true will remove tags that are not in the $string, false wont
  * do this and just add new tags without removing existing tags associated to

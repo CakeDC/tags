@@ -132,7 +132,7 @@ class TaggableTest extends CakeTestCase {
  */
 	function testSaveTimesTagged() {
 		$this->Article->Behaviors->Taggable->settings['Article']['taggedCounter'] = true;
-		$tags = 'foo, bar, test';
+		$tags = 'foo, bar , test';
 		$this->assertTrue($this->Article->saveTags($tags, 1, false));
 		$this->assertTrue($this->Article->saveTags($tags, 1, false));
 

@@ -25,7 +25,7 @@ The taggable behavior can be configured using the following parameters
  * foreignKey				- foreignKey used in the HABTM association
  * associationForeignKey	- associationForeignKey used in the HABTM association
  * automaticTagging			- if set to true you don't need to use saveTags() manually
- * language					- only tags in a certain language, string or array
+ * taggedCounter			- true to update the number of times a particular tag was used for a specific record
 
 
 The Tagged model contains a method _findCloud which can be used like any other
@@ -35,3 +35,7 @@ The result contains a "weight" field which has a normalized size of the tag
 occurrence set. The min and max size can be set by passing 'minSize" and
 'maxSize' to the query. This value can be used in the view to control the size 
 of the tag font.
+
+Tags can contain special tokens called "identifiers" to namespace tags or classify them into catageories.
+A valid tags string to be saved is "foo, bar, cakephp:special".
+The token "cakephp" will end up as the identifier or category for the tag "special"
