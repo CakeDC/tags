@@ -114,9 +114,9 @@ class TaggableBehavior extends ModelBehavior {
 				if (strpos($tag, ':') !== false) {
 					$t = explode(':', $tag);
 					$identifier = trim($t[0]);
-					$tag = trim($t[1]);
-
+					$tag = $t[1];
 				}
+				$tag = trim($tag);
 				if (!empty($tag)) {
 					$key = $this->multibyteKey($Model, $tag);
 					if (empty($tags[$key])) {
