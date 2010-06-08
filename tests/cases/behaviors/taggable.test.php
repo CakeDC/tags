@@ -132,7 +132,7 @@ class TaggableTest extends CakeTestCase {
  */
 	function testSaveTimesTagged() {
 		$this->Article->Behaviors->Taggable->settings['Article']['taggedCounter'] = true;
-		$tags = 'foo, test';
+		$tags = 'foo, bar, test';
 		$this->assertTrue($this->Article->saveTags($tags, 1, false));
 		$this->assertTrue($this->Article->saveTags($tags, 1, false));
 
@@ -141,6 +141,9 @@ class TaggableTest extends CakeTestCase {
 		
 		$fooCount = Set::extract('/Tag[keyname=foo]/../Tagged/times_tagged', $result);
 		$this->assertEqual($fooCount, array(2));
+		
+		$barCount = Set::extract('/Tag[keyname=bar]/../Tagged/times_tagged', $result);
+		$this->assertEqual($barCount, array(2));
 
 		$testCount = Set::extract('/Tag[keyname=test]/../Tagged/times_tagged', $result);
 		$this->assertEqual($testCount, array(2));
