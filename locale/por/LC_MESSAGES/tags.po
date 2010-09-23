@@ -1,0 +1,163 @@
+# LANGUAGE translation of the CakePHP Tags plugin
+#
+# Copyright 2010, Cake Development Corporation (http://cakedc.com)
+#
+# Licensed under The MIT License
+# Redistributions of files must retain the above copyright notice.
+#
+# @copyright Copyright 2010, Cake Development Corporation (http://cakedc.com)
+# @license MIT License (http://www.opensource.org/licenses/mit-license.php)
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: CakePHP Tags Plugin\n"
+"POT-Creation-Date: 2010-09-15 15:37+0200\n"
+"PO-Revision-Date: 2010-09-23 19:05-0300\n"
+"Last-Translator: Renan Gonçalves <renan.saddam@gmail.com>\n"
+"Language-Team: CakeDC <renan.saddam@gmail.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2;plural=n>1;\n"
+"X-Poedit-Language: Portuguese\n"
+"X-Poedit-Country: BRAZIL\n"
+
+#: /controllers/tags_controller.php:105
+msgid "The Tags has been saved."
+msgstr "As tags foram salvas."
+
+#: /controllers/tags_controller.php:122
+msgid "Tag saved."
+msgstr "Tag salva."
+
+#: /controllers/tags_controller.php:146
+msgid "Tag deleted."
+msgstr "Tag removida."
+
+#: /controllers/tags_controller.php:148
+#: /models/tag.php:77;119
+msgid "Invalid Tag."
+msgstr "Tag inválida."
+
+#: /views/tags/admin_add.ctp:16
+msgid "Add %s"
+msgstr "Adicionar %s"
+
+#: /views/tags/admin_add.ctp:16
+#: /views/tags/admin_edit.ctp:16
+#: /views/tags/admin_index.ctp:78
+#: /views/tags/admin_view.ctp:14;55;56;58
+#: /views/tags/view.ctp:14
+msgid "Tag"
+msgstr "Tag"
+
+#: /views/tags/admin_add.ctp:21
+#: /views/tags/admin_edit.ctp:24
+msgid "Submit"
+msgstr "Enviar"
+
+#: /views/tags/admin_add.ctp:25
+#: /views/tags/admin_edit.ctp:29
+#: /views/tags/admin_view.ctp:57
+#: /views/tags/view.ctp:55
+msgid "List %s"
+msgstr "Listar %s"
+
+#: /views/tags/admin_add.ctp:25
+#: /views/tags/admin_edit.ctp:29
+#: /views/tags/admin_index.ctp:14
+#: /views/tags/admin_view.ctp:57
+#: /views/tags/index.ctp:14
+#: /views/tags/view.ctp:55
+msgid "Tags"
+msgstr "Tags"
+
+#: /views/tags/admin_edit.ctp:16
+#: /views/tags/admin_view.ctp:55
+msgid "Edit %s"
+msgstr "Editar %s"
+
+#: /views/tags/admin_edit.ctp:28
+#: /views/tags/admin_index.ctp:65
+msgid "Delete"
+msgstr "Remover"
+
+#: /views/tags/admin_edit.ctp:28
+#: /views/tags/admin_index.ctp:65
+#: /views/tags/admin_view.ctp:56
+msgid "Are you sure you want to delete # %s?"
+msgstr "Você tem certeza que deseja remover # %s?"
+
+#: /views/tags/admin_index.ctp:18
+#: /views/tags/index.ctp:18
+msgid "Page %page% of %pages%, showing %current% records out of %count% total, starting on record %start%, ending on %end%"
+msgstr "Página %page% de %pages%, mostrando %current% resultados de um total de %count%, começando em %start%, terminando em %end%"
+
+#: /views/tags/admin_index.ctp:30
+#: /views/tags/index.ctp:30
+msgid "Actions"
+msgstr "Ações"
+
+#: /views/tags/admin_index.ctp:63
+#: /views/tags/index.ctp:63
+msgid "View"
+msgstr "Visualizar"
+
+#: /views/tags/admin_index.ctp:64
+msgid "Edit"
+msgstr "Editar"
+
+#: /views/tags/admin_index.ctp:72
+#: /views/tags/index.ctp:70
+msgid "previous"
+msgstr "anterior"
+
+#: /views/tags/admin_index.ctp:74
+#: /views/tags/index.ctp:72
+msgid "next"
+msgstr "próxima"
+
+#: /views/tags/admin_index.ctp:78
+#: /views/tags/admin_view.ctp:58
+msgid "New %s"
+msgstr "Nova %s"
+
+#: /views/tags/admin_view.ctp:16
+#: /views/tags/view.ctp:16
+msgid "Id"
+msgstr "Id"
+
+#: /views/tags/admin_view.ctp:21
+#: /views/tags/view.ctp:21
+msgid "Identifier"
+msgstr "Identificador"
+
+#: /views/tags/admin_view.ctp:26
+#: /views/tags/view.ctp:26
+msgid "Name"
+msgstr "Nome"
+
+#: /views/tags/admin_view.ctp:31
+#: /views/tags/view.ctp:31
+msgid "Keyname"
+msgstr "Chave"
+
+#: /views/tags/admin_view.ctp:36
+#: /views/tags/view.ctp:36
+msgid "Weight"
+msgstr "Peso"
+
+#: /views/tags/admin_view.ctp:41
+#: /views/tags/view.ctp:41
+msgid "Created"
+msgstr "Criação"
+
+#: /views/tags/admin_view.ctp:46
+#: /views/tags/view.ctp:46
+msgid "Modified"
+msgstr "Atualização"
+
+#: /views/tags/admin_view.ctp:56
+msgid "Delete %s"
+msgstr "Remover %s"
+
