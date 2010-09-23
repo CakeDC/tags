@@ -81,6 +81,7 @@ class TaggedTestCase extends CakeTestCase {
 				'tag_id' => 1, //cakephp
 				'model' => 'Article',
 				'language' => 'eng',
+				'times_tagged' => 1,
 				'created' => '2008-12-02 12:32:31',
 				'modified' => '2008-12-02 12:32:31'));
 

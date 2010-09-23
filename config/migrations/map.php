@@ -16,6 +16,9 @@
  */
 
 $map = array(
-	1 => array('001_initialize_tags_schema' => 'M49ac311a54844a9d87o822502jedc423')
+	1 => array(
+		'001_initialize_tags_schema' => 'M49ac311a54844a9d87o822502jedc423'),
+	2 => array(
+		'002_create_times_tagged_field' => 'M4c0d42bcd12c4db099c105f40e8f3d6d'),
 );
 ?>

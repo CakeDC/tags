@@ -44,6 +44,7 @@ class TaggableBehavior extends ModelBehavior {
  * associationForeignKey	- associationForeignKey used in the HABTM association
  * automaticTagging			- if set to true you don't need to use saveTags() manually
  * language					- only tags in a certain language, string or array
+ * taggedCounter			- true to update the number of times a particular tag was used for a specific record
  *
  * @var array
  * @access protected
@@ -59,7 +60,8 @@ class TaggableBehavior extends ModelBehavior {
 		'cacheWeight' => true,
 		'automaticTagging' => true,
 		'unsetInAfterFind' => false,
-		'resetBinding' => false);
+		'resetBinding' => false,
+		'taggedCounter' => false);
 
 /**
  * Setup
@@ -93,9 +95,11 @@ class TaggableBehavior extends ModelBehavior {
  * Saves a string of tags
  *
  * @param AppModel $Model
- * @param string $string
- * @param string $foreignKey
- * @param boolean true will remove tags that are not in the $string, false wont
+ * @param string $string comma separeted list of tags to be saved
+ *		Tags can contain special tokens called `identifiers´ to namespace tags or classify them into catageories.
+ *		A valid string is "foo, bar, cakephp:special". The token `cakephp´ will end up as the identifier or category for the tag `special´
+ * @param mixed $foreignKey the identifier for the record to associate the tags with
+ * @param boolean $update true will remove tags that are not in the $string, false wont
  * do this and just add new tags without removing existing tags associated to
  * the current set foreign key
  * @return array
@@ -107,14 +111,20 @@ class TaggableBehavior extends ModelBehavior {
 			$tagModel = $Model->Tag;
 			$array = explode($this->settings[$Model->alias]['separator'], $string);
 
-			$keys = array();
+			$tags = $identifiers = array();
 			foreach ($array as $tag) {
+				$identifier = null;
+				if (strpos($tag, ':') !== false) {
+					$t = explode(':', $tag);
+					$identifier = trim($t[0]);
+					$tag = $t[1];
+				}
 				$tag = trim($tag);
 				if (!empty($tag)) {
 					$key = $this->multibyteKey($Model, $tag);
-					if (!in_array($key, $keys)) {
-						$tags[] = $tag;
-						$keys[] = $key;
+					if (empty($tags[$key])) {
+						$tags[] = array('name' => $tag, 'identifier' => $identifier, 'keyname' => $key);
+						$identifiers[$key][] = $identifier;
 					}
 				}
 			}
@@ -123,39 +133,40 @@ class TaggableBehavior extends ModelBehavior {
 				$existingTags = $tagModel->find('all', array(
 					'contain' => array(),
 					'conditions' => array(
-						'Tag.keyname' => $keys),
+						'Tag.keyname' => Set::extract($tags, '{n}.keyname')),
 					'fields' => array(
+						'Tag.identifier',
 						'Tag.keyname',
 						'Tag.name',
 						'Tag.id')));
 
 				if (!empty($existingTags)) {
-					$existingTagKeyNames = Set::extract($existingTags, '{n}.Tag.keyname');
-					$existingTagIds = Set::extract($existingTags, '{n}.Tag.id');
+					foreach ($existingTags as $existing) {
+						$existingTagKeyNames[] = $existing['Tag']['keyname'];
+						$existingTagIds[] = $existing['Tag']['id'];
+						$existingTagIdentifiers[$existing['Tag']['keyname']][] = $existing['Tag']['identifier'];
+					}
 					$newTags = array();
 					foreach($tags as $possibleNewTag) {
-						$key = $this->multibyteKey($Model, $possibleNewTag);
+						$key = $possibleNewTag['keyname'];
 						if (!in_array($key, $existingTagKeyNames)) {
-							$newTags[] = $possibleNewTag;
+							array_push($newTags, $possibleNewTag);
+						} elseif (!empty($identifiers[$key])) {
+							$newIdentifiers = array_diff($identifiers[$key], $existingTagIdentifiers[$key]);
+							foreach ($newIdentifiers as $identifier) {
+								array_push($newTags, array_merge($possibleNewTag, compact('identifier')));
+							}
+							unset($identifiers[$key]);
 						}
 					}
 				} else {
-					$existingTagIds = array();
+					$existingTagIds = $alreadyTagged = array();
 					$newTags = $tags;
 				}
 
-				foreach ($newTags as $newTag) {
-					$identifier = null;
-					if (strpos($newTag, ':') !== false) {
-						$t = explode(':', $newTag);
-						$identifier = trim($t[0]);
-						$newTag = trim($t[1]);
-					}
-					$data[$tagClass]['name'] = $newTag;
-					$data[$tagClass]['identifier'] = $identifier;
-					$data[$tagClass]['keyname'] = $this->multibyteKey($Model, $newTag);
+				foreach ($newTags as $key => $newTag) {
 					$tagModel->create();
-					$tagModel->save($data);
+					$tagModel->save($newTag);
 					$newTagIds[] = $tagModel->id;
 				}
 
@@ -186,6 +197,8 @@ class TaggableBehavior extends ModelBehavior {
 
 					if ($update == true) {
 						$tagModel->Tagged->deleteAll($deleteAll, false);
+					} elseif ($this->settings[$Model->alias]['taggedCounter'] && !empty($alreadyTagged)) {
+						$tagModel->Tagged->updateAll(array('times_tagged' => 'times_tagged + 1'), array('Tagged.tag_id' => $alreadyTagged));
 					}
 
 					foreach ($existingTagIds as $tagId) {
