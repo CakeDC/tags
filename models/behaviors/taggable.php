@@ -1,34 +1,26 @@
 <?php
 /**
- * CakePHP Tags Plugin
- *
- * Copyright 2009 - 2010, Cake Development Corporation
- *                        1785 E. Sahara Avenue, Suite 490-423
- *                        Las Vegas, Nevada 89104
+ * Copyright 2009-2010, Cake Development Corporation (http://cakedc.com)
  *
  * Licensed under The MIT License
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright 2009 - 2010, Cake Development Corporation (http://cakedc.com)
- * @link      http://github.com/CakeDC/Tags
- * @package   plugins.tags
- * @license   MIT License (http://www.opensource.org/licenses/mit-license.php)
+ * @copyright Copyright 2009-2010, Cake Development Corporation (http://cakedc.com)
+ * @license MIT License (http://www.opensource.org/licenses/mit-license.php)
  */
 
 /**
- * Short description for class.
+ * Taggable Behavior
  *
- * @package		plugins.tags
- * @subpackage	plugins.tags.models.behaviors
+ * @package tags
+ * @subpackage tags.models.behaviors
  */
-
 class TaggableBehavior extends ModelBehavior {
 
 /**
  * Settings array
  *
  * @var array
- * @access public
  */
 	public $settings = array();
 
@@ -47,7 +39,6 @@ class TaggableBehavior extends ModelBehavior {
  * taggedCounter			- true to update the number of times a particular tag was used for a specific record
  *
  * @var array
- * @access protected
  */
 	protected $_defaults = array(
 		'separator' => ',',
@@ -68,7 +59,6 @@ class TaggableBehavior extends ModelBehavior {
  *
  * @param AppModel $Model
  * @param array $settings
- * @access public
  */
 	public function setup(Model $Model, $settings = array()) {
 		if (!isset($this->settings[$Model->alias])) {
@@ -103,7 +93,6 @@ class TaggableBehavior extends ModelBehavior {
  * do this and just add new tags without removing existing tags associated to
  * the current set foreign key
  * @return array
- * @access public
  */
 	public function saveTags(Model $Model, $string = null, $foreignKey = null, $update = true) {
 		if (is_string($string) && !empty($string) && (!empty($foreignKey) || $foreignKey === false)) {
@@ -222,7 +211,6 @@ class TaggableBehavior extends ModelBehavior {
  * @param object Model instance
  * @param string Tag name string
  * @return string Multibyte safe key string
- * @access public
  */
 	public function multibyteKey(Model $Model, $string = null) {
 		$str = mb_strtolower($string);
@@ -248,7 +236,6 @@ class TaggableBehavior extends ModelBehavior {
  *
  * @param array $string
  * @return string
- * @access public
  */
 	public function tagArrayToString(Model $Model, $data = null) {
 		if ($data) {
@@ -291,4 +278,3 @@ class TaggableBehavior extends ModelBehavior {
 		return $results;
 	}
 }
-?>

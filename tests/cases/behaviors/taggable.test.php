@@ -1,44 +1,79 @@
 <?php
 /**
- * CakePHP Tags Plugin
- *
- * Copyright 2009 - 2010, Cake Development Corporation
- *                        1785 E. Sahara Avenue, Suite 490-423
- *                        Las Vegas, Nevada 89104
+ * Copyright 2009-2010, Cake Development Corporation (http://cakedc.com)
  *
  * Licensed under The MIT License
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright 2009 - 2010, Cake Development Corporation (http://cakedc.com)
- * @link      http://github.com/CakeDC/Tags
- * @package   plugins.tags
- * @license   MIT License (http://www.opensource.org/licenses/mit-license.php)
- */
-
-/**
- * Short description for class.
- *
- * @package		plugins.tags
- * @subpackage	plugins.tags.tests.cases.behaviors
+ * @copyright Copyright 2009-2010, Cake Development Corporation (http://cakedc.com)
+ * @license MIT License (http://www.opensource.org/licenses/mit-license.php)
  */
 
 App::import('Core', 'Model');
 
+/**
+ * Article model
+ *
+ * @package tags
+ * @subpackage tags.tests.cases.behaviors
+ */
 class Article extends Model {
+
+/**
+ * Use table
+ *
+ * @var string
+ */
 	public $useTable = 'articles';
+
+/**
+ * Belongs to associations
+ *
+ * @var array
+ */
 	public $belongsTo = array();
+
+/**
+ * HABTM associations
+ *
+ * @var array
+ */
 	public $hasAndBelongsToMany = array();
+
+/**
+ * Has Many Associations
+ *
+ * @var array
+ */
 	public $hasMany = array();
+
+/**
+ * Has One associations
+ *
+ * @var array
+ */
 	public $hasOne = array();
+
+/**
+ * Behaviors
+ *
+ * @var array
+ */
 	public $actsAs = array('Tags.Taggable');
 }
 
+/**
+ * TaggableTest
+ *
+ * @package tags
+ * @subpackage tags.tests.cases.behaviors
+ */
 class TaggableTest extends CakeTestCase {
+
 /**
  * Plugin name used for fixtures loading
  *
  * @var string
- * @access public
  */
 	public $plugin = 'tags';
 
@@ -46,7 +81,6 @@ class TaggableTest extends CakeTestCase {
  * Holds the instance of the model
  *
  * @var mixed $UsersAddon
- * @access public
  */
 	public $Article = null;
 
@@ -55,7 +89,6 @@ class TaggableTest extends CakeTestCase {
  *
  * @var array
  * @return void
- * @access public
  */
 	public $fixtures = array(
 		'plugin.tags.tagged',
@@ -66,7 +99,6 @@ class TaggableTest extends CakeTestCase {
  * Method executed before each test
  *
  * @return void
- * @access public
  */
 	public function startTest() {
 		$this->Article = ClassRegistry::init('Article');
@@ -77,7 +109,6 @@ class TaggableTest extends CakeTestCase {
  * Method executed after each test
  *
  * @return void
- * @access public
  */
 	public function endTest() {
 		unset($this->Article);
@@ -88,7 +119,6 @@ class TaggableTest extends CakeTestCase {
  * Testings saving of tags trough the specified field in the tagable model
  *
  * @return void
- * @access public
  */
 	public function testTagSaving() {
 		$data['id'] = 1;
@@ -128,7 +158,6 @@ class TaggableTest extends CakeTestCase {
  * Tests that toggling taggedCounter will update the time_tagged counter in the tagged table 
  *
  * @return void
- * @access public
  */
 	function testSaveTimesTagged() {
 		$this->Article->Behaviors->Taggable->settings['Article']['taggedCounter'] = true;
@@ -153,7 +182,6 @@ class TaggableTest extends CakeTestCase {
  * Testings Taggable::tagArrayToString()
  *
  * @return void
- * @access public
  */
 	public function testTagArrayToString() {
 		$data['id'] = 1;
@@ -175,7 +203,6 @@ class TaggableTest extends CakeTestCase {
  * Testings Taggable::multibyteKey()
  *
  * @return void
- * @access public
  */
 	public function testMultibyteKey() {
 		$result = $this->Article->multibyteKey('this is _ a Nice ! - _ key!');
@@ -189,7 +216,6 @@ class TaggableTest extends CakeTestCase {
  * testAfterFind callback method
  *
  * @return void
- * @access public
  */
 	public function testAfterFind() {
 		$data['id'] = 1;
@@ -207,7 +233,4 @@ class TaggableTest extends CakeTestCase {
 				'id' => 1)));
 		$this->assertTrue(!isset($result['Tag']));
 	}
-
 }
-
-?>
