@@ -1,37 +1,35 @@
 <?php
 /**
- * CakePHP Tags Plugin
- *
- * Copyright 2009 - 2010, Cake Development Corporation
- *                        1785 E. Sahara Avenue, Suite 490-423
- *                        Las Vegas, Nevada 89104
+ * Copyright 2009-2010, Cake Development Corporation (http://cakedc.com)
  *
  * Licensed under The MIT License
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright 2009 - 2010, Cake Development Corporation (http://cakedc.com)
- * @link      http://github.com/CakeDC/Tags
- * @package   plugins.tags
- * @license   MIT License (http://www.opensource.org/licenses/mit-license.php)
- */
-
-/**
- * Short description for class.
- *
- * @package		plugins.tags
- * @subpackage	plugins.tags.tests.cases.models
+ * @copyright Copyright 2009-2010, Cake Development Corporation (http://cakedc.com)
+ * @license MIT License (http://www.opensource.org/licenses/mit-license.php)
  */
 
 App::import('Model', 'Tags.Tagged');
 
-class TaggedTestCase extends CakeTestCase {
 /**
+ * Short description for class.
  *
+ * @package tags
+ * @subpackage tags.tests.cases.models
+ */
+class TaggedTestCase extends CakeTestCase {
+
+/**
+ * Tagged model
+ *
+ * @var Tagged
  */
 	public $Tagged = null;
 
 /**
+ * Fixtures
  *
+ * @var array
  */
 	public $fixtures = array(
 		'plugin.tags.tagged',
@@ -39,20 +37,18 @@ class TaggedTestCase extends CakeTestCase {
 		'plugin.tags.article');
 
 /**
- * 
+ * startTest
  *
  * @return void
- * @access public
  */
 	public function startTest() {
 		$this->Tagged = ClassRegistry::init('Tags.Tagged');
 	}
 
 /**
- * 
+ * endTest
  *
  * @return void
- * @access public
  */
 	public function endTest() {
 		unset($this->Tagged);
@@ -60,16 +56,20 @@ class TaggedTestCase extends CakeTestCase {
 	}
 
 /**
+ * testTaggedInstance
  *
+ * @return void
  */
-	function testTaggedInstance() {
+	public function testTaggedInstance() {
 		$this->assertTrue(is_a($this->Tagged, 'Tagged'));
 	}
 
 /**
+ * testTaggedInstance
  *
+ * @return void
  */
-	function testTaggedFind() {
+	public function testTaggedFind() {
 		$this->Tagged->recursive = -1;
 		$result = $this->Tagged->find('first');
 		$this->assertTrue(!empty($result));
@@ -89,7 +89,9 @@ class TaggedTestCase extends CakeTestCase {
 	}
 
 /**
+ * testFindCloud
  *
+ * @return void
  */
 	public function testFindCloud() {
 		$result = $this->Tagged->find('cloud', array(
@@ -121,6 +123,4 @@ class TaggedTestCase extends CakeTestCase {
 			'type' => 'tagged'));
 		$this->assertEqual($result, 2);
 	}
-
 }
-?>

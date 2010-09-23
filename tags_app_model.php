@@ -1,26 +1,19 @@
 <?php
 /**
- * CakePHP Tags Plugin
- *
- * Copyright 2009 - 2010, Cake Development Corporation
- *                        1785 E. Sahara Avenue, Suite 490-423
- *                        Las Vegas, Nevada 89104
+ * Copyright 2009-2010, Cake Development Corporation (http://cakedc.com)
  *
  * Licensed under The MIT License
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright 2009 - 2010, Cake Development Corporation (http://cakedc.com)
- * @link      http://github.com/CakeDC/Tags
- * @package   plugins.tags
- * @license   MIT License (http://www.opensource.org/licenses/mit-license.php)
+ * @copyright Copyright 2009-2010, Cake Development Corporation (http://cakedc.com)
+ * @license MIT License (http://www.opensource.org/licenses/mit-license.php)
  */
 
 /**
- * Short description for class.
+ * Tags Plugin AppModel
  *
- * @package		plugins.tags
+ * @package tags
  */
-
 class TagsAppModel extends AppModel {
 
 /**
@@ -29,8 +22,7 @@ class TagsAppModel extends AppModel {
  * @param array
  * @param integer
  * @param array
- * @return 
- * @access public
+ * @return array
  */
 	public function paginateCount($conditions = array(), $recursive = 0, $extra = array()) {
 		$parameters = compact('conditions');
@@ -44,6 +36,4 @@ class TagsAppModel extends AppModel {
 			return $this->find('count', array_merge($parameters, $extra));
 		}
 	}
-
 }
-?>
