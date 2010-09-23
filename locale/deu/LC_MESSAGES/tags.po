@@ -1,0 +1,164 @@
+# LANGUAGE translation of the CakePHP Tags plugin
+#
+# Copyright 2010, Cake Development Corporation (http://cakedc.com)
+#
+# Licensed under The MIT License
+# Redistributions of files must retain the above copyright notice.
+#
+# @copyright Copyright 2010, Cake Development Corporation (http://cakedc.com)
+# @license MIT License (http://www.opensource.org/licenses/mit-license.php)
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: CakePHP Tags Plugin\n"
+"POT-Creation-Date: 2010-09-15 15:37+0200\n"
+"PO-Revision-Date: 2010-09-23 13:33+0100\n"
+"Last-Translator: Florian Krämer <florian.kraemer@cakedc.com>\n"
+"Language-Team: Cake Development Corporation <info@cakedc.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n!=1);\n"
+"X-Poedit-Language: GERMAN\n"
+"X-Poedit-Country: GERMANY\n"
+"X-Poedit-SourceCharset: utf-8\n"
+
+#: /controllers/tags_controller.php:105
+msgid "The Tags has been saved."
+msgstr "Der Tag wurde gespeichert."
+
+#: /controllers/tags_controller.php:122
+msgid "Tag saved."
+msgstr "Tag gespeichert."
+
+#: /controllers/tags_controller.php:146
+msgid "Tag deleted."
+msgstr "Tag gelöscht."
+
+#: /controllers/tags_controller.php:148
+#: /models/tag.php:77;119
+msgid "Invalid Tag."
+msgstr "Ungültiger Tag."
+
+#: /views/tags/admin_add.ctp:16
+msgid "Add %s"
+msgstr "Füge %s hinzu"
+
+#: /views/tags/admin_add.ctp:16
+#: /views/tags/admin_edit.ctp:16
+#: /views/tags/admin_index.ctp:78
+#: /views/tags/admin_view.ctp:14;55;56;58
+#: /views/tags/view.ctp:14
+msgid "Tag"
+msgstr "Tag"
+
+#: /views/tags/admin_add.ctp:21
+#: /views/tags/admin_edit.ctp:24
+msgid "Submit"
+msgstr "Absenden"
+
+#: /views/tags/admin_add.ctp:25
+#: /views/tags/admin_edit.ctp:29
+#: /views/tags/admin_view.ctp:57
+#: /views/tags/view.ctp:55
+msgid "List %s"
+msgstr "Liste %s"
+
+#: /views/tags/admin_add.ctp:25
+#: /views/tags/admin_edit.ctp:29
+#: /views/tags/admin_index.ctp:14
+#: /views/tags/admin_view.ctp:57
+#: /views/tags/index.ctp:14
+#: /views/tags/view.ctp:55
+msgid "Tags"
+msgstr "Tags"
+
+#: /views/tags/admin_edit.ctp:16
+#: /views/tags/admin_view.ctp:55
+msgid "Edit %s"
+msgstr "Bearbeite %s"
+
+#: /views/tags/admin_edit.ctp:28
+#: /views/tags/admin_index.ctp:65
+msgid "Delete"
+msgstr "Löschen"
+
+#: /views/tags/admin_edit.ctp:28
+#: /views/tags/admin_index.ctp:65
+#: /views/tags/admin_view.ctp:56
+msgid "Are you sure you want to delete # %s?"
+msgstr "Sind Sie sicher das Sie %s löschen wollen?"
+
+#: /views/tags/admin_index.ctp:18
+#: /views/tags/index.ctp:18
+msgid "Page %page% of %pages%, showing %current% records out of %count% total, starting on record %start%, ending on %end%"
+msgstr "Seite %page% von %pages%, zeige %current% Einträge von %count% Einträgen insgesamt, beginne mit Eintrag %start%, ende mit %end%."
+
+#: /views/tags/admin_index.ctp:30
+#: /views/tags/index.ctp:30
+msgid "Actions"
+msgstr "Aktionen"
+
+#: /views/tags/admin_index.ctp:63
+#: /views/tags/index.ctp:63
+msgid "View"
+msgstr "Ansehen"
+
+#: /views/tags/admin_index.ctp:64
+msgid "Edit"
+msgstr "Bearbeiten"
+
+#: /views/tags/admin_index.ctp:72
+#: /views/tags/index.ctp:70
+msgid "previous"
+msgstr "zurück"
+
+#: /views/tags/admin_index.ctp:74
+#: /views/tags/index.ctp:72
+msgid "next"
+msgstr "weiter"
+
+#: /views/tags/admin_index.ctp:78
+#: /views/tags/admin_view.ctp:58
+msgid "New %s"
+msgstr "Neu %s"
+
+#: /views/tags/admin_view.ctp:16
+#: /views/tags/view.ctp:16
+msgid "Id"
+msgstr "Id"
+
+#: /views/tags/admin_view.ctp:21
+#: /views/tags/view.ctp:21
+msgid "Identifier"
+msgstr "Identifikator"
+
+#: /views/tags/admin_view.ctp:26
+#: /views/tags/view.ctp:26
+msgid "Name"
+msgstr "Name"
+
+#: /views/tags/admin_view.ctp:31
+#: /views/tags/view.ctp:31
+msgid "Keyname"
+msgstr "Schlüsselname"
+
+#: /views/tags/admin_view.ctp:36
+#: /views/tags/view.ctp:36
+msgid "Weight"
+msgstr "Gewicht"
+
+#: /views/tags/admin_view.ctp:41
+#: /views/tags/view.ctp:41
+msgid "Created"
+msgstr "Erstellt"
+
+#: /views/tags/admin_view.ctp:46
+#: /views/tags/view.ctp:46
+msgid "Modified"
+msgstr "Modifiziert"
+
+#: /views/tags/admin_view.ctp:56
+msgid "Delete %s"
+msgstr "Lösche %s"
+
