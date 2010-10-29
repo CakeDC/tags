@@ -39,7 +39,7 @@ The token "cakephp" will end up as the identifier or category for the tag "speci
 ## Requirements ##
 
 * PHP version: PHP 5.2+
-* CakePHP version: Cakephp 1.3 Stable
+* CakePHP version: 1.3 Stable
 
 ## Support ##
 
