@@ -1,34 +1,26 @@
 <?php
 /**
- * CakePHP Tags Plugin
- *
- * Copyright 2009 - 2010, Cake Development Corporation
- *                        1785 E. Sahara Avenue, Suite 490-423
- *                        Las Vegas, Nevada 89104
+ * Copyright 2009-2010, Cake Development Corporation (http://cakedc.com)
  *
  * Licensed under The MIT License
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright 2009 - 2010, Cake Development Corporation (http://cakedc.com)
- * @link      http://github.com/CakeDC/Tags
- * @package   plugins.tags
- * @license   MIT License (http://www.opensource.org/licenses/mit-license.php)
+ * @copyright Copyright 2009-2010, Cake Development Corporation (http://cakedc.com)
+ * @license MIT License (http://www.opensource.org/licenses/mit-license.php)
  */
 
 /**
- * Short description for class.
+ * TaggedFixture
  *
- * @package		plugins.tags
- * @subpackage	plugins.tags.tests.fixtures
+ * @package tags
+ * @subpackage tags.tests.fixtures
  */
-
 class TaggedFixture extends CakeTestFixture {
 
 /**
  * Name
  *
  * @var string $name
- * @access public
  */
 	public $name = 'Tagged';
 
@@ -36,7 +28,6 @@ class TaggedFixture extends CakeTestFixture {
  * Table
  *
  * @var string name$table
- * @access public
  */
 	public $table = 'tagged';
 
@@ -44,7 +35,6 @@ class TaggedFixture extends CakeTestFixture {
  * Fields
  *
  * @var array $fields
- * @access public
  */
 	public $fields = array(
 		'id' => array('type' => 'string', 'null' => false, 'default' => NULL, 'length' => 36, 'key' => 'primary'),
@@ -52,6 +42,7 @@ class TaggedFixture extends CakeTestFixture {
 		'tag_id' => array('type' => 'string', 'null' => false, 'default' => NULL, 'length' => 36),
 		'model' => array('type' => 'string', 'null' => false, 'default' => NULL, 'key' => 'index'),
 		'language' => array('type' => 'string', 'null' => true, 'default' => NULL, 'length' => 6),
+		'times_tagged' => array('type' => 'integer', 'null' => false, 'default' => 1),
 		'created' => array('type' => 'datetime', 'null' => true, 'default' => NULL),
 		'modified' => array('type' => 'datetime', 'null' => true, 'default' => NULL),
 		'indexes' => array(
@@ -66,7 +57,6 @@ class TaggedFixture extends CakeTestFixture {
  * Records
  *
  * @var array $records
- * @access public
  */
 	public $records = array(
 		array(
@@ -98,4 +88,3 @@ class TaggedFixture extends CakeTestFixture {
 		),
 	);
 }
-?>

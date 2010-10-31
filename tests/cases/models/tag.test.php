@@ -1,44 +1,79 @@
 <?php
 /**
- * CakePHP Tags Plugin
- *
- * Copyright 2009 - 2010, Cake Development Corporation
- *                        1785 E. Sahara Avenue, Suite 490-423
- *                        Las Vegas, Nevada 89104
+ * Copyright 2009-2010, Cake Development Corporation (http://cakedc.com)
  *
  * Licensed under The MIT License
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright 2009 - 2010, Cake Development Corporation (http://cakedc.com)
- * @link      http://github.com/CakeDC/Tags
- * @package   plugins.tags
- * @license   MIT License (http://www.opensource.org/licenses/mit-license.php)
- */
-
-/**
- * Short description for class.
- *
- * @package		plugins.tags
- * @subpackage	plugins.tags.tests.cases.models
+ * @copyright Copyright 2009-2010, Cake Development Corporation (http://cakedc.com)
+ * @license MIT License (http://www.opensource.org/licenses/mit-license.php)
  */
 
 App::import('Model', 'Tags.Tag');
 
+/**
+ * TestTag
+ *
+ * @package tags
+ * @subpackage tags.tests.cases.models
+ */
 class TestTag extends Tag {
+
+/**
+ * Database Configuration
+ *
+ * @var string
+ */
 	public $useDbConfig = "test_suite";
+
+/**
+ * Cache Sources
+ *
+ * @var boolean
+ */
 	public $cacheSources = false;
-	public $hasAndBelongsToMany = array();
+
+/**
+ * Belongs to associations
+ *
+ * @var array
+ */
 	public $belongsTo = array();
-	public $hasOne = array();
+
+/**
+ * HABTM associations
+ *
+ * @var array
+ */
+	public $hasAndBelongsToMany = array();
+
+/**
+ * Has Many Associations
+ *
+ * @var array
+ */
 	public $hasMany = array();
+
+/**
+ * Has One associations
+ *
+ * @var array
+ */
+	public $hasOne = array();
 }
 
+/**
+ * TagTestCase
+ *
+ * @package tags
+ * @subpackage tags.tests.cases.models
+ */
 class TagTestCase extends CakeTestCase {
+
 /**
  * Tag Instance
  *
  * @var instance
- * @access public
  */
 	public $Tag = null;
 
@@ -46,7 +81,6 @@ class TagTestCase extends CakeTestCase {
  * startTest
  *
  * @var array
- * @access public
  */
 	public $fixtures = array(
 		'plugin.tags.tagged',
@@ -56,7 +90,6 @@ class TagTestCase extends CakeTestCase {
  * startTest
  *
  * @return void
- * @access public
  */
 	public function startTest() {
 		$this->Tag = new TestTag();
@@ -66,7 +99,6 @@ class TagTestCase extends CakeTestCase {
  * endTest
  *
  * @return void
- * @access public
  */
 	public function endTest() {
 		unset($this->Tag);
@@ -76,7 +108,6 @@ class TagTestCase extends CakeTestCase {
  * testTagInstance
  *
  * @return void
- * @access public
  */
 	public function testTagInstance() {
 		$this->assertTrue(is_a($this->Tag, 'Tag'));
@@ -86,7 +117,6 @@ class TagTestCase extends CakeTestCase {
  * testTagFind
  *
  * @return void
- * @access public
  */
 	public function testTagFind() {
 		$this->Tag->recursive = -1;
@@ -109,7 +139,6 @@ class TagTestCase extends CakeTestCase {
  * testView
  *
  * @return void
- * @access public
  */
 	public function testView() {
 		$result = $this->Tag->view('cakephp');
@@ -124,7 +153,6 @@ class TagTestCase extends CakeTestCase {
  * testAdd
  *
  * @return void
- * @access public
  */
 	public function testAdd() {
 		$result = $this->Tag->add(
@@ -145,7 +173,6 @@ class TagTestCase extends CakeTestCase {
  * testAdd
  *
  * @return void
- * @access public
  */
 	public function testEdit() {
 		$this->assertNull($this->Tag->edit(1));
@@ -173,7 +200,4 @@ class TagTestCase extends CakeTestCase {
 		$this->expectException('Exception');
 		$this->assertTrue($this->Tag->edit('invalid-id', array()));
 	}
-
 }
-
-?>

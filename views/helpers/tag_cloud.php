@@ -1,34 +1,26 @@
 <?php
 /**
- * CakePHP Tags Plugin
- *
- * Copyright 2009 - 2010, Cake Development Corporation
- *                        1785 E. Sahara Avenue, Suite 490-423
- *                        Las Vegas, Nevada 89104
+ * Copyright 2009-2010, Cake Development Corporation (http://cakedc.com)
  *
  * Licensed under The MIT License
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright 2009 - 2010, Cake Development Corporation (http://cakedc.com)
- * @link      http://github.com/CakeDC/Tags
- * @package   plugins.tags
- * @license   MIT License (http://www.opensource.org/licenses/mit-license.php)
+ * @copyright Copyright 2009-2010, Cake Development Corporation (http://cakedc.com)
+ * @license MIT License (http://www.opensource.org/licenses/mit-license.php)
  */
 
 /**
  * Tag cloud helper
  *
- * @package		plugins.tags
- * @subpackage	plugins.tags.views.helpers
+ * @package tags
+ * @subpackage tags.views.helpers
  */
-
 class TagCloudHelper extends AppHelper {
 
 /**
  * Other helpers to load
  *
  * @var public $helpers
- * @access public
  */
 	public $helpers = array('Html');
 
@@ -46,7 +38,6 @@ class TagCloudHelper extends AppHelper {
  *  - url: an array containing the default url
  *  - named: the named parameter used to send the tag [default: by]
  * @return string
- * @access public
  */
 	public function display($tags = null, $options = array()) {
 		if (empty($tags) || !is_array($tags)) {
@@ -98,11 +89,8 @@ class TagCloudHelper extends AppHelper {
  * Replaces %size% in strings with the calculated "size" of the tag
  *
  * @return string
- * @access protected
  */
 	protected function _replace($string, $size) {
 		return str_replace("%size%", $size, $string);
 	}
-
 }
-?>

@@ -1,49 +1,40 @@
 <?php
 /**
- * CakePHP Tags Plugin
- *
- * Copyright 2009 - 2010, Cake Development Corporation
- *                        1785 E. Sahara Avenue, Suite 490-423
- *                        Las Vegas, Nevada 89104
+ * Copyright 2009-2010, Cake Development Corporation (http://cakedc.com)
  *
  * Licensed under The MIT License
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright 2009 - 2010, Cake Development Corporation (http://cakedc.com)
- * @link      http://github.com/CakeDC/Tags
- * @package   plugins.tags
- * @license   MIT License (http://www.opensource.org/licenses/mit-license.php)
+ * @copyright Copyright 2009-2010, Cake Development Corporation (http://cakedc.com)
+ * @license MIT License (http://www.opensource.org/licenses/mit-license.php)
  */
 
 /**
- * Short description for class.
+ * Tags Controller
  *
- * @package		plugins.tags
- * @subpackage	plugins.tags.controllers
+ * @package tags
+ * @subpackage tags.controllers
  */
-
 class TagsController extends TagsAppController {
+
 /**
  * Name
  *
- * @var string $name
- * @access public
+ * @var string
  */
 	public $name = 'Tags';
 
 /**
  * Helpers
  *
- * @var array $name
- * @access public
+ * @var array
  */
 	public $helpers = array('Html', 'Form');
 
 /**
- * Index
+ * Index action
  *
  * @return void
- * @access public
  */
 	public function index() {
 		$this->Tag->recursive = 0;
@@ -51,11 +42,10 @@ class TagsController extends TagsAppController {
 	}
 
 /**
- * Index
+ * View
  *
  * @param string
  * @return void
- * @access public
  */
 	public function view($keyName = null) {
 		try {
@@ -70,7 +60,6 @@ class TagsController extends TagsAppController {
  * Admin Index
  *
  * @return void
- * @access public
  */
 	public function admin_index() {
 		$this->Tag->recursive = 0;
@@ -82,7 +71,6 @@ class TagsController extends TagsAppController {
  *
  * @param string tag UUID
  * @return void
- * @access public
  */
 	public function admin_view($keyName) {
 		try {
@@ -97,7 +85,6 @@ class TagsController extends TagsAppController {
  * Adds one or more tags
  *
  * @return void
- * @access public
  */
 	public function admin_add() {
 		if (!empty($this->data)) {
@@ -113,7 +100,6 @@ class TagsController extends TagsAppController {
  *
  * @param string tag UUID
  * @return void
- * @access public
  */
 	public function admin_edit($tagId = null) {
 		try {
@@ -139,7 +125,6 @@ class TagsController extends TagsAppController {
  *
  * @param string tag UUID
  * @return void
- * @access public
  */
 	public function admin_delete($id = null) {
 		if ($this->Tag->delete($id)) {
@@ -150,4 +135,3 @@ class TagsController extends TagsAppController {
 		$this->redirect(array('action' => 'index'));
 	}
 }
-?>

@@ -1,36 +1,29 @@
 <?php
 /**
- * CakePHP Tags Plugin
- *
- * Copyright 2009 - 2010, Cake Development Corporation
- *                        1785 E. Sahara Avenue, Suite 490-423
- *                        Las Vegas, Nevada 89104
+ * Copyright 2009-2010, Cake Development Corporation (http://cakedc.com)
  *
  * Licensed under The MIT License
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright 2009 - 2010, Cake Development Corporation (http://cakedc.com)
- * @link      http://github.com/CakeDC/Tags
- * @package   plugins.tags
- * @license   MIT License (http://www.opensource.org/licenses/mit-license.php)
- */
-
-/**
- * Short description for class.
- *
- * @package		plugins.tags
- * @subpackage	plugins.tags.tests.cases.controllers
+ * @copyright Copyright 2009-2010, Cake Development Corporation (http://cakedc.com)
+ * @license MIT License (http://www.opensource.org/licenses/mit-license.php)
  */
 
 App::import('Controller', 'Tags.Tags');
 App::import('Model', 'Tags.Tag');
 
+/**
+ * TestTagsController
+ *
+ * @package tags
+ * @subpackage tags.tests.cases.controllers
+ */
 class TestTagsController extends TagsController {
+
 /**
  * Auto render
  *
  * @var boolean
- * @access public
  */
 	public $autoRender = false;
 
@@ -38,12 +31,13 @@ class TestTagsController extends TagsController {
  * Redirect URL
  *
  * @var mixed
- * @access public
  */
 	public $redirectUrl = null;
 
 /**
  * Override controller method for testing
+ *
+ * @return void
  */
 	public function redirect($url, $status = null, $exit = true) {
 		$this->redirectUrl = $url;
@@ -51,25 +45,35 @@ class TestTagsController extends TagsController {
 
 /**
  * Override controller method for testing
+ *
+ * @return void
  */
 	public function render($action = null, $layout = null, $file = null) {
 		$this->renderedView = $action;
 	}
 }
 
+/**
+ * TagsControllerTest
+ *
+ * @package tags
+ * @subpackage tags.tests.cases.controllers
+ */
 class TagsControllerTest extends CakeTestCase {
 
 /**
+ * Fixtures
  *
+ * @var array
  */
 	public $fixtures = array(
 		'plugin.tags.tagged',
 		'plugin.tags.tag');
+
 /**
  * Tags Controller Instance
  *
  * @return void
- * @access public
  */
 	public $Tags = null;
 
@@ -77,7 +81,6 @@ class TagsControllerTest extends CakeTestCase {
  * startTest
  *
  * @return void
- * @access public
  */
 	public function startTest() {
 		$this->Tags = new TestTagsController();
@@ -91,7 +94,6 @@ class TagsControllerTest extends CakeTestCase {
  * endTest
  *
  * @return void
- * @access public
  */
 	public function endTest() {
 		unset($this->Tags);
@@ -101,7 +103,6 @@ class TagsControllerTest extends CakeTestCase {
  * testTagsControllerInstance
  *
  * @return void
- * @access public
  */
 	public function testTagsControllerInstance() {
 		$this->assertTrue(is_a($this->Tags, 'TagsController'));
@@ -111,7 +112,6 @@ class TagsControllerTest extends CakeTestCase {
  * testIndex
  *
  * @return void
- * @access public
  */
 	public function testIndex() {
 		$this->Tags->index();
@@ -122,7 +122,6 @@ class TagsControllerTest extends CakeTestCase {
  * testIndex
  *
  * @return void
- * @access public
  */
 	public function testView() {
 		$this->Tags->view('cakephp');
@@ -137,7 +136,6 @@ class TagsControllerTest extends CakeTestCase {
  * testIndex
  *
  * @return void
- * @access public
  */
 	public function testAdminView() {
 		$this->Tags->admin_view('cakephp');
@@ -152,7 +150,6 @@ class TagsControllerTest extends CakeTestCase {
  * testAdminIndex
  *
  * @return void
- * @access public
  */
 	public function testAdminIndex() {
 		$this->Tags->admin_index();
@@ -163,7 +160,6 @@ class TagsControllerTest extends CakeTestCase {
  * testAdminDelete
  *
  * @return void
- * @access public
  */
 	public function testAdminDelete() {
 		$this->Tags->admin_delete('WRONG-ID');
@@ -179,7 +175,6 @@ class TagsControllerTest extends CakeTestCase {
  * testAdminAdd
  *
  * @return void
- * @access public
  */
 	public function testAdminAdd() {
 		$this->Tags->data = array(
@@ -193,7 +188,6 @@ class TagsControllerTest extends CakeTestCase {
  * testAdminEdit
  *
  * @return void
- * @access public
  */
 	public function testAdminEdit() {
 		$this->Tags->admin_edit(1);
@@ -217,4 +211,3 @@ class TagsControllerTest extends CakeTestCase {
 		$this->assertEqual($this->Tags->redirectUrl, array('action' => 'index'));
 	}
 }
-?>

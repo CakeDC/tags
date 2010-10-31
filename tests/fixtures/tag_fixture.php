@@ -1,34 +1,26 @@
 <?php
 /**
- * CakePHP Tags Plugin
- *
- * Copyright 2009 - 2010, Cake Development Corporation
- *                        1785 E. Sahara Avenue, Suite 490-423
- *                        Las Vegas, Nevada 89104
+ * Copyright 2009-2010, Cake Development Corporation (http://cakedc.com)
  *
  * Licensed under The MIT License
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright 2009 - 2010, Cake Development Corporation (http://cakedc.com)
- * @link      http://github.com/CakeDC/Tags
- * @package   plugins.tags
- * @license   MIT License (http://www.opensource.org/licenses/mit-license.php)
+ * @copyright Copyright 2009-2010, Cake Development Corporation (http://cakedc.com)
+ * @license MIT License (http://www.opensource.org/licenses/mit-license.php)
  */
 
 /**
- * Short description for class.
+ * TagFixture
  *
- * @package		plugins.tags
- * @subpackage	plugins.tags.tests.fixtures
+ * @package tags
+ * @subpackage tags.tests.fixtures
  */
-
 class TagFixture extends CakeTestFixture {
 
 /**
  * Name
  *
  * @var string $name
- * @access public
  */
 	public $name = 'Tag';
 
@@ -36,7 +28,6 @@ class TagFixture extends CakeTestFixture {
  * Table
  *
  * @var string $table
- * @access public
  */
 	public $table = 'tags';
 
@@ -44,7 +35,6 @@ class TagFixture extends CakeTestFixture {
  * Fields
  *
  * @var array $fields
- * @access public
  */
 	public $fields = array(
 		'id' => array('type' => 'string', 'null' => false, 'default' => NULL, 'length' => 36, 'key' => 'primary'),
@@ -64,7 +54,6 @@ class TagFixture extends CakeTestFixture {
  * Records
  *
  * @var array $records
- * @access public
  */
 	public $records = array(
 		array(
@@ -92,4 +81,3 @@ class TagFixture extends CakeTestFixture {
 			'created'  => '2008-06-01 18:18:15',
 			'modified'  => '2008-06-01 18:18:15'));
 }
-?>
