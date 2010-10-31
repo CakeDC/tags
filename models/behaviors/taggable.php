@@ -27,16 +27,17 @@ class TaggableBehavior extends ModelBehavior {
 /**
  * Default settings
  *
- * separator				- separator used to enter a lot of tags, comma by default
- * tagAlias					- model alias for Tag model
- * tagClass					- class name of the table storing the tags
- * taggedClass				- class name of the HABTM association table between tags and models
- * field					- the fieldname that contains the raw tags as string
- * foreignKey				- foreignKey used in the HABTM association
- * associationForeignKey	- associationForeignKey used in the HABTM association
- * automaticTagging			- if set to true you don't need to use saveTags() manually
- * language					- only tags in a certain language, string or array
- * taggedCounter			- true to update the number of times a particular tag was used for a specific record
+ * separator             - separator used to enter a lot of tags, comma by default
+ * tagAlias              - model alias for Tag model
+ * tagClass              - class name of the table storing the tags
+ * taggedClass           - class name of the HABTM association table between tags and models
+ * field                 - the fieldname that contains the raw tags as string
+ * foreignKey            - foreignKey used in the HABTM association
+ * associationForeignKey - associationForeignKey used in the HABTM association
+ * automaticTagging      - if set to true you don't need to use saveTags() manually
+ * language              - only tags in a certain language, string or array
+ * taggedCounter         - true to update the number of times a particular tag was used for a specific record
+ * unsetInAfterFind      - unset 'Tag' results in afterFind
  *
  * @var array
  */
@@ -256,11 +257,11 @@ class TaggableBehavior extends ModelBehavior {
 	}
 
 /**
- * beforeSave callback
+ * afterFind Callback
  *
- * @param AppModel $Model
- * @param array $results
- * @param mixed
+ * @param AppModel $Model 
+ * @param array $results 
+ * @param boolean $primary 
  * @return array
  */
 	public function afterFind(Model $Model, $results, $primary) {

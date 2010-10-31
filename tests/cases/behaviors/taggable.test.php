@@ -233,4 +233,18 @@ class TaggableTest extends CakeTestCase {
 				'id' => 1)));
 		$this->assertTrue(!isset($result['Tag']));
 	}
+
+/**
+ * testAfterFindFields
+ *
+ * @return void
+ */
+	public function testAfterFindFields() {
+		$this->Article->Behaviors->detach('Taggable');
+		$results = $this->Article->find('first', array(
+			'recursive' => -1,
+			'fields' => array('id')));
+		$expected = array($this->Article->alias => array('id' => '1'));
+		$this->assertIdentical($results, $expected);
+	}
 }
