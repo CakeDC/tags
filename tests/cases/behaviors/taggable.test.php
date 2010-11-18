@@ -247,4 +247,16 @@ class TaggableTest extends CakeTestCase {
 		$expected = array($this->Article->alias => array('id' => '1'));
 		$this->assertIdentical($results, $expected);
 	}
+
+/**
+ * testGettingTagCloudThroughAssociation
+ *
+ * @link http://cakedc.lighthouseapp.com/projects/59622/tickets/6-tag-cloud-helper
+ * @return void
+ */
+	public function testGettingTagCloudThroughAssociation() {
+		$result = $this->Article->Tagged->find('cloud');
+		$this->assertTrue(is_array($result) && !empty($result));
+	}
+
 }

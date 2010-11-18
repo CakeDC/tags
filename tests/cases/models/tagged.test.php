@@ -99,8 +99,15 @@ class TaggedTestCase extends CakeTestCase {
 		$this->assertEqual(count($result), 3);
 		$this->assertTrue(isset($result[0][0]['occurrence']));
 		$this->assertEqual($result[0][0]['occurrence'], 1);
+
+		$result = $this->Tagged->find('cloud');
+		$this->assertTrue(is_array($result) && !empty($result));
+
+		$result = $this->Tagged->find('cloud', array(
+			'limit' => 1));
+		$this->assertEqual(count($result), 1);
 	}
-	
+
 /**
  * Test custom _findTagged method
  * 
