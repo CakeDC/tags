@@ -134,15 +134,18 @@ class Tagged extends TagsAppModel {
 					$Model->alias => array(
 						'className' => $Model->name,
 						'foreignKey' => 'foreign_key',
+						'type' => 'INNER',
 						'conditions' => array(
 							$this->alias . '.model' => $Model->alias
 						),
 					)
 				);
+
 				$this->bindModel(compact('belongsTo'));
 
 				if (isset($query['operation']) && $query['operation'] == 'count') {
-					$query['fields'][] = "COUNT(DISTINCT $Model->alias.$Model->primaryKey)";
+					$query['fields'] = "COUNT(DISTINCT $Model->alias.$Model->primaryKey)";
+					$this->Behaviors->Containable->setup($this, array('autoFields' => false));
 				} else {
 					$query['fields'][] = "DISTINCT $Model->alias.*";
 				}

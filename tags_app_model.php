@@ -17,6 +17,14 @@
 class TagsAppModel extends AppModel {
 
 /**
+ * Behaviors
+ *
+ * @var array
+ */
+	public $actsAs = array(
+		'Containable');
+
+/**
  * Customized paginateCount method
  *
  * @param array
