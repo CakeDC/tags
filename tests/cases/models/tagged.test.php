@@ -37,20 +37,20 @@ class TaggedTestCase extends CakeTestCase {
 		'plugin.tags.article');
 
 /**
- * startTest
+ * setUp
  *
  * @return void
  */
-	public function startTest() {
+	public function setUp() {
 		$this->Tagged = ClassRegistry::init('Tags.Tagged');
 	}
 
 /**
- * endTest
+ * tearDown
  *
  * @return void
  */
-	public function endTest() {
+	public function tearDown() {
 		unset($this->Tagged);
 		ClassRegistry::flush(); 
 	}

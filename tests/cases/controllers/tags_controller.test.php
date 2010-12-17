@@ -78,12 +78,12 @@ class TagsControllerTest extends CakeTestCase {
 	public $Tags = null;
 
 /**
- * startTest
+ * setUp
  *
  * @return void
  */
-	public function startTest() {
-		$this->Tags = new TestTagsController();
+	public function setUp() {
+		$this->Tags = new TestTagsController(new CakeRequest(null, false));
 		$this->Tags->params = array(
 			'named' => array(),
 			'url' => array());
@@ -91,11 +91,11 @@ class TagsControllerTest extends CakeTestCase {
 	}
 
 /**
- * endTest
+ * tearDown
  *
  * @return void
  */
-	public function endTest() {
+	public function tearDown() {
 		unset($this->Tags);
 	}
 
@@ -201,13 +201,13 @@ class TagsControllerTest extends CakeTestCase {
 				'created'  => '2008-06-02 18:18:11',
 				'modified'  => '2008-06-02 18:18:37',
 				'tags' => null));
-		$this->assertEqual($this->Tags->data, $tag);
+		$this->assertEquals($this->Tags->data, $tag);
 
 		$this->Tags->data = array(
 			'Tag' => array(
 				'id' => 1,
 				'name' => 'CAKEPHP'));
 		$this->Tags->admin_edit(1);
-		$this->assertEqual($this->Tags->redirectUrl, array('action' => 'index'));
+		$this->assertEquals($this->Tags->redirectUrl, array('action' => 'index'));
 	}
 }

@@ -78,7 +78,7 @@ class TagTestCase extends CakeTestCase {
 	public $Tag = null;
 
 /**
- * startTest
+ * setUp
  *
  * @var array
  */
@@ -87,20 +87,20 @@ class TagTestCase extends CakeTestCase {
 		'plugin.tags.tag');
 
 /**
- * startTest
+ * setUp
  *
  * @return void
  */
-	public function startTest() {
+	public function setUp() {
 		$this->Tag = new TestTag();
 	}
 
 /**
- * endTest
+ * tearDown
  *
  * @return void
  */
-	public function endTest() {
+	public function tearDown() {
 		unset($this->Tag);
 	}
 

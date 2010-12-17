@@ -17,7 +17,7 @@ App::import('Core', 'Model');
  * @package tags
  * @subpackage tags.tests.cases.behaviors
  */
-class Article extends Model {
+class Article extends CakeTestModel {
 
 /**
  * Use table
@@ -100,7 +100,7 @@ class TaggableTest extends CakeTestCase {
  *
  * @return void
  */
-	public function startTest() {
+	public function setUp() {
 		$this->Article = ClassRegistry::init('Article');
 		$this->Article->Behaviors->attach('Tags.Taggable', array());
 	}
@@ -110,7 +110,7 @@ class TaggableTest extends CakeTestCase {
  *
  * @return void
  */
-	public function endTest() {
+	public function tearDown() {
 		unset($this->Article);
 		ClassRegistry::flush();
 	}
@@ -192,11 +192,11 @@ class TaggableTest extends CakeTestCase {
 				'id' => 1)));
 		$result = $this->Article->tagArrayToString($result['Tag']);
 		$this->assertTrue(!empty($result));
-		$this->assertIsA($result, 'string');
+		$this->assertInternalType('string', $result);
 
 		$result = $this->Article->tagArrayToString();
 		$this->assertTrue(empty($result));
-		$this->assertIsA($result, 'string');
+		$this->assertInternalType('string', $result);
 	}
 
 /**
