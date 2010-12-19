@@ -199,8 +199,7 @@ class TagsControllerTest extends CakeTestCase {
 				'keyname'  => 'cakephp',
 				'weight' => 2,
 				'created'  => '2008-06-02 18:18:11',
-				'modified'  => '2008-06-02 18:18:37',
-				'tags' => null));
+				'modified'  => '2008-06-02 18:18:37'));
 		$this->assertEquals($this->Tags->data, $tag);
 
 		$this->Tags->data = array(
