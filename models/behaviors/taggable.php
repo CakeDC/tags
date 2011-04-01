@@ -132,9 +132,9 @@ class TaggableBehavior extends ModelBehavior {
 
 				if (!empty($existingTags)) {
 					foreach ($existingTags as $existing) {
-						$existingTagKeyNames[] = $existing['Tag']['keyname'];
-						$existingTagIds[] = $existing['Tag']['id'];
-						$existingTagIdentifiers[$existing['Tag']['keyname']][] = $existing['Tag']['identifier'];
+						$existingTagKeyNames[] = $existing[$tagModel->alias]['keyname'];
+						$existingTagIds[] = $existing[$tagModel->alias]['id'];
+						$existingTagIdentifiers[$existing[$tagModel->alias]['keyname']][] = $existing[$tagModel->alias]['identifier'];
 					}
 					$newTags = array();
 					foreach($tags as $possibleNewTag) {
