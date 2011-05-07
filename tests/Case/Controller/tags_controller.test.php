@@ -10,6 +10,7 @@
  */
 
 App::import('Controller', 'Tags.Tags');
+App::import('Controller', 'Tags.TagsAppController');
 App::import('Model', 'Tags.Tag');
 
 /**
