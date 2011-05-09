@@ -36,7 +36,7 @@ class Tagged extends TagsAppModel {
  *
  * @var array
  */
-	public $_findMethods = array(
+	public $findMethods = array(
 		'cloud' => true,
 		'tagged' => true);
 

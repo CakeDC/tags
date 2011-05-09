@@ -128,9 +128,9 @@ class TagsController extends TagsAppController {
  */
 	public function admin_delete($id = null) {
 		if ($this->Tag->delete($id)) {
-			$this->Session->setFlash(__d('tags', 'Tag deleted.', true));
+			$this->Session->setFlash(__d('tags', 'Tag deleted.'));
 		} else {
-			$this->Session->setFlash(__d('tags', 'Invalid Tag.', true));
+			$this->Session->setFlash(__d('tags', 'Invalid Tag.'));
 		}
 		$this->redirect(array('action' => 'index'));
 	}
