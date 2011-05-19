@@ -12,15 +12,15 @@
 <div class="tags form">
 <?php echo $this->Form->create('Tag');?>
 	<fieldset>
- 		<legend><?php printf(__d('tags', 'Add %s', true), __d('tags', 'Tag', true)); ?></legend>
+ 		<legend><?php printf(__d('tags', 'Add %s'), __d('tags', 'Tag')); ?></legend>
 	<?php
 		echo $this->Form->input('tags', array('label' => 'Tags (list of tags separated by comma)'));
 	?>
 	</fieldset>
-<?php echo $this->Form->end(__d('tags', 'Submit', true));?>
+<?php echo $this->Form->end(__d('tags', 'Submit'));?>
 </div>
 <div class="actions">
 	<ul>
-		<li><?php echo $this->Html->link(sprintf(__d('tags', 'List %s', true), __d('tags', 'Tags', true)), array('action' => 'index'));?></li>
+		<li><?php echo $this->Html->link(sprintf(__d('tags', 'List %s'), __d('tags', 'Tags')), array('action' => 'index'));?></li>
 	</ul>
 </div>

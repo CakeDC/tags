@@ -62,7 +62,7 @@ class Tag extends TagsAppModel {
 				$this->alias . '.keyname' => $keyName)));
 
 		if (empty($result)) {
-			throw new Exception(__d('tags', 'Invalid Tag.', true));
+			throw new Exception(__d('tags', 'Invalid Tag.'));
 		}
 		return $result;
 	}
@@ -91,7 +91,7 @@ class Tag extends TagsAppModel {
  * Edits an existing tag, allows only to modify upper/lowercased characters
  *
  * @param string tag uuid
- * @param array controller post data usually $this->data
+ * @param array controller post data usually $this->request->data
  * @return mixed True on successfully save else post data as array
  */
 	public function edit($tagId = null, $postData = null) {
@@ -102,7 +102,7 @@ class Tag extends TagsAppModel {
 
 		$this->set($tag);
 		if (empty($tag)) {
-			throw new Exception(__d('tags', 'Invalid Tag.', true));
+			throw new Exception(__d('tags', 'Invalid Tag.'));
 		}
 
 		if (!empty($postData[$this->alias]['name'])) {
@@ -112,7 +112,7 @@ class Tag extends TagsAppModel {
 			$this->set($postData);
 			$result = $this->save(null, true);
 			if ($result) {
-				$this->data = $result;
+				$this->request->data = $result;
 				return true;
 			} else {
 				return $postData;
