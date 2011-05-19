@@ -147,7 +147,7 @@ class TaggableTest extends CakeTestCase {
 				'Tag.identifier' => 'cakephp')));
 		$result = Set::extract($result, '{n}.Tag.keyname');
 		$this->assertEqual($result, array(
-			'developer', 'foo', 'php'));
+			'foo', 'developer', 'php'));
 
 
 		$this->assertFalse($this->Article->saveTags('foo, bar', null));

@@ -112,7 +112,7 @@ class Tag extends TagsAppModel {
 			$this->set($postData);
 			$result = $this->save(null, true);
 			if ($result) {
-				$this->request->data = $result;
+				$this->data = $result;
 				return true;
 			} else {
 				return $postData;
