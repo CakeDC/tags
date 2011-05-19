@@ -9,7 +9,7 @@ class AllTagsPluginTest extends PHPUnit_Framework_TestSuite {
 	public static function suite() {
 		$suite = new PHPUnit_Framework_TestSuite('All Tags Plugin Tests');
 
-		$basePath = CakePLugin::path('Tags') . DS . 'Test' . DS . 'Case' . DS;
+		$basePath = CakePlugin::path('Tags') . DS . 'Test' . DS . 'Case' . DS;
 		// controllers
 		$suite->addTestFile($basePath . 'Controller' . DS . 'TagsControllerTest.php');
 		// behaviors
