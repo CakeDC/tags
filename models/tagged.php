@@ -151,7 +151,7 @@ class Tagged extends TagsAppModel {
 				}
 
 				if (!empty($query['by'])) {
-					$query['conditions'] = array(
+					$query['conditions'][] = array(
 						$this->Tag->alias . '.keyname' => $query['by']);
 				}
 			}
