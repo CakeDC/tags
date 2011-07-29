@@ -130,4 +130,24 @@ class TaggedTestCase extends CakeTestCase {
 			'type' => 'tagged'));
 		$this->assertEqual($result, 2);
 	}
+
+/**
+ * Test custom _findTagged method with additional conditions on the model
+ *
+ * @return void
+ */
+	public function testFindTaggedWithConditions() {
+		$result = $this->Tagged->find('tagged', array(
+			'by' => 'cakephp',
+			'model' => 'Article',
+			'conditions' => array('Article.title LIKE' => 'Second %')));
+		$this->assertEqual(count($result), 0);
+
+		$result = $this->Tagged->find('tagged', array(
+			'by' => 'cakephp',
+			'model' => 'Article',
+			'conditions' => array('Article.title LIKE' => 'First %')));
+		$this->assertEqual(count($result), 1);
+		$this->assertEqual($result[0]['Article']['id'], 1);
+	}
 }
