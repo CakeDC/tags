@@ -6,6 +6,10 @@ The tags plugin includes the Taggable Behavior that allows you to simply tag eve
 
 It saves all tags in a tags table and connects any kind of records to them through the tagged table.
 
+To create tables you can use migrations plugin or schema shell. To create tables execute:
+
+cake schema create -plugin tags -name tags
+
 You can specify alternate tables for both in the case you get *A LOT* records tagged.
 
 ## Usage ##
