@@ -70,7 +70,7 @@ class TaggableBehavior extends ModelBehavior {
 		$this->settings[$Model->alias]['withModel'] = $this->settings[$Model->alias]['taggedClass'];
 
 		$Model->bindModel(array('hasAndBelongsToMany' => array(
-			'Tag' => array(
+			$this->settings[$Model->alias]['tagAlias'] => array(
 				'className' => $this->settings[$Model->alias]['tagClass'],
 				'foreignKey' => $this->settings[$Model->alias]['foreignKey'],
 				'associationForeignKey' => $this->settings[$Model->alias]['associationForeignKey'],
@@ -97,8 +97,8 @@ class TaggableBehavior extends ModelBehavior {
  */
 	public function saveTags(Model $Model, $string = null, $foreignKey = null, $update = true) {
 		if (is_string($string) && !empty($string) && (!empty($foreignKey) || $foreignKey === false)) {
-			$tagClass = $this->settings[$Model->alias]['tagAlias'];
-			$tagModel = $Model->Tag;
+			$tagAlias = $this->settings[$Model->alias]['tagAlias'];
+			$tagModel = $Model->{$tagAlias};
 			$array = explode($this->settings[$Model->alias]['separator'], $string);
 
 			$tags = $identifiers = array();
@@ -123,18 +123,18 @@ class TaggableBehavior extends ModelBehavior {
 				$existingTags = $tagModel->find('all', array(
 					'contain' => array(),
 					'conditions' => array(
-						'Tag.keyname' => Set::extract($tags, '{n}.keyname')),
+						"{$tagModel->alias}.keyname" => Set::extract($tags, '{n}.keyname')),
 					'fields' => array(
-						'Tag.identifier',
-						'Tag.keyname',
-						'Tag.name',
-						'Tag.id')));
+						"{$tagModel->alias}.identifier",
+						"{$tagModel->alias}.keyname",
+						"{$tagModel->alias}.name",
+						"{$tagModel->alias}.id")));
 
 				if (!empty($existingTags)) {
 					foreach ($existingTags as $existing) {
-						$existingTagKeyNames[] = $existing['Tag']['keyname'];
-						$existingTagIds[] = $existing['Tag']['id'];
-						$existingTagIdentifiers[$existing['Tag']['keyname']][] = $existing['Tag']['identifier'];
+						$existingTagKeyNames[] = $existing[$tagModel->alias]['keyname'];
+						$existingTagIds[] = $existing[$tagModel->alias]['id'];
+						$existingTagIdentifiers[$existing[$tagModel->alias]['keyname']][] = $existing[$tagModel->alias]['identifier'];
 					}
 					$newTags = array();
 					foreach($tags as $possibleNewTag) {
