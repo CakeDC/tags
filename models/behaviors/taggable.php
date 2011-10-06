@@ -180,7 +180,7 @@ class TaggableBehavior extends ModelBehavior {
 						$existingTagIds = array_diff($existingTagIds, $alreadyTagged);
 						$deleteAll['NOT'] = array('Tagged.tag_id' => $alreadyTagged);
 					}
-					
+					$newTagIds = $oldTagIds = array();
 					if ($update == true) {
 						$oldTagIds = $tagModel->Tagged->find('all', array(
 							'contain' => array(),
