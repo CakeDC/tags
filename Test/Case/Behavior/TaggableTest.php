@@ -121,12 +121,12 @@ class TaggableTest extends CakeTestCase {
  * @return void
  */
 	public function testTagSaving() {
-		$data['id'] = 1;
+		$data['id'] = 'article-1';
 		$data['tags'] = 'foo, bar, test';
 		$this->Article->save($data, false);
 		$result = $this->Article->find('first', array(
 			'conditions' => array(
-			'id' => 1)));
+				'id' => 'article-1')));
 		$this->assertTrue(!empty($result['Article']['tags']));
 
 		$data['tags'] = 'foo, developer, developer, php';
@@ -134,7 +134,7 @@ class TaggableTest extends CakeTestCase {
 		$result = $this->Article->find('first', array(
 			'contain' => array('Tag'),
 			'conditions' => array(
-				'id' => 1)));
+				'id' => 'article-1')));
 		$this->assertTrue(!empty($result['Article']['tags']));
 
 
@@ -146,8 +146,9 @@ class TaggableTest extends CakeTestCase {
 			'conditions' => array(
 				'Tag.identifier' => 'cakephp')));
 		$result = Set::extract($result, '{n}.Tag.keyname');
+		asort($result);
 		$this->assertEqual($result, array(
-			'foo', 'developer', 'php'));
+			'developer', 'foo', 'php'));
 
 
 		$this->assertFalse($this->Article->saveTags('foo, bar', null));
@@ -162,8 +163,8 @@ class TaggableTest extends CakeTestCase {
 	function testSaveTimesTagged() {
 		$this->Article->Behaviors->Taggable->settings['Article']['taggedCounter'] = true;
 		$tags = 'foo, bar , test';
-		$this->assertTrue($this->Article->saveTags($tags, 1, false));
-		$this->assertTrue($this->Article->saveTags($tags, 1, false));
+		$this->assertTrue($this->Article->saveTags($tags, 'article-1', false));
+		$this->assertTrue($this->Article->saveTags($tags, 'article-1', false));
 
 		$result =  $this->Article->Tagged->find('all', array(
 			'conditions' => array('model' => 'Article')));
@@ -184,12 +185,12 @@ class TaggableTest extends CakeTestCase {
  * @return void
  */
 	public function testTagArrayToString() {
-		$data['id'] = 1;
+		$data['id'] = 'article-1';
 		$data['tags'] = 'foo, bar, test';
 		$this->Article->save($data, false);
 		$result = $this->Article->find('first', array(
 			'conditions' => array(
-				'id' => 1)));
+				'id' => 'article-1')));
 		$result = $this->Article->tagArrayToString($result['Tag']);
 		$this->assertTrue(!empty($result));
 		$this->assertInternalType('string', $result);
@@ -218,19 +219,19 @@ class TaggableTest extends CakeTestCase {
  * @return void
  */
 	public function testAfterFind() {
-		$data['id'] = 1;
+		$data['id'] = 'article-1';
 		$data['tags'] = 'foo, bar, test';
 		$this->Article->save($data, false);
 
 		$result = $this->Article->find('first', array(
 			'conditions' => array(
-				'id' => 1)));
+				'id' => 'article-1')));
 		$this->assertTrue(isset($result['Tag']));
 
 		$this->Article->Behaviors->Taggable->settings['Article']['unsetInAfterFind'] = true;
 		$result = $this->Article->find('first', array(
 			'conditions' => array(
-				'id' => 1)));
+				'id' => 'article-1')));
 		$this->assertTrue(!isset($result['Tag']));
 	}
 
@@ -244,7 +245,7 @@ class TaggableTest extends CakeTestCase {
 		$results = $this->Article->find('first', array(
 			'recursive' => -1,
 			'fields' => array('id')));
-		$expected = array($this->Article->alias => array('id' => '1'));
+		$expected = array($this->Article->alias => array('id' => 'article-1'));
 		$this->assertIdentical($results, $expected);
 	}
 }

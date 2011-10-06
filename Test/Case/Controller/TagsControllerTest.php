@@ -178,7 +178,7 @@ class TagsControllerTest extends CakeTestCase {
 		$this->Tags->admin_delete('WRONG-ID!!!');
 		$this->assertEqual($this->Tags->redirectUrl, array('action' => 'index'));
 
-		$this->Tags->admin_delete(1);
+		$this->Tags->admin_delete('tag-1');
 		$this->assertEqual($this->Tags->redirectUrl, array('action' => 'index'));
 	}
 
@@ -201,10 +201,10 @@ class TagsControllerTest extends CakeTestCase {
  * @return void
  */
 	public function testAdminEdit() {
-		$this->Tags->admin_edit(1);
+		$this->Tags->admin_edit('tag-1');
 		$tag = array(
 			'Tag' => array(
-				'id'  => 1,
+				'id'  => 'tag-1',
 				'identifier'  => null,
 				'name'  => 'CakePHP',
 				'keyname'  => 'cakephp',
@@ -215,9 +215,9 @@ class TagsControllerTest extends CakeTestCase {
 
 		$this->Tags->data = array(
 			'Tag' => array(
-				'id' => 1,
+				'id' => 'tag-1',
 				'name' => 'CAKEPHP'));
-		$this->Tags->admin_edit(1);
+		$this->Tags->admin_edit('tag-1');
 		$this->assertEquals($this->Tags->redirectUrl, array('action' => 'index'));
 	}
 }

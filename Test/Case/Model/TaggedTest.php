@@ -41,7 +41,7 @@ class TaggedTestCase extends CakeTestCase {
  *
  * @return void
  */
-	public function setUp() {
+	public function startTest($method) {
 		$this->Tagged = ClassRegistry::init('Tags.Tagged');
 	}
 
@@ -50,7 +50,7 @@ class TaggedTestCase extends CakeTestCase {
  *
  * @return void
  */
-	public function tearDown() {
+	public function endTest($method) {
 		unset($this->Tagged);
 		ClassRegistry::flush(); 
 	}
@@ -77,8 +77,8 @@ class TaggedTestCase extends CakeTestCase {
 		$expected = array(
 			'Tagged' => array(
 				'id' => '49357f3f-c464-461f-86ac-a85d4a35e6b6',
-				'foreign_key' => 1,
-				'tag_id' => 1, //cakephp
+				'foreign_key' => 'article-1',
+				'tag_id' => 'tag-1', //cakephp
 				'model' => 'Article',
 				'language' => 'eng',
 				'times_tagged' => 1,
@@ -111,7 +111,7 @@ class TaggedTestCase extends CakeTestCase {
 			'by' => 'cakephp',
 			'model' => 'Article'));
 		$this->assertEqual(count($result), 1);
-		$this->assertEqual($result[0]['Article']['id'], 1);
+		$this->assertEqual($result[0]['Article']['id'], 'article-1');
 
 		$result = $this->Tagged->find('tagged', array(
 			'model' => 'Article'));

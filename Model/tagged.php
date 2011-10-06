@@ -75,8 +75,8 @@ class Tagged extends TagsAppModel {
 				'offset' => '',
 				'contain' => 'Tag',
 				'conditions' => array(),
-				'fields' => 'Tag.*, Tagged.tag_id, COUNT(*) AS occurrence',
-				'group' => 'Tagged.tag_id');
+				'fields' => 'Tagged.tag_id, Tag.id, Tag.identifier, Tag.name, Tag.keyname, Tag.weight, COUNT(*) AS occurrence',
+				'group' => array('Tagged.tag_id', 'Tag.id', 'Tag.identifier', 'Tag.name', 'Tag.keyname', 'Tag.weight'));
 
 			foreach ($query as $key => $value) {
 				if (!empty($value)) {
@@ -139,7 +139,7 @@ class Tagged extends TagsAppModel {
 						),
 					)
 				);
-				$this->bindModel(compact('belongsTo'));
+				$this->bindModel(compact('belongsTo'), false);
 
 				if (isset($query['operation']) && $query['operation'] == 'count') {
 					$query['fields'][] = "COUNT(DISTINCT $Model->alias.$Model->primaryKey)";
