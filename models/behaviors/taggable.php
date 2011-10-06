@@ -68,18 +68,19 @@ class TaggableBehavior extends ModelBehavior {
 
 		$this->settings[$Model->alias] = array_merge($this->settings[$Model->alias], $settings);
 		$this->settings[$Model->alias]['withModel'] = $this->settings[$Model->alias]['taggedClass'];
+		extract($this->settings[$Model->alias]);
 
 		$Model->bindModel(array('hasAndBelongsToMany' => array(
-			'Tag' => array(
-				'className' => $this->settings[$Model->alias]['tagClass'],
-				'foreignKey' => $this->settings[$Model->alias]['foreignKey'],
-				'associationForeignKey' => $this->settings[$Model->alias]['associationForeignKey'],
+			$tagAlias => array(
+				'className' => $tagClass,
+				'foreignKey' => $foreignKey,
+				'associationForeignKey' => $associationForeignKey,
 				'unique' => true,
 				'conditions' => array(
 					'Tagged.model' => $Model->name),
 				'fields' => '',
 				'dependent' => true,
-				'with' => $this->settings[$Model->alias]['withModel']))),  $this->settings[$Model->alias]['resetBinding']);
+				'with' => $withModel))), $resetBinding);
 	}
 
 /**
@@ -97,7 +98,7 @@ class TaggableBehavior extends ModelBehavior {
  */
 	public function saveTags(Model $Model, $string = null, $foreignKey = null, $update = true) {
 		if (is_string($string) && !empty($string) && (!empty($foreignKey) || $foreignKey === false)) {
-			$tagClass = $this->settings[$Model->alias]['tagAlias'];
+			$tagAlias = $this->settings[$Model->alias]['tagAlias'];
 			$tagModel = $Model->Tag;
 			$array = explode($this->settings[$Model->alias]['separator'], $string);
 
@@ -123,18 +124,18 @@ class TaggableBehavior extends ModelBehavior {
 				$existingTags = $tagModel->find('all', array(
 					'contain' => array(),
 					'conditions' => array(
-						'Tag.keyname' => Set::extract($tags, '{n}.keyname')),
+						$tagAlias . '.keyname' => Set::extract($tags, '{n}.keyname')),
 					'fields' => array(
-						'Tag.identifier',
-						'Tag.keyname',
-						'Tag.name',
-						'Tag.id')));
+						$tagAlias . '.identifier',
+						$tagAlias . '.keyname',
+						$tagAlias . '.name',
+						$tagAlias . '.id')));
 
 				if (!empty($existingTags)) {
 					foreach ($existingTags as $existing) {
-						$existingTagKeyNames[] = $existing['Tag']['keyname'];
-						$existingTagIds[] = $existing['Tag']['id'];
-						$existingTagIdentifiers[$existing['Tag']['keyname']][] = $existing['Tag']['identifier'];
+						$existingTagKeyNames[] = $existing[$tagAlias]['keyname'];
+						$existingTagIds[] = $existing[$tagAlias]['id'];
+						$existingTagIdentifiers[$existing[$tagAlias]['keyname']][] = $existing[$tagAlias]['identifier'];
 					}
 					$newTags = array();
 					foreach($tags as $possibleNewTag) {
