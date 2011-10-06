@@ -65,6 +65,14 @@ class Tagged extends TagsAppModel {
  */
 	public function _findCloud($state, $query, $results = array()) {
 		if ($state == 'before') {
+			// Support old code without the occurrence cache
+			if (!$this->Tag->hasField('occurrence') || isset($query['occurrenceCache']) && $query['occurrenceCache'] === false) {
+				$fields = 'Tag.*, Tagged.tag_id, COUNT(*) AS occurrence';
+				$groupBy = 'Tagged.tag_id';
+			} else {
+				$fields = 'DISTINCT Tag.id, Tag.*, Tagged.tag_id';
+				$groupBy = null;
+			}
 			$options = array(
 				'minSize' => 10,
 				'maxSize' => 20,
@@ -75,8 +83,8 @@ class Tagged extends TagsAppModel {
 				'offset' => null,
 				'contain' => 'Tag',
 				'conditions' => array(),
-				'fields' => 'Tag.*, Tagged.tag_id, COUNT(*) AS occurrence',
-				'group' => 'Tagged.tag_id');
+				'fields' => $fields,
+				'group' => $groupBy);
 
 			foreach ($query as $key => $value) {
 				if (!empty($value)) {
@@ -91,8 +99,19 @@ class Tagged extends TagsAppModel {
 
 			return $query;
 		} elseif ($state == 'after') {
-			if (!empty($results) && isset($results[0][0]['occurrence'])) {
-				$weights = Set::extract($results, '{n}.0.occurrence');
+			if (!empty($results) && isset($results[0][0]['occurrence']) || isset($results[0]['Tag']['occurrence'])) {
+				// Support old code without the occurrence cache
+				if (!$this->Tag->hasField('occurrence')) {
+					foreach ($results as $key => $result) {
+						$results[$key]['Tag']['occurrence'] = $results[$key][0]['occurrence'];
+					}
+				} else {
+					foreach ($results as $key => $result) {
+						$results[$key][0]['occurrence'] = $results[$key]['Tag']['occurrence'];
+					}
+				}
+
+				$weights = Set::extract($results, '{n}.Tag.occurrence');
 				$maxWeight = max($weights);
 				$minWeight = min($weights);
 
@@ -102,8 +121,7 @@ class Tagged extends TagsAppModel {
 				}
 
 				foreach ($results as $key => $result) {
-					$size = $query['minSize'] + (($result[0]['occurrence'] - $minWeight) * (($query['maxSize'] - $query['minSize']) / ($spread)));
-					$results[$key]['Tag']['occurrence'] = $result[0]['occurrence'];
+					$size = $query['minSize'] + (($result['Tag']['occurrence'] - $minWeight) * (($query['maxSize'] - $query['minSize']) / ($spread)));
 					$results[$key]['Tag']['weight'] = ceil($size);
 				}
 			}

@@ -20,6 +20,13 @@ App::import('Core', 'Model');
 class Article extends Model {
 
 /**
+ * Model name
+ *
+ * @var string
+ */
+	public $name = 'Article';
+
+/**
  * Use table
  *
  * @var string
@@ -113,6 +120,38 @@ class TaggableTest extends CakeTestCase {
 	public function endTest() {
 		unset($this->Article);
 		ClassRegistry::flush();
+	}
+
+/**
+ * Test the occurrence cache
+ * 
+ * @return void
+ */
+	public function testOccurrenceCache() {
+		$resultBefore = $this->Article->Tag->find('first', array(
+			'contain' => array(),
+			'conditions' => array(
+				'Tag.name' => 'cakephp')));
+
+		// adding a new record with the cakephp tag to increase the occurrence
+		$data = array('title' => 'Test Article', 'tags' => 'cakephp, php');
+		$this->Article->create();
+		$this->Article->save($data, false);
+
+		$resultAfter = $this->Article->Tag->find('first', array(
+			'contain' => array(),
+			'conditions' => array(
+				'Tag.name' => 'cakephp')));
+		$this->assertEqual($resultAfter['Tag']['occurrence'] - $resultBefore['Tag']['occurrence'], 1);
+
+		// updating the record to not have the cakephp tag anymore, decreases the occurrence
+		$data = array('id' => $this->Article->id, 'title' => 'Test Article', 'tags' => 'php, something, else');
+		$this->Article->save($data, false);
+		$resultAfter = $this->Article->Tag->find('first', array(
+			'contain' => array(),
+			'conditions' => array(
+				'Tag.name' => 'cakephp')));
+		$this->assertEqual($resultAfter['Tag']['occurrence'], 1);
 	}
 
 /**
