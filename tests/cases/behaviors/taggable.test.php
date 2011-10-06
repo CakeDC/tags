@@ -20,6 +20,13 @@ App::import('Core', 'Model');
 class Article extends Model {
 
 /**
+ * Model name
+ *
+ * @var string
+ */
+	public $name = 'Article';
+
+/**
  * Use table
  *
  * @var string

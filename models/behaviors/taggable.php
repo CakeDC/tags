@@ -49,7 +49,7 @@ class TaggableBehavior extends ModelBehavior {
 		'taggedClass' => 'Tags.Tagged',
 		'foreignKey' => 'foreign_key',
 		'associationForeignKey' => 'tag_id',
-		'cacheWeight' => true,
+		'cacheOccurrence' => true,
 		'automaticTagging' => true,
 		'unsetInAfterFind' => false,
 		'resetBinding' => false,
@@ -99,7 +99,7 @@ class TaggableBehavior extends ModelBehavior {
 	public function saveTags(Model $Model, $string = null, $foreignKey = null, $update = true) {
 		if (is_string($string) && !empty($string) && (!empty($foreignKey) || $foreignKey === false)) {
 			$tagAlias = $this->settings[$Model->alias]['tagAlias'];
-			$tagModel = $Model->Tag;
+			$tagModel = $Model->{$tagAlias};
 			$array = explode($this->settings[$Model->alias]['separator'], $string);
 
 			$tags = $identifiers = array();
@@ -199,12 +199,44 @@ class TaggableBehavior extends ModelBehavior {
 						$data['Tagged']['language'] = Configure::read('Config.language');
 						$tagModel->Tagged->create($data);
 						$tagModel->Tagged->save();
+
+						if ($this->settings[$Model->alias]['cacheOccurrence']) {
+							$this->cacheOccurrence($Model, $tagId);
+						}
 					}
 				}
 			}
 			return true;
 		}
 		return false;
+	}
+
+/**
+ * Cache the weight or occurence of a tag in the tags table
+ *
+ * @param object $Model instance of a model
+ * @param string $tagId Tag UUID
+ * @return void
+ */
+	public function cacheOccurrence(Model $Model, $tagId) {
+		$fieldName = Inflector::underscore($Model->name) . '_occurrence';
+		$tagModel = $Model->{$this->settings[$Model->alias]['tagAlias']};
+		$data = array('id' => $tagId);
+
+		if ($tagModel->hasField($fieldName)) {
+			$count = $tagModel->Tagged->find('count', array(
+				'conditions' => array(
+					'Tagged.tag_id' => $tagId,
+					'Tagged.model' => $Model->name)));
+			$data[$fieldName] = $count;
+		}
+
+		$count = $tagModel->Tagged->find('count', array(
+			'conditions' => array(
+				'Tagged.tag_id' => $tagId)));
+		$data['occurrence'] = $count;
+
+		$tagModel->save($data, array('validate' => false, 'callbacks' => false));
 	}
 
 /**
