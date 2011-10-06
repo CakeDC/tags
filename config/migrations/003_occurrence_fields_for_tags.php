@@ -41,7 +41,7 @@ class M8d01880f01c11e0be500800200c9a66 extends CakeMigration {
 		'up' => array(
 			'create_field' => array(
 				'tags' => array(
-					'occurence' => array('type' => 'integer', 'null' => false, 'default' => 0, 'length' => 8),
+					'occurrence' => array('type' => 'integer', 'null' => false, 'default' => 0, 'length' => 8),
 					)
 				),
 			'drop_field' => array(
@@ -50,7 +50,7 @@ class M8d01880f01c11e0be500800200c9a66 extends CakeMigration {
 		),
 		'down' => array(
 			'drop_field' => array(
-				'tags' => array('occurence')
+				'tags' => array('occurrence')
 			),
 			'create_field' => array(
 				'tags' => array(
