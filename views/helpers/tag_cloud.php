@@ -44,6 +44,7 @@ class TagCloudHelper extends AppHelper {
 			return '';
 		}
 		$defaults = array(
+			'tagModel' => 'Tag',
 			'shuffle' => true,
 			'extract' => '{n}.Tag.weight',
 			'before' => '',
@@ -73,13 +74,13 @@ class TagCloudHelper extends AppHelper {
 
 		$cloud = null;
 		foreach ($tags as $tag) {
-			$options['url'][$options['named']] = $tag['Tag']['keyname'];
+			$options['url'][$options['named']] = $tag[$options['tagModel']]['keyname'];
 
-			$size = $options['minSize'] + (($tag['Tag']['weight'] - $minWeight) * (($options['maxSize'] - $options['minSize']) / ($spread)));
+			$size = $options['minSize'] + (($tag[$options['tagModel']]['weight'] - $minWeight) * (($options['maxSize'] - $options['minSize']) / ($spread)));
 			$size = ceil($size);
 
 			$cloud .= $this->_replace($options['before'], $size);
-			$cloud .= $this->Html->link($tag['Tag']['name'], $options['url'], array('id' => 'tag-' . $tag['Tag']['id'])) . ' ';
+			$cloud .= $this->Html->link($tag[$options['tagModel']]['name'], $options['url'], array('id' => 'tag-' . $tag[$options['tagModel']]['id'])) . ' ';
 			$cloud .= $this->_replace($options['after'], $size);
 		}
 		return $cloud;
