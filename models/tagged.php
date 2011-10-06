@@ -66,11 +66,11 @@ class Tagged extends TagsAppModel {
 	public function _findCloud($state, $query, $results = array()) {
 		if ($state == 'before') {
 			// Support old code without the occurrence cache
-			if (!$this->Tag->hasField('occurrence')) {
+			if (!$this->Tag->hasField('occurrence') || isset($query['occurrenceCache']) && $query['occurrenceCache'] === false) {
 				$fields = 'Tag.*, Tagged.tag_id, COUNT(*) AS occurrence';
 				$groupBy = 'Tagged.tag_id';
 			} else {
-				$fields = 'Tag.*, Tagged.tag_id, DISTINCT Tag.id';
+				$fields = 'DISTINCT Tag.id, Tag.*, Tagged.tag_id';
 				$groupBy = null;
 			}
 			$options = array(

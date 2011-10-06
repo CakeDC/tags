@@ -150,4 +150,5 @@ class TaggedTestCase extends CakeTestCase {
 		$this->assertEqual(count($result), 1);
 		$this->assertEqual($result[0]['Article']['id'], 1);
 	}
+
 }
