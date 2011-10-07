@@ -58,10 +58,11 @@ class Tagged extends TagsAppModel {
  * size of the tag font.
  *
  * @todo Ideas to improve this are welcome
- * @param string
- * @param array
- * @param array
+ * @param string $state
+ * @param array $query
+ * @param array $results
  * @return array
+ * @link https://github.com/CakeDC/tags/issues/10
  */
 	public function _findCloud($state, $query, $results = array()) {
 		if ($state == 'before') {
@@ -70,9 +71,10 @@ class Tagged extends TagsAppModel {
 				$fields = 'Tagged.tag_id, Tag.id, Tag.identifier, Tag.name, Tag.keyname, Tag.weight, COUNT(*) AS occurrence';
 				$groupBy = array('Tagged.tag_id', 'Tag.id', 'Tag.identifier', 'Tag.name', 'Tag.keyname', 'Tag.weight');
 			} else {
-				$fld = $this->getDataSource()->fields($this->Tag);
-				$fld = array_merge($fld, $this->getDataSource()->fields($this, null, "Tagged.tag_id"));
-				$fields = "DISTINCT " . join(',', $fld);
+				// This is related to https://github.com/CakeDC/tags/issues/10 to work around a limitation of postgres
+				$field = $this->getDataSource()->fields($this->Tag);
+				$field = array_merge($field, $this->getDataSource()->fields($this, null, "Tagged.tag_id"));
+				$fields = "DISTINCT " . join(',', $field);
 				$groupBy = null;
 			}
 			$options = array(
