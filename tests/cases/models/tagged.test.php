@@ -96,6 +96,7 @@ class TaggedTestCase extends CakeTestCase {
 	public function testFindCloud() {
 		$result = $this->Tagged->find('cloud', array(
 			'model' => 'Article'));
+		
 		$this->assertEqual(count($result), 3);
 		$this->assertTrue(isset($result[0][0]['occurrence']));
 		$this->assertEqual($result[0][0]['occurrence'], 1);

@@ -70,7 +70,9 @@ class Tagged extends TagsAppModel {
 				$fields = 'Tagged.tag_id, Tag.id, Tag.identifier, Tag.name, Tag.keyname, Tag.weight, COUNT(*) AS occurrence';
 				$groupBy = array('Tagged.tag_id', 'Tag.id', 'Tag.identifier', 'Tag.name', 'Tag.keyname', 'Tag.weight');
 			} else {
-				$fields = 'DISTINCT Tag.id, Tag.*, Tagged.tag_id';
+				$fld = $this->getDataSource()->fields($this->Tag);
+				$fld = array_merge($fld, $this->getDataSource()->fields($this, null, "Tagged.tag_id"));
+				$fields = "DISTINCT " . join(',', $fld);
 				$groupBy = null;
 			}
 			$options = array(
@@ -162,7 +164,7 @@ class Tagged extends TagsAppModel {
 					$query['fields'] = "COUNT(DISTINCT $Model->alias.$Model->primaryKey)";
 					$this->Behaviors->Containable->setup($this, array('autoFields' => false));
 				} else {
-					$query['fields'][] = "DISTINCT $Model->alias.*";
+					$query['fields'][] = "DISTINCT " . join(',', $this->getDataSource()->fields($Model));
 				}
 
 				if (!empty($query['by'])) {

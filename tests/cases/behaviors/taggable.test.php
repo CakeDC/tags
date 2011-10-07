@@ -131,7 +131,7 @@ class TaggableTest extends CakeTestCase {
 		$resultBefore = $this->Article->Tag->find('first', array(
 			'contain' => array(),
 			'conditions' => array(
-				'Tag.name' => 'cakephp')));
+				'Tag.keyname' => 'cakephp')));
 
 		// adding a new record with the cakephp tag to increase the occurrence
 		$data = array('title' => 'Test Article', 'tags' => 'cakephp, php');
@@ -141,7 +141,8 @@ class TaggableTest extends CakeTestCase {
 		$resultAfter = $this->Article->Tag->find('first', array(
 			'contain' => array(),
 			'conditions' => array(
-				'Tag.name' => 'cakephp')));
+				'Tag.keyname' => 'cakephp')));
+
 		$this->assertEqual($resultAfter['Tag']['occurrence'] - $resultBefore['Tag']['occurrence'], 1);
 
 		// updating the record to not have the cakephp tag anymore, decreases the occurrence
@@ -150,7 +151,7 @@ class TaggableTest extends CakeTestCase {
 		$resultAfter = $this->Article->Tag->find('first', array(
 			'contain' => array(),
 			'conditions' => array(
-				'Tag.name' => 'cakephp')));
+				'Tag.keyname' => 'cakephp')));
 		$this->assertEqual($resultAfter['Tag']['occurrence'], 1);
 	}
 
