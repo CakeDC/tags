@@ -269,7 +269,6 @@ class TaggableBehavior extends ModelBehavior {
 			$data['occurrence'] = $tagModel->Tagged->find('count', array(
 				'conditions' => array(
 					'Tagged.tag_id' => $tagId)));
-
 			$tagModel->save($data, array('validate' => false, 'callbacks' => false));
 		}
 	}

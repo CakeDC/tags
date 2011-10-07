@@ -58,19 +58,23 @@ class Tagged extends TagsAppModel {
  * size of the tag font.
  *
  * @todo Ideas to improve this are welcome
- * @param string
- * @param array
- * @param array
+ * @param string $state
+ * @param array $query
+ * @param array $results
  * @return array
+ * @link https://github.com/CakeDC/tags/issues/10
  */
 	public function _findCloud($state, $query, $results = array()) {
 		if ($state == 'before') {
 			// Support old code without the occurrence cache
 			if (!$this->Tag->hasField('occurrence') || isset($query['occurrenceCache']) && $query['occurrenceCache'] === false) {
-				$fields = 'Tag.*, Tagged.tag_id, COUNT(*) AS occurrence';
-				$groupBy = 'Tagged.tag_id';
+				$fields = 'Tagged.tag_id, Tag.id, Tag.identifier, Tag.name, Tag.keyname, Tag.weight, COUNT(*) AS occurrence';
+				$groupBy = array('Tagged.tag_id', 'Tag.id', 'Tag.identifier', 'Tag.name', 'Tag.keyname', 'Tag.weight');
 			} else {
-				$fields = 'DISTINCT Tag.id, Tag.*, Tagged.tag_id';
+				// This is related to https://github.com/CakeDC/tags/issues/10 to work around a limitation of postgres
+				$field = $this->getDataSource()->fields($this->Tag);
+				$field = array_merge($field, $this->getDataSource()->fields($this, null, "Tagged.tag_id"));
+				$fields = "DISTINCT " . join(',', $field);
 				$groupBy = null;
 			}
 			$options = array(
@@ -154,18 +158,15 @@ class Tagged extends TagsAppModel {
 						'foreignKey' => 'foreign_key',
 						'type' => 'INNER',
 						'conditions' => array(
-							$this->alias . '.model' => $Model->alias
-						),
-					)
-				);
+							$this->alias . '.model' => $Model->alias)));
 
-				$this->bindModel(compact('belongsTo'));
+				$this->bindModel(compact('belongsTo'), false);
 
 				if (isset($query['operation']) && $query['operation'] == 'count') {
 					$query['fields'] = "COUNT(DISTINCT $Model->alias.$Model->primaryKey)";
 					$this->Behaviors->Containable->setup($this, array('autoFields' => false));
 				} else {
-					$query['fields'][] = "DISTINCT $Model->alias.*";
+					$query['fields'][] = "DISTINCT " . join(',', $this->getDataSource()->fields($Model));
 				}
 
 				if (!empty($query['by'])) {

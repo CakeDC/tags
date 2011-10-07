@@ -58,7 +58,7 @@ class TagFixture extends CakeTestFixture {
  */
 	public $records = array(
 		array(
-			'id'  => 1,
+			'id'  => 'tag-1',
 			'identifier'  => null,
 			'name'  => 'CakePHP',
 			'keyname'  => 'cakephp',
@@ -67,7 +67,7 @@ class TagFixture extends CakeTestFixture {
 			'created'  => '2008-06-02 18:18:11',
 			'modified'  => '2008-06-02 18:18:37'),
 		array(
-			'id'  => 2,
+			'id'  => 'tag-2',
 			'identifier'  => null,
 			'name'  => 'CakeDC',
 			'keyname'  => 'cakedc',
@@ -76,7 +76,7 @@ class TagFixture extends CakeTestFixture {
 			'created'  => '2008-06-01 18:18:15',
 			'modified'  => '2008-06-01 18:18:15'),
 		array(
-			'id'  => 3,
+			'id'  => 'tag-3',
 			'identifier'  => null,
 			'name'  => 'CakeDC',
 			'keyname'  => 'cakedc',
