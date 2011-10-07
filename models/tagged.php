@@ -67,8 +67,8 @@ class Tagged extends TagsAppModel {
 		if ($state == 'before') {
 			// Support old code without the occurrence cache
 			if (!$this->Tag->hasField('occurrence') || isset($query['occurrenceCache']) && $query['occurrenceCache'] === false) {
-				$fields = 'Tag.*, Tagged.tag_id, COUNT(*) AS occurrence';
-				$groupBy = 'Tagged.tag_id';
+				$fields = 'Tagged.tag_id, Tag.id, Tag.identifier, Tag.name, Tag.keyname, Tag.weight, COUNT(*) AS occurrence';
+				$groupBy = array('Tagged.tag_id', 'Tag.id', 'Tag.identifier', 'Tag.name', 'Tag.keyname', 'Tag.weight');
 			} else {
 				$fields = 'DISTINCT Tag.id, Tag.*, Tagged.tag_id';
 				$groupBy = null;
@@ -154,12 +154,9 @@ class Tagged extends TagsAppModel {
 						'foreignKey' => 'foreign_key',
 						'type' => 'INNER',
 						'conditions' => array(
-							$this->alias . '.model' => $Model->alias
-						),
-					)
-				);
+							$this->alias . '.model' => $Model->alias)));
 
-				$this->bindModel(compact('belongsTo'));
+				$this->bindModel(compact('belongsTo'), false);
 
 				if (isset($query['operation']) && $query['operation'] == 'count') {
 					$query['fields'] = "COUNT(DISTINCT $Model->alias.$Model->primaryKey)";
