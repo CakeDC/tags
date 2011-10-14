@@ -20,6 +20,13 @@ App::import('Core', 'Model');
 class Article extends CakeTestModel {
 
 /**
+ * Model name
+ *
+ * @var string
+ */
+	public $name = 'Article';
+
+/**
  * Use table
  *
  * @var string
@@ -116,6 +123,39 @@ class TaggableTest extends CakeTestCase {
 	}
 
 /**
+ * Test the occurrence cache
+ * 
+ * @return void
+ */
+	public function testOccurrenceCache() {
+		$resultBefore = $this->Article->Tag->find('first', array(
+			'contain' => array(),
+			'conditions' => array(
+				'Tag.keyname' => 'cakephp')));
+
+		// adding a new record with the cakephp tag to increase the occurrence
+		$data = array('title' => 'Test Article', 'tags' => 'cakephp, php');
+		$this->Article->create();
+		$this->Article->save($data, false);
+
+		$resultAfter = $this->Article->Tag->find('first', array(
+			'contain' => array(),
+			'conditions' => array(
+				'Tag.keyname' => 'cakephp')));
+
+		$this->assertEqual($resultAfter['Tag']['occurrence'] - $resultBefore['Tag']['occurrence'], 1);
+
+		// updating the record to not have the cakephp tag anymore, decreases the occurrence
+		$data = array('id' => $this->Article->id, 'title' => 'Test Article', 'tags' => 'php, something, else');
+		$this->Article->save($data, false);
+		$resultAfter = $this->Article->Tag->find('first', array(
+			'contain' => array(),
+			'conditions' => array(
+				'Tag.keyname' => 'cakephp')));
+		$this->assertEqual($resultAfter['Tag']['occurrence'], 1);
+	}
+
+/**
  * Testings saving of tags trough the specified field in the tagable model
  *
  * @return void
@@ -146,10 +186,8 @@ class TaggableTest extends CakeTestCase {
 			'conditions' => array(
 				'Tag.identifier' => 'cakephp')));
 		$result = Set::extract($result, '{n}.Tag.keyname');
-		asort($result);
 		$this->assertEqual($result, array(
-			'developer', 'foo', 'php'));
-
+			'foo', 'developer', 'php'));
 
 		$this->assertFalse($this->Article->saveTags('foo, bar', null));
 		$this->assertFalse($this->Article->saveTags(array('foo', 'bar'), 'something'));
@@ -248,4 +286,16 @@ class TaggableTest extends CakeTestCase {
 		$expected = array($this->Article->alias => array('id' => 'article-1'));
 		$this->assertIdentical($results, $expected);
 	}
+
+/**
+ * testGettingTagCloudThroughAssociation
+ *
+ * @link http://cakedc.lighthouseapp.com/projects/59622/tickets/6-tag-cloud-helper
+ * @return void
+ */
+	public function testGettingTagCloudThroughAssociation() {
+		$result = $this->Article->Tagged->find('cloud');
+		$this->assertTrue(is_array($result) && !empty($result));
+	}
+
 }

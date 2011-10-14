@@ -208,16 +208,19 @@ class TagsControllerTest extends CakeTestCase {
 				'identifier'  => null,
 				'name'  => 'CakePHP',
 				'keyname'  => 'cakephp',
-				'weight' => 2,
+				'occurrence' => 1,
+				'article_occurrence' => 1,
 				'created'  => '2008-06-02 18:18:11',
 				'modified'  => '2008-06-02 18:18:37'));
-		$this->assertEquals($this->Tags->data, $tag);
+
+		$this->assertEqual($this->Tags->data, $tag);
 
 		$this->Tags->data = array(
 			'Tag' => array(
 				'id' => 'tag-1',
 				'name' => 'CAKEPHP'));
 		$this->Tags->admin_edit('tag-1');
-		$this->assertEquals($this->Tags->redirectUrl, array('action' => 'index'));
+
+		$this->assertEqual($this->Tags->redirectUrl, array('action' => 'index'));
 	}
 }

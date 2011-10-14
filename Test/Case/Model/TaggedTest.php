@@ -96,9 +96,17 @@ class TaggedTestCase extends CakeTestCase {
 	public function testFindCloud() {
 		$result = $this->Tagged->find('cloud', array(
 			'model' => 'Article'));
+		
 		$this->assertEqual(count($result), 3);
 		$this->assertTrue(isset($result[0][0]['occurrence']));
 		$this->assertEqual($result[0][0]['occurrence'], 1);
+
+		$result = $this->Tagged->find('cloud');
+		$this->assertTrue(is_array($result) && !empty($result));
+
+		$result = $this->Tagged->find('cloud', array(
+			'limit' => 1));
+		$this->assertEqual(count($result), 1);
 	}
 
 /**
@@ -123,4 +131,25 @@ class TaggedTestCase extends CakeTestCase {
 			'type' => 'tagged'));
 		$this->assertEqual($result, 3);
 	}
+
+/**
+ * Test custom _findTagged method with additional conditions on the model
+ *
+ * @return void
+ */
+	public function testFindTaggedWithConditions() {
+		$result = $this->Tagged->find('tagged', array(
+			'by' => 'cakephp',
+			'model' => 'Article',
+			'conditions' => array('Article.title LIKE' => 'Second %')));
+		$this->assertEqual(count($result), 0);
+
+		$result = $this->Tagged->find('tagged', array(
+			'by' => 'cakephp',
+			'model' => 'Article',
+			'conditions' => array('Article.title LIKE' => 'First %')));
+		$this->assertEqual(count($result), 1);
+		$this->assertEqual($result[0]['Article']['id'], 'article-1');
+	}
+
 }
