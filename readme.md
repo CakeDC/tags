@@ -1,8 +1,14 @@
 # Tags Plugin for CakePHP #
 
+Version 1.2
+
 The tags plugin includes the Taggable Behavior that allows you to simply tag everything.
 
 It saves all tags in a tags table and connects any kind of records to them through the tagged table.
+
+To create tables you can use migrations plugin or schema shell. To create tables execute:
+
+cake schema create -plugin tags -name tags
 
 You can specify alternate tables for both in the case you get *A LOT* records tagged.
 
@@ -56,7 +62,7 @@ Redistributions of files must retain the above copyright notice.
 
 ## Copyright ###
 
-Copyright 2009-2010<br/>
+Copyright 2009-2011<br/>
 [Cake Development Corporation](http://cakedc.com)<br/>
 1785 E. Sahara Avenue, Suite 490-423<br/>
 Las Vegas, Nevada 89104<br/>

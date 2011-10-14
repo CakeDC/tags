@@ -74,7 +74,7 @@ class TagCloudHelperTestCase extends CakeTestCase {
 		do {
 			$i--;
 			$result = $this->TagCloud->display($tags, $options);
-		} while($result == $expected && $i > 0);
+		} while ($result == $expected && $i > 0);
 		$this->assertNotEqual($result, $expected);
 
 		// Test normal display

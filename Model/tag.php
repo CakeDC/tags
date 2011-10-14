@@ -98,7 +98,7 @@ class Tag extends TagsAppModel {
 		$tag = $this->find('first', array(
 			'contain' => array(),
 			'conditions' => array(
-				'Tag.id' => $tagId)));
+				$this->alias . '.' . $this->primaryKey => $tagId)));
 
 		$this->set($tag);
 		if (empty($tag)) {
