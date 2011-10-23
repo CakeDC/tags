@@ -8,7 +8,7 @@ It saves all tags in a tags table and connects any kind of records to them throu
 
 To create tables you can use migrations plugin or schema shell. To create tables execute:
 
-cake schema create -plugin tags -name tags
+cake schema create -plugin Tags -name tags
 
 You can specify alternate tables for both in the case you get *A LOT* records tagged.
 
