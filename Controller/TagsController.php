@@ -25,6 +25,13 @@ class TagsController extends TagsAppController {
 	public $name = 'Tags';
 
 /**
+ * Components
+ *
+ * @var array
+ */
+	public $components = array('Session');
+
+/**
  * Helpers
  *
  * @var array
