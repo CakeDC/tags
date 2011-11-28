@@ -152,15 +152,22 @@ class Tagged extends TagsAppModel {
 	public function _findTagged($state, $query, $results = array()) {
 		if ($state == 'before') {
 			if (isset($query['model']) && $Model = ClassRegistry::init($query['model'])) {
-				$belongsTo = array(
-					$Model->alias => array(
-						'className' => $Model->name,
-						'foreignKey' => 'foreign_key',
-						'type' => 'INNER',
-						'conditions' => array(
-							$this->alias . '.model' => $Model->alias)));
+				$this->bindModel(array(
+					'belongsTo' => array(
+						$Model->alias => array(
+							'className' => $Model->name,
+							'foreignKey' => 'foreign_key',
+							'type' => 'INNER',
+							'conditions' => array(
+								$this->alias . '.model' => $Model->alias)))), false);
 
-				$this->bindModel(compact('belongsTo'), false);
+				if (!isset($query['recursive'])) {
+					$query['recursive'] = 0;
+				}
+
+				if ($query['recursive'] == -1) {
+					throw new InvalidArgumentException(__d('tags', 'Find tagged will not work with a recursive level of -1, you need at least 0.', true), E_USER_ERROR)
+				}
 
 				if (isset($query['operation']) && $query['operation'] == 'count') {
 					$query['fields'] = "COUNT(DISTINCT $Model->alias.$Model->primaryKey)";
