@@ -115,6 +115,7 @@ class TaggedTestCase extends CakeTestCase {
  * @return void
  */
 	public function testFindTagged() {
+		$this->Tagged->recursive = -1;
 		$result = $this->Tagged->find('tagged', array(
 			'by' => 'cakephp',
 			'model' => 'Article'));
@@ -138,6 +139,7 @@ class TaggedTestCase extends CakeTestCase {
  * @return void
  */
 	public function testFindTaggedWithConditions() {
+		$this->Tagged->recursive = -1;
 		$result = $this->Tagged->find('tagged', array(
 			'by' => 'cakephp',
 			'model' => 'Article',
