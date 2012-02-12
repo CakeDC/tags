@@ -12,57 +12,6 @@
 App::import('Model', 'Tags.Tag');
 
 /**
- * TestTag
- *
- * @package tags
- * @subpackage tags.tests.cases.models
- */
-class TestTag extends Tag {
-
-/**
- * Database Configuration
- *
- * @var string
- */
-	public $useDbConfig = "test_suite";
-
-/**
- * Cache Sources
- *
- * @var boolean
- */
-	public $cacheSources = false;
-
-/**
- * Belongs to associations
- *
- * @var array
- */
-	public $belongsTo = array();
-
-/**
- * HABTM associations
- *
- * @var array
- */
-	public $hasAndBelongsToMany = array();
-
-/**
- * Has Many Associations
- *
- * @var array
- */
-	public $hasMany = array();
-
-/**
- * Has One associations
- *
- * @var array
- */
-	public $hasOne = array();
-}
-
-/**
  * TagTestCase
  *
  * @package tags
@@ -92,7 +41,7 @@ class TagTestCase extends CakeTestCase {
  * @return void
  */
 	public function setUp() {
-		$this->Tag = new TestTag();
+		$this->Tag = ClassRegistry::init('Tags.Tag');
 	}
 
 /**
