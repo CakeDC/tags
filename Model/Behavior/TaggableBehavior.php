@@ -46,6 +46,7 @@ class TaggableBehavior extends ModelBehavior {
 		'field' => 'tags',
 		'tagAlias' => 'Tag',
 		'tagClass' => 'Tags.Tag',
+		'taggedAlias' => 'Tagged',
 		'taggedClass' => 'Tags.Tagged',
 		'foreignKey' => 'foreign_key',
 		'associationForeignKey' => 'tag_id',
@@ -81,6 +82,10 @@ class TaggableBehavior extends ModelBehavior {
 				'fields' => '',
 				'dependent' => true,
 				'with' => $withModel))), $resetBinding);
+
+		$Model->$tagAlias->bindModel(array('hasMany' => array(
+			$taggedAlias => array(
+				'className' => $taggedClass))), $resetBinding);
 	}
 
 /**
@@ -131,6 +136,7 @@ class TaggableBehavior extends ModelBehavior {
 	public function saveTags(Model $Model, $string = null, $foreignKey = null, $update = true) {
 		if (is_string($string) && !empty($string) && (!empty($foreignKey) || $foreignKey === false)) {
 			$tagAlias = $this->settings[$Model->alias]['tagAlias'];
+			$taggedAlias = $this->settings[$Model->alias]['taggedAlias'];
 			$tagModel = $Model->{$tagAlias};
 
 			extract($this->disassembleTags($Model, $string, $this->settings[$Model->alias]['separator']));
@@ -178,59 +184,59 @@ class TaggableBehavior extends ModelBehavior {
 					if (!empty($newTagIds)) {
 						$existingTagIds = array_merge($existingTagIds, $newTagIds);
 					}
-					$tagged = $tagModel->Tagged->find('all', array(
+					$tagged = $tagModel->{$taggedAlias}->find('all', array(
 						'contain' => array(),
 						'conditions' => array(
-							'Tagged.model' => $Model->name,
-							'Tagged.foreign_key' => $foreignKey,
-							'Tagged.language' => Configure::read('Config.language'),
-							'Tagged.tag_id' => $existingTagIds),
+							$taggedAlias . '.model' => $Model->name,
+							$taggedAlias . '.foreign_key' => $foreignKey,
+							$taggedAlias . '.language' => Configure::read('Config.language'),
+							$taggedAlias . '.tag_id' => $existingTagIds),
 						'fields' => 'Tagged.tag_id'));
 
 					$deleteAll = array(
-						'Tagged.foreign_key' => $foreignKey,
-						'Tagged.model' => $Model->name);
+						$taggedAlias . '.foreign_key' => $foreignKey,
+						$taggedAlias . '.model' => $Model->name);
 
 					if (!empty($tagged)) {
-						$alreadyTagged = Set::extract($tagged, '{n}.Tagged.tag_id');
+						$alreadyTagged = Set::extract($tagged, "{n}.{$taggedAlias}.tag_id");
 						$existingTagIds = array_diff($existingTagIds, $alreadyTagged);
-						$deleteAll['NOT'] = array('Tagged.tag_id' => $alreadyTagged);
+						$deleteAll['NOT'] = array($taggedAlias . '.tag_id' => $alreadyTagged);
 					}
 
 					$newTagIds = $oldTagIds = array();
 
 					if ($update == true) {
-						$oldTagIds = $tagModel->Tagged->find('all', array(
+						$oldTagIds = $tagModel->{$taggedAlias}->find('all', array(
 							'contain' => array(),
 							'conditions' => array(
-								'Tagged.model' => $Model->name,
-								'Tagged.foreign_key' => $foreignKey,
-								'Tagged.language' => Configure::read('Config.language')),
+								$taggedAlias . '.model' => $Model->name,
+								$taggedAlias . '.foreign_key' => $foreignKey,
+								$taggedAlias . '.language' => Configure::read('Config.language')),
 							'fields' => 'Tagged.tag_id'));
 
 						$oldTagIds = Set::extract($oldTagIds, '/Tagged/tag_id');
-						$tagModel->Tagged->deleteAll($deleteAll, false);
+						$tagModel->{$taggedAlias}->deleteAll($deleteAll, false);
 					} elseif ($this->settings[$Model->alias]['taggedCounter'] && !empty($alreadyTagged)) {
-						$tagModel->Tagged->updateAll(array('times_tagged' => 'times_tagged + 1'), array('Tagged.tag_id' => $alreadyTagged));
+						$tagModel->{$taggedAlias}->updateAll(array('times_tagged' => 'times_tagged + 1'), array('Tagged.tag_id' => $alreadyTagged));
 					}
 
 					foreach ($existingTagIds as $tagId) {
-						$data['Tagged']['tag_id'] = $tagId;
-						$data['Tagged']['model'] = $Model->name;
-						$data['Tagged']['foreign_key'] = $foreignKey;
-						$data['Tagged']['language'] = Configure::read('Config.language');
-						$tagModel->Tagged->create($data);
-						$tagModel->Tagged->save();
+						$data[$taggedAlias]['tag_id'] = $tagId;
+						$data[$taggedAlias]['model'] = $Model->name;
+						$data[$taggedAlias]['foreign_key'] = $foreignKey;
+						$data[$taggedAlias]['language'] = Configure::read('Config.language');
+						$tagModel->{$taggedAlias}->create($data);
+						$tagModel->{$taggedAlias}->save();
 					}
 
 					//To update occurrence
 					if ($this->settings[$Model->alias]['cacheOccurrence']) {
-						$newTagIds = $tagModel->Tagged->find('all', array(
+						$newTagIds = $tagModel->{$taggedAlias}->find('all', array(
 							'contain' => array(),
 							'conditions' => array(
-								'Tagged.model' => $Model->name,
-								'Tagged.foreign_key' => $foreignKey,
-								'Tagged.language' => Configure::read('Config.language')),
+								$taggedAlias . '.model' => $Model->name,
+								$taggedAlias . '.foreign_key' => $foreignKey,
+								$taggedAlias . '.language' => Configure::read('Config.language')),
 							'fields' => 'Tagged.tag_id'));
 
 						$newTagIds = Set::extract($newTagIds, '{n}.Tagged.tag_id');
@@ -260,16 +266,17 @@ class TaggableBehavior extends ModelBehavior {
 		foreach ($tagIds as $tagId) {
 			$fieldName = Inflector::underscore($Model->name) . '_occurrence';
 			$tagModel = $Model->{$this->settings[$Model->alias]['tagAlias']};
+			$taggedModel = $tagModel->{$this->settings[$Model->alias]['taggedAlias']};
 			$data = array('id' => $tagId);
 
 			if ($tagModel->hasField($fieldName)) {
-				$data[$fieldName] = $tagModel->Tagged->find('count', array(
+				$data[$fieldName] = $taggedModel->find('count', array(
 					'conditions' => array(
 						'Tagged.tag_id' => $tagId,
 						'Tagged.model' => $Model->name)));
 			}
 
-			$data['occurrence'] = $tagModel->Tagged->find('count', array(
+			$data['occurrence'] = $taggedModel->find('count', array(
 				'conditions' => array(
 					'Tagged.tag_id' => $tagId)));
 			$tagModel->save($data, array('validate' => false, 'callbacks' => false));
