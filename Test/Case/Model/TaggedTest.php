@@ -130,7 +130,7 @@ class TaggedTestCase extends CakeTestCase {
 		$result = $this->Tagged->paginateCount(array(), 1, array(
 			'model' => 'Article',
 			'type' => 'tagged'));
-		$this->assertEqual($result, 3);
+		$this->assertEqual($result, 2);
 	}
 
 /**
