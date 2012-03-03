@@ -166,7 +166,7 @@ class Tagged extends TagsAppModel {
 				}
 
 				if ($query['recursive'] == -1) {
-					throw new InvalidArgumentException(__d('tags', 'Find tagged will not work with a recursive level of -1, you need at least 0.', true), E_USER_ERROR)
+					throw new InvalidArgumentException(__d('tags', 'Find tagged will not work with a recursive level of -1, you need at least 0.', true), E_USER_ERROR);
 				}
 
 				if (isset($query['operation']) && $query['operation'] == 'count') {
