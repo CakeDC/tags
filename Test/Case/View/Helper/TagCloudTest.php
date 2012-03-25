@@ -9,16 +9,17 @@
  * @license MIT License (http://www.opensource.org/licenses/mit-license.php)
  */
 
-App::import('Helper', array('Html', 'Tags.TagCloud'));
-App::import('View', array('View'));
+App::uses('View', 'View');
+App::uses('HtmlHelper', 'View/Helper');
+App::uses('TagCloudHelper', 'Tags.View/Helper');
 
 /**
- * TagCloudHelperTestCase
+ * TagCloudHelperTest
  *
  * @package tags
  * @subpackage tags.tests.cases.helpers
  */
-class TagCloudHelperTestCase extends CakeTestCase {
+class TagCloudHelperTest extends CakeTestCase {
 
 /**
  * Helper being tested
@@ -32,6 +33,7 @@ class TagCloudHelperTestCase extends CakeTestCase {
  * @see cake/tests/lib/CakeTestCase#setUp($method)
  */
 	public function setUp() {
+		parent::setUp();
 		$controller = null;
 		$this->View = new View($controller);
 		$this->TagCloud = new TagCloudHelper($this->View);
@@ -109,6 +111,7 @@ class TagCloudHelperTestCase extends CakeTestCase {
  * @see cake/tests/lib/CakeTestCase#tearDown($method)
  */
 	public function tearDown() {
+		parent::tearDown();
 		unset($this->TagCloud, $this->View);
 		ClassRegistry::flush();
 	}

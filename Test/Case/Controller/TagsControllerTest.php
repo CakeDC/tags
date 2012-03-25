@@ -9,9 +9,8 @@
  * @license MIT License (http://www.opensource.org/licenses/mit-license.php)
  */
 
-App::import('Controller', 'Tags.Tags');
-App::import('Controller', 'Tags.TagsAppController');
-App::import('Model', 'Tags.Tag');
+App::uses('TagsController', 'Tags.Controller');
+App::uses('TagsAppController', 'Tags.Controller');
 
 /**
  * TestTagsController
@@ -84,6 +83,7 @@ class TagsControllerTest extends CakeTestCase {
  * @return void
  */
 	public function setUp() {
+		parent::setUp();
 		$this->Tags = new TestTagsController(new CakeRequest(null, false));
 		$this->Tags->params = array(
 			'named' => array(),
@@ -98,6 +98,7 @@ class TagsControllerTest extends CakeTestCase {
  * @return void
  */
 	public function tearDown() {
+		parent::tearDown();
 		unset($this->Tags);
 	}
 

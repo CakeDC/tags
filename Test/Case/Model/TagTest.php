@@ -9,15 +9,15 @@
  * @license MIT License (http://www.opensource.org/licenses/mit-license.php)
  */
 
-App::import('Model', 'Tags.Tag');
+App::uses('Tag', 'Tags.Model');
 
 /**
- * TagTestCase
+ * TagTest
  *
  * @package tags
  * @subpackage tags.tests.cases.models
  */
-class TagTestCase extends CakeTestCase {
+class TagTest extends CakeTestCase {
 
 /**
  * Tag Instance
@@ -41,6 +41,7 @@ class TagTestCase extends CakeTestCase {
  * @return void
  */
 	public function setUp() {
+		parent::setUp();
 		$this->Tag = ClassRegistry::init('Tags.Tag');
 	}
 
@@ -50,6 +51,7 @@ class TagTestCase extends CakeTestCase {
  * @return void
  */
 	public function tearDown() {
+		parent::tearDown();
 		unset($this->Tag);
 	}
 
