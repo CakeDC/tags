@@ -9,8 +9,6 @@
  * @license MIT License (http://www.opensource.org/licenses/mit-license.php)
  */
 
-App::import('Core', 'Model');
-
 /**
  * Article model
  *
@@ -108,6 +106,7 @@ class TaggableTest extends CakeTestCase {
  * @return void
  */
 	public function setUp() {
+		parent::setUp();
 		$this->Article = ClassRegistry::init('Article');
 		$this->Article->Behaviors->attach('Tags.Taggable', array());
 	}
@@ -118,6 +117,7 @@ class TaggableTest extends CakeTestCase {
  * @return void
  */
 	public function tearDown() {
+		parent::tearDown();
 		unset($this->Article);
 		ClassRegistry::flush();
 	}
@@ -205,8 +205,9 @@ class TaggableTest extends CakeTestCase {
 		$this->assertTrue($this->Article->saveTags($tags, 'article-1', false));
 
 		$result =  $this->Article->Tagged->find('all', array(
-			'conditions' => array('model' => 'Article')));
-		
+			'conditions' => array('model' => 'Article'),
+			'contain' => array('Tag'),
+		));
 		$fooCount = Set::extract('/Tag[keyname=foo]/../Tagged/times_tagged', $result);
 		$this->assertEqual($fooCount, array(2));
 		
