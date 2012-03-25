@@ -62,7 +62,7 @@ class Tag extends TagsAppModel {
 				$this->alias . '.keyname' => $keyName)));
 
 		if (empty($result)) {
-			throw new Exception(__d('tags', 'Invalid Tag.'));
+			throw new CakeException(__d('tags', 'Invalid Tag.'));
 		}
 		return $result;
 	}
@@ -102,7 +102,7 @@ class Tag extends TagsAppModel {
 
 		$this->set($tag);
 		if (empty($tag)) {
-			throw new Exception(__d('tags', 'Invalid Tag.'));
+			throw new CakeException(__d('tags', 'Invalid Tag.'));
 		}
 
 		if (!empty($postData[$this->alias]['name'])) {

@@ -97,7 +97,7 @@ class TagTest extends CakeTestCase {
 		$this->assertTrue(is_array($result));
 		$this->assertEqual($result['Tag']['keyname'], 'cakephp');
 
-		$this->expectException('Exception');
+		$this->expectException('CakeException');
 		$this->Tag->view('invalid-key!!!');
 	}
 
@@ -149,7 +149,7 @@ class TagTest extends CakeTestCase {
 				'keyname' => ''));
 		$this->assertEqual($this->Tag->edit('tag-1', $data), $data);
 		
-		$this->expectException('Exception');
+		$this->expectException('CakeException');
 		$this->assertTrue($this->Tag->edit('invalid-id', array()));
 	}
 }
