@@ -10,6 +10,16 @@
  */
 
 App::uses('Tagged', 'Tags.Model');
+App::uses('Model', 'Model');
+
+/**
+ * TagggedArticle Test Model
+ */
+class TaggedArticle extends Model {
+	public $useTable = 'articles';
+	public $actsAs = array(
+		'Tags.Taggable');
+}
 
 /**
  * Short description for class.
@@ -34,7 +44,8 @@ class TaggedTest extends CakeTestCase {
 	public $fixtures = array(
 		'plugin.tags.tagged',
 		'plugin.tags.tag',
-		'plugin.tags.article');
+		'plugin.tags.article',
+		'plugin.tags.user');
 
 /**
  * setUp
@@ -154,6 +165,56 @@ class TaggedTest extends CakeTestCase {
 			'conditions' => array('Article.title LIKE' => 'First %')));
 		$this->assertEqual(count($result), 1);
 		$this->assertEqual($result[0]['Article']['id'], 'article-1');
+	}
+
+/**
+ * testDeepAssociations
+ *
+ * @link https://github.com/CakeDC/tags/issues/15
+ * @return void
+ */
+	public function testDeepAssociationsHasOne() {
+		$this->Tagged->bindModel(array(
+			'belongsTo' => array(
+				'Article' => array(
+					'className' => 'TaggedArticle',
+					'foreignKey' => 'foreign_key'))));
+
+		$this->Tagged->Article->bindModel(array(
+			'hasOne' => array(
+				'User' => array())));
+
+		$result = $this->Tagged->find('all', array(
+			'contain' => array(
+				'Article' => array(
+					'User'))));
+
+		$this->assertEqual($result[0]['Article']['User']['name'], 'CakePHP');
+	}
+
+/**
+ * testDeepAssociationsBelongsTo
+ *
+ * @link https://github.com/CakeDC/tags/issues/15
+ * @return void
+ */
+	public function testDeepAssociationsBelongsTo() {
+		$this->Tagged->bindModel(array(
+			'belongsTo' => array(
+				'Article' => array(
+					'className' => 'TaggedArticle',
+					'foreignKey' => 'foreign_key'))));
+	
+		$this->Tagged->Article->bindModel(array(
+			'belongsTo' => array(
+				'User' => array())));
+	
+		$result = $this->Tagged->find('all', array(
+			'contain' => array(
+				'Article' => array(
+				'User'))));
+
+		$this->assertEqual($result[0]['Article']['User']['name'], 'CakePHP');
 	}
 
 }
