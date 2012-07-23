@@ -10,16 +10,6 @@
  */
 
 App::import('Model', 'Tags.Tagged');
-App::import('Model', 'Model');
-
-/**
- * TagggedArticle Test Model
- */
-class TaggedArticle extends Model {
-	public $useTable = 'articles';
-	public $actsAs = array(
-		'Tags.Taggable');
-}
 
 /**
  * Short description for class.
@@ -44,8 +34,7 @@ class TaggedTestCase extends CakeTestCase {
 	public $fixtures = array(
 		'plugin.tags.tagged',
 		'plugin.tags.tag',
-		'plugin.tags.article',
-		'plugin.tags.user');
+		'plugin.tags.article');
 
 /**
  * startTest
@@ -88,8 +77,8 @@ class TaggedTestCase extends CakeTestCase {
 		$expected = array(
 			'Tagged' => array(
 				'id' => '49357f3f-c464-461f-86ac-a85d4a35e6b6',
-				'foreign_key' => 1,
-				'tag_id' => 1, //cakephp
+				'foreign_key' => 'article-1',
+				'tag_id' => 'tag-1', //cakephp
 				'model' => 'Article',
 				'language' => 'eng',
 				'times_tagged' => 1,
@@ -107,6 +96,7 @@ class TaggedTestCase extends CakeTestCase {
 	public function testFindCloud() {
 		$result = $this->Tagged->find('cloud', array(
 			'model' => 'Article'));
+		
 		$this->assertEqual(count($result), 3);
 		$this->assertTrue(isset($result[0][0]['occurrence']));
 		$this->assertEqual($result[0][0]['occurrence'], 1);
@@ -125,11 +115,12 @@ class TaggedTestCase extends CakeTestCase {
  * @return void
  */
 	public function testFindTagged() {
+		$this->Tagged->recursive = -1;
 		$result = $this->Tagged->find('tagged', array(
 			'by' => 'cakephp',
 			'model' => 'Article'));
 		$this->assertEqual(count($result), 1);
-		$this->assertEqual($result[0]['Article']['id'], 1);
+		$this->assertEqual($result[0]['Article']['id'], 'article-1');
 		
 		$result = $this->Tagged->find('tagged', array(
 			'model' => 'Article'));
@@ -141,54 +132,26 @@ class TaggedTestCase extends CakeTestCase {
 			'type' => 'tagged'));
 		$this->assertEqual($result, 2);
 	}
-/**
- * testDeepAssociations
- *
- * @link https://github.com/CakeDC/tags/issues/15
- * @return void
- */
-	public function testDeepAssociationsHasOne() {
-		$this->Tagged->bindModel(array(
-			'belongsTo' => array(
-				'Article' => array(
-					'className' => 'TaggedArticle',
-					'foreignKey' => 'foreign_key'))));
-
-		$this->Tagged->Article->bindModel(array(
-			'hasOne' => array(
-				'User' => array())));
-
-		$result = $this->Tagged->find('all', array(
-			'contain' => array(
-				'Article' => array(
-					'User'))));
-
-		$this->assertEqual($result[0]['Article']['User']['name'], 'CakePHP');
-	}
 
 /**
- * testDeepAssociationsBelongsTo
+ * Test custom _findTagged method with additional conditions on the model
  *
- * @link https://github.com/CakeDC/tags/issues/15
  * @return void
  */
-	public function testDeepAssociationsBelongsTo() {
-		$this->Tagged->bindModel(array(
-			'belongsTo' => array(
-				'Article' => array(
-					'className' => 'TaggedArticle',
-					'foreignKey' => 'foreign_key'))));
-	
-		$this->Tagged->Article->bindModel(array(
-			'belongsTo' => array(
-				'User' => array())));
-	
-		$result = $this->Tagged->find('all', array(
-			'contain' => array(
-				'Article' => array(
-				'User'))));
+	public function testFindTaggedWithConditions() {
+		$this->Tagged->recursive = -1;
+		$result = $this->Tagged->find('tagged', array(
+			'by' => 'cakephp',
+			'model' => 'Article',
+			'conditions' => array('Article.title LIKE' => 'Second %')));
+		$this->assertEqual(count($result), 0);
 
-		$this->assertEqual($result[0]['Article']['User']['name'], 'CakePHP');
+		$result = $this->Tagged->find('tagged', array(
+			'by' => 'cakephp',
+			'model' => 'Article',
+			'conditions' => array('Article.title LIKE' => 'First %')));
+		$this->assertEqual(count($result), 1);
+		$this->assertEqual($result[0]['Article']['id'], 'article-1');
 	}
 
 }

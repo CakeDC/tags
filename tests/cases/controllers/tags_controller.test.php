@@ -166,7 +166,7 @@ class TagsControllerTest extends CakeTestCase {
 		$this->assertEqual($this->Tags->redirectUrl, array('action' => 'index'));
 		$this->assertEqual($_SESSION['Message']['flash']['message'], 'Invalid Tag.');
 
-		$this->Tags->admin_delete(1);
+		$this->Tags->admin_delete('tag-1');
 		$this->assertEqual($this->Tags->redirectUrl, array('action' => 'index'));
 		$this->assertEqual($_SESSION['Message']['flash']['message'], 'Tag deleted.');
 	}
@@ -190,23 +190,24 @@ class TagsControllerTest extends CakeTestCase {
  * @return void
  */
 	public function testAdminEdit() {
-		$this->Tags->admin_edit(1);
+		$this->Tags->admin_edit('tag-1');
 		$tag = array(
 			'Tag' => array(
-				'id'  => 1,
+				'id'  => 'tag-1',
 				'identifier'  => null,
 				'name'  => 'CakePHP',
 				'keyname'  => 'cakephp',
-				'weight' => 2,
+				'occurrence' => 1,
+				'article_occurrence' => 1,
 				'created'  => '2008-06-02 18:18:11',
 				'modified'  => '2008-06-02 18:18:37'));
 		$this->assertEqual($this->Tags->data, $tag);
 
 		$this->Tags->data = array(
 			'Tag' => array(
-				'id' => 1,
+				'id' => 'tag-1',
 				'name' => 'CAKEPHP'));
-		$this->Tags->admin_edit(1);
+		$this->Tags->admin_edit('tag-1');
 		$this->assertEqual($this->Tags->redirectUrl, array('action' => 'index'));
 	}
 }
