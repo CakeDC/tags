@@ -55,7 +55,7 @@ For more information about our Professional CakePHP Services please visit the [C
 
 ## License ##
 
-Copyright 2009-2010, [Cake Development Corporation](http://cakedc.com)
+Copyright 2009-2012, [Cake Development Corporation](http://cakedc.com)
 
 Licensed under [The MIT License](http://www.opensource.org/licenses/mit-license.php)<br/>
 Redistributions of files must retain the above copyright notice.
