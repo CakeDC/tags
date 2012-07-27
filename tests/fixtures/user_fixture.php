@@ -43,7 +43,7 @@ class UserFixture extends CakeTestFixture {
 		array(
 			'id' => 'user-1',
 			'name' => 'CakePHP',
-			'article_id' => '1'),
+			'article_id' => 'article-1'),
 		array(
 			'id' => 'user-2',
 			'name' => 'Second User',
