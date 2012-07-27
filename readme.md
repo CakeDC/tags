@@ -8,7 +8,7 @@ It saves all tags in a tags table and connects any kind of records to them throu
 
 To create tables you can use migrations plugin or schema shell. To create tables execute:
 
-cake schema create -plugin tags -name tags
+cake schema create --plugin Tags --name tags
 
 You can specify alternate tables for both in the case you get *A LOT* records tagged.
 
@@ -55,7 +55,7 @@ For more information about our Professional CakePHP Services please visit the [C
 
 ## License ##
 
-Copyright 2009-2012, [Cake Development Corporation](http://cakedc.com)
+Copyright 2009-2010, [Cake Development Corporation](http://cakedc.com)
 
 Licensed under [The MIT License](http://www.opensource.org/licenses/mit-license.php)<br/>
 Redistributions of files must retain the above copyright notice.
