@@ -167,14 +167,14 @@ class TagsControllerTest extends CakeTestCase {
 	public function testAdminDelete() {
 		$this->Tags->Session->expects($this->at(0))
 			->method('setFlash')
-			->with($this->equalTo('Invalid Tag.'))
+			->with($this->equalTo(__d('tags', 'Invalid Tag.')))
 			->will($this->returnValue(true));
 
 		$this->Tags->Session->expects($this->at(1))
 			->method('setFlash')
-			->with($this->equalTo('Tag deleted.'))
+			->with($this->equalTo(__d('tags', 'Tag deleted.')))
 			->will($this->returnValue(true));
-		
+
 
 		$this->Tags->admin_delete('WRONG-ID!!!');
 		$this->assertEqual($this->Tags->redirectUrl, array('action' => 'index'));

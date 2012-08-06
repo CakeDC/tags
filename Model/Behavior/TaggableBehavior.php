@@ -8,6 +8,7 @@
  * @copyright Copyright 2009-2012, Cake Development Corporation (http://cakedc.com)
  * @license MIT License (http://www.opensource.org/licenses/mit-license.php)
  */
+App::uses('ModelBehavior', 'Model');
 
 /**
  * Taggable Behavior
@@ -110,7 +111,8 @@ class TaggableBehavior extends ModelBehavior {
 			$tag = trim($tag);
 			if (!empty($tag)) {
 				$key = $this->multibyteKey($model, $tag);
-				if (empty($tags[$key])) {
+				// FIX - avoid multiple instances of the same identifier
+				if (empty($tags[$key]) && (empty($identifiers[$key]) || !in_array($identifier, $identifiers[$key]))) {
 					$tags[] = array('name' => $tag, 'identifier' => $identifier, 'keyname' => $key);
 					$identifiers[$key][] = $identifier;
 				}

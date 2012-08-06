@@ -8,7 +8,8 @@
  * @copyright Copyright 2009-2012, Cake Development Corporation (http://cakedc.com)
  * @license MIT License (http://www.opensource.org/licenses/mit-license.php)
  */
-App::uses('Model', 'AppModel');
+App::uses('AppModel', 'Model');
+
 /**
  * Tags Plugin AppModel
  *
@@ -44,4 +45,5 @@ class TagsAppModel extends AppModel {
 			return $this->find('count', array_merge($parameters, $extra));
 		}
 	}
+
 }

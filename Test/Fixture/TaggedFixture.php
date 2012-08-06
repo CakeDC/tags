@@ -18,13 +18,6 @@
 class TaggedFixture extends CakeTestFixture {
 
 /**
- * Name
- *
- * @var string $name
- */
-	public $name = 'Tagged';
-
-/**
  * Table
  *
  * @var string name$table
