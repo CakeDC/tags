@@ -8,6 +8,7 @@
  * @copyright Copyright 2009-2012, Cake Development Corporation (http://cakedc.com)
  * @license MIT License (http://www.opensource.org/licenses/mit-license.php)
  */
+App::uses('TagsAppModel', 'Tags.Model');
 
 /**
  * Tag model
@@ -16,13 +17,6 @@
  * @subpackage tags.models
  */
 class Tag extends TagsAppModel {
-
-/**
- * Name
- *
- * @var string $name
- */
-	public $name = 'Tag';
 
 /**
  * hasMany associations
