@@ -111,7 +111,6 @@ class TaggableBehavior extends ModelBehavior {
 			$tag = trim($tag);
 			if (!empty($tag)) {
 				$key = $this->multibyteKey($model, $tag);
-				// FIX - avoid multiple instances of the same identifier
 				if (empty($tags[$key]) && (empty($identifiers[$key]) || !in_array($identifier, $identifiers[$key]))) {
 					$tags[] = array('name' => $tag, 'identifier' => $identifier, 'keyname' => $key);
 					$identifiers[$key][] = $identifier;
