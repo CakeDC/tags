@@ -1,4 +1,4 @@
-<?php 
+<?php
 /**
  * CakePHP Tags Plugin
  *
@@ -24,13 +24,6 @@
 
 class TagsSchema extends CakeSchema {
 
-/**
- * Name
- *
- * @var string
- * @access public
- */
-	public $name = 'Tags';
 
 /**
  * Before callback
