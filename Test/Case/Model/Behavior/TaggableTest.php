@@ -18,13 +18,6 @@
 class Article extends CakeTestModel {
 
 /**
- * Model name
- *
- * @var string
- */
-	public $name = 'Article';
-
-/**
  * Use table
  *
  * @var string
@@ -108,6 +101,7 @@ class TaggableTest extends CakeTestCase {
 	public function setUp() {
 		parent::setUp();
 		$this->Article = ClassRegistry::init('Article');
+		Configure::write('Config.language', 'eng');
 		$this->Article->Behaviors->attach('Tags.Taggable', array());
 	}
 
@@ -124,7 +118,7 @@ class TaggableTest extends CakeTestCase {
 
 /**
  * Test the occurrence cache
- * 
+ *
  * @return void
  */
 	public function testOccurrenceCache() {
@@ -175,26 +169,29 @@ class TaggableTest extends CakeTestCase {
 			'contain' => array('Tag'),
 			'conditions' => array(
 				'id' => 'article-1')));
+
 		$this->assertTrue(!empty($result['Article']['tags']));
+		$this->assertEqual(3, count($result['Tag']));
 
 
 		$data['tags'] = 'cakephp:foo, developer, cakephp:developer, cakephp:php';
 		$this->Article->save($data, false);
 		$result = $this->Article->Tag->find('all', array(
 			'recursive' => -1,
-			'order' => 'Tag.identifier DESC',
+			'order' => 'Tag.identifier DESC, Tag.name ASC',
 			'conditions' => array(
 				'Tag.identifier' => 'cakephp')));
+
 		$result = Set::extract($result, '{n}.Tag.keyname');
 		$this->assertEqual($result, array(
-			'foo', 'developer', 'php'));
+			'developer', 'foo', 'php'));
 
 		$this->assertFalse($this->Article->saveTags('foo, bar', null));
 		$this->assertFalse($this->Article->saveTags(array('foo', 'bar'), 'something'));
 	}
 
 /**
- * Tests that toggling taggedCounter will update the time_tagged counter in the tagged table 
+ * Tests that toggling taggedCounter will update the time_tagged counter in the tagged table
  *
  * @return void
  */
@@ -210,7 +207,7 @@ class TaggableTest extends CakeTestCase {
 		));
 		$fooCount = Set::extract('/Tag[keyname=foo]/../Tagged/times_tagged', $result);
 		$this->assertEqual($fooCount, array(2));
-		
+
 		$barCount = Set::extract('/Tag[keyname=bar]/../Tagged/times_tagged', $result);
 		$this->assertEqual($barCount, array(2));
 
@@ -297,6 +294,31 @@ class TaggableTest extends CakeTestCase {
 	public function testGettingTagCloudThroughAssociation() {
 		$result = $this->Article->Tagged->find('cloud');
 		$this->assertTrue(is_array($result) && !empty($result));
+	}
+
+
+	public function testSavingEmptyTagsDeleteAssociatedTags() {
+		$this->Article->Behaviors->Taggable->settings['Article']['deleteTagsOnEmptyField'] = true;
+		$data = $this->Article->findById('article-1');
+		$data['Article']['tags']= '';
+		$this->Article->save($data, false);
+		$result = $this->Article->find('first', array(
+			'conditions' => array('id' => 'article-1')
+		));
+
+		$this->assertEmpty($result['Tag']);
+	}
+
+	public function testSavingEmptyTags_DoNotDeleteAssociatedTags() {
+		$this->Article->Behaviors->Taggable->settings['Article']['deleteTagsOnEmptyField'] = false;
+		$data = $this->Article->findById('article-1');
+		$data['Article']['tags']= '';
+		$this->Article->save($data, false);
+		$result = $this->Article->find('first', array(
+			'conditions' => array('id' => 'article-1')
+		));
+
+		$this->assertNotEmpty($result['Tag']);
 	}
 
 }

@@ -65,7 +65,7 @@ class TaggedTest extends CakeTestCase {
 	public function tearDown() {
 		parent::tearDown();
 		unset($this->Tagged);
-		ClassRegistry::flush(); 
+		ClassRegistry::flush();
 	}
 
 /**
@@ -109,7 +109,7 @@ class TaggedTest extends CakeTestCase {
 	public function testFindCloud() {
 		$result = $this->Tagged->find('cloud', array(
 			'model' => 'Article'));
-		
+
 		$this->assertEqual(count($result), 3);
 		$this->assertTrue(isset($result[0][0]['occurrence']));
 		$this->assertEqual($result[0][0]['occurrence'], 1);
@@ -124,7 +124,7 @@ class TaggedTest extends CakeTestCase {
 
 /**
  * Test custom _findTagged method
- * 
+ *
  * @return void
  */
 	public function testFindTagged() {
@@ -204,11 +204,11 @@ class TaggedTest extends CakeTestCase {
 				'Article' => array(
 					'className' => 'TaggedArticle',
 					'foreignKey' => 'foreign_key'))));
-	
+
 		$this->Tagged->Article->bindModel(array(
 			'belongsTo' => array(
 				'User' => array())));
-	
+
 		$result = $this->Tagged->find('all', array(
 			'contain' => array(
 				'Article' => array(

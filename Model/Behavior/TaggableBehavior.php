@@ -8,6 +8,7 @@
  * @copyright Copyright 2009-2012, Cake Development Corporation (http://cakedc.com)
  * @license MIT License (http://www.opensource.org/licenses/mit-license.php)
  */
+App::uses('ModelBehavior', 'Model');
 
 /**
  * Taggable Behavior
@@ -27,17 +28,18 @@ class TaggableBehavior extends ModelBehavior {
 /**
  * Default settings
  *
- * separator             - separator used to enter a lot of tags, comma by default
- * tagAlias              - model alias for Tag model
- * tagClass              - class name of the table storing the tags
- * taggedClass           - class name of the HABTM association table between tags and models
- * field                 - the fieldname that contains the raw tags as string
- * foreignKey            - foreignKey used in the HABTM association
- * associationForeignKey - associationForeignKey used in the HABTM association
- * automaticTagging      - if set to true you don't need to use saveTags() manually
- * language              - only tags in a certain language, string or array
- * taggedCounter         - true to update the number of times a particular tag was used for a specific record
- * unsetInAfterFind      - unset 'Tag' results in afterFind
+ * separator             	- separator used to enter a lot of tags, comma by default
+ * tagAlias              	- model alias for Tag model
+ * tagClass              	- class name of the table storing the tags
+ * taggedClass           	- class name of the HABTM association table between tags and models
+ * field                 	- the fieldname that contains the raw tags as string
+ * foreignKey            	- foreignKey used in the HABTM association
+ * associationForeignKey 	- associationForeignKey used in the HABTM association
+ * automaticTagging      	- if set to true you don't need to use saveTags() manually
+ * language              	- only tags in a certain language, string or array
+ * taggedCounter         	- true to update the number of times a particular tag was used for a specific record
+ * unsetInAfterFind      	- unset 'Tag' results in afterFind
+ * deleteTagsOnEmptyField 	- delete associated Tags if field is empty.
  *
  * @var array
  */
@@ -54,7 +56,9 @@ class TaggableBehavior extends ModelBehavior {
 		'automaticTagging' => true,
 		'unsetInAfterFind' => false,
 		'resetBinding' => false,
-		'taggedCounter' => false);
+		'taggedCounter' => false,
+		'deleteTagsOnEmptyField' => false
+	);
 
 /**
  * Setup
@@ -93,7 +97,7 @@ class TaggableBehavior extends ModelBehavior {
  *
  * @param object $model Model instance
  * @param string $string incoming tag string
- * @param striing $separator separator character
+ * @param string $separator separator character
  * @return array Array of 'tags' and 'identifiers', use extract to get both vars out of the array if needed
  */
 	public function disassembleTags(Model $model, $string = '', $separator = ',') {
@@ -110,7 +114,7 @@ class TaggableBehavior extends ModelBehavior {
 			$tag = trim($tag);
 			if (!empty($tag)) {
 				$key = $this->multibyteKey($model, $tag);
-				if (empty($tags[$key])) {
+				if (empty($tags[$key]) && (empty($identifiers[$key]) || !in_array($identifier, $identifiers[$key]))) {
 					$tags[] = array('name' => $tag, 'identifier' => $identifier, 'keyname' => $key);
 					$identifiers[$key][] = $identifier;
 				}
@@ -328,9 +332,28 @@ class TaggableBehavior extends ModelBehavior {
  * @param AppModel $model
  */
 	public function afterSave(Model $model, $created) {
-		if ($this->settings[$model->alias]['automaticTagging'] == true && !empty($model->data[$model->alias][$this->settings[$model->alias]['field']])) {
+		$hasTags = !empty($model->data[$model->alias][$this->settings[$model->alias]['field']]);
+		if ($this->settings[$model->alias]['automaticTagging'] == true && $hasTags) {
 			$this->saveTags($model, $model->data[$model->alias][$this->settings[$model->alias]['field']], $model->id);
+		} else if (!$hasTags && $this->settings[$model->alias]['deleteTagsOnEmptyField']) {
+			$this->deleteTagged($model);
 		}
+	}
+
+
+/**
+ * Delete associated Tags if record has no tags and deleteTagsOnEmptyField is true
+ * @param object Model instance
+ */
+	public function deleteTagged(Model $model){
+		extract($this->settings[$model->alias]);
+		$tagModel = $model->{$tagAlias};
+		$tagModel->{$taggedAlias}->deleteAll(
+			array(
+				$taggedAlias . '.model' => $model->name,
+				$taggedAlias . '.foreign_key' => $model->id,
+			)
+		);
 	}
 
 /**

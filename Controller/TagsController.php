@@ -8,6 +8,7 @@
  * @copyright Copyright 2009-2012, Cake Development Corporation (http://cakedc.com)
  * @license MIT License (http://www.opensource.org/licenses/mit-license.php)
  */
+App::uses('TagsAppController', 'Tags.Controller');
 
 /**
  * Tags Controller
@@ -16,13 +17,6 @@
  * @subpackage tags.controllers
  */
 class TagsController extends TagsAppController {
-
-/**
- * Name
- *
- * @var string
- */
-	public $name = 'Tags';
 
 /**
  * Uses
