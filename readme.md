@@ -49,7 +49,7 @@ The token "cakephp" will end up as the identifier or category for the tag "speci
 
 ## Support ##
 
-For support and feature request, please visit the [Tags Plugin Support Site](http://cakedc.lighthouseapp.com/projects/59622-tags-plugin/).
+For support and feature request, please visit the [Tags Plugin Support Site](http://github.com/cakedc/tags/).
 
 For more information about our Professional CakePHP Services please visit the [Cake Development Corporation website](http://cakedc.com).
 
