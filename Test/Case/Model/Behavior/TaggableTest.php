@@ -101,6 +101,7 @@ class TaggableTest extends CakeTestCase {
 	public function setUp() {
 		parent::setUp();
 		$this->Article = ClassRegistry::init('Article');
+		Configure::write('Config.language', 'eng');
 		$this->Article->Behaviors->attach('Tags.Taggable', array());
 	}
 
@@ -293,6 +294,31 @@ class TaggableTest extends CakeTestCase {
 	public function testGettingTagCloudThroughAssociation() {
 		$result = $this->Article->Tagged->find('cloud');
 		$this->assertTrue(is_array($result) && !empty($result));
+	}
+
+
+	public function testSavingEmptyTagsDeleteAssociatedTags() {
+		$this->Article->Behaviors->Taggable->settings['Article']['deleteTagsOnEmptyField'] = true;
+		$data = $this->Article->findById('article-1');
+		$data['Article']['tags']= '';
+		$this->Article->save($data, false);
+		$result = $this->Article->find('first', array(
+			'conditions' => array('id' => 'article-1')
+		));
+
+		$this->assertEmpty($result['Tag']);
+	}
+
+	public function testSavingEmptyTags_DoNotDeleteAssociatedTags() {
+		$this->Article->Behaviors->Taggable->settings['Article']['deleteTagsOnEmptyField'] = false;
+		$data = $this->Article->findById('article-1');
+		$data['Article']['tags']= '';
+		$this->Article->save($data, false);
+		$result = $this->Article->find('first', array(
+			'conditions' => array('id' => 'article-1')
+		));
+
+		$this->assertNotEmpty($result['Tag']);
 	}
 
 }
