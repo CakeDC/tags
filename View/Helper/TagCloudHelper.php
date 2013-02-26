@@ -76,21 +76,34 @@ class TagCloudHelper extends AppHelper {
 
 		$cloud = null;
 		foreach ($tags as $tag) {
-			$options['url'][$options['named']] = $tag[$options['tagModel']]['keyname'];
-
 			$size = $options['minSize'] + (($tag[$options['tagModel']]['weight'] - $minWeight) * (($options['maxSize'] - $options['minSize']) / ($spread)));
-			$size = ceil($size);
+			$size = $tag[$options['tagModel']]['size'] = ceil($size);
 
 			$cloud .= $this->_replace($options['before'], $size);
-			$cloud .= $this->Html->link($tag[$options['tagModel']]['name'], $options['url'], array('id' => 'tag-' . $tag[$options['tagModel']]['id'])) . ' ';
+			$cloud .= $this->Html->link($tag[$options['tagModel']]['name'], $this->_tagUrl($tag, $options), array('id' => 'tag-' . $tag[$options['tagModel']]['id'])) . ' ';
 			$cloud .= $this->_replace($options['after'], $size);
 		}
+
 		return $cloud;
+	}
+
+/**
+ * Generates the URL for a tag
+ *
+ * @param array
+ * @param array
+ * @return array|string
+ */
+	protected function _tagUrl($tag, $options) {
+		$options['url'][$options['named']] = $tag[$options['tagModel']]['keyname'];
+		return $options['url'];
 	}
 
 /**
  * Replaces %size% in strings with the calculated "size" of the tag
  *
+ * @param string
+ * @param float
  * @return string
  */
 	protected function _replace($string, $size) {
