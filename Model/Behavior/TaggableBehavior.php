@@ -243,7 +243,9 @@ class TaggableBehavior extends ModelBehavior {
 								$taggedAlias . '.language' => Configure::read('Config.language')),
 							'fields' => 'Tagged.tag_id'));
 
-						$newTagIds = Set::extract($newTagIds, '{n}.Tagged.tag_id');
+						if (!empty($newTagIds)) {
+							$newTagIds = Set::extract($newTagIds, '{n}.Tagged.tag_id');
+						}
 						$tagIds = array_merge($oldTagIds, $newTagIds);
 
 						$this->cacheOccurrence($model, $tagIds);
