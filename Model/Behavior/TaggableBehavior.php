@@ -162,7 +162,7 @@ class TaggableBehavior extends ModelBehavior {
 						$existingTagIdentifiers[$existing[$tagAlias]['keyname']][] = $existing[$tagAlias]['identifier'];
 					}
 					$newTags = array();
-					foreach($tags as $possibleNewTag) {
+					foreach ($tags as $possibleNewTag) {
 						$key = $possibleNewTag['keyname'];
 						if (!in_array($key, $existingTagKeyNames)) {
 							array_push($newTags, $possibleNewTag);
@@ -244,6 +244,9 @@ class TaggableBehavior extends ModelBehavior {
 							'fields' => 'Tagged.tag_id'));
 
 						$newTagIds = Set::extract($newTagIds, '{n}.Tagged.tag_id');
+						if (!empty($newTagIds)) {
+							$newTagIds = Set::extract($newTagIds, '{n}.Tagged.tag_id');
+						}
 						$tagIds = array_merge($oldTagIds, $newTagIds);
 
 						$this->cacheOccurrence($model, $tagIds);
@@ -321,7 +324,7 @@ class TaggableBehavior extends ModelBehavior {
  */
 	public function tagArrayToString(Model $model, $data = null) {
 		if ($data) {
-			return join($this->settings[$model->alias]['separator'].' ', Set::extract($data, '{n}.name'));
+			return join($this->settings[$model->alias]['separator'] . ' ', Set::extract($data, '{n}.name'));
 		}
 		return '';
 	}
@@ -340,12 +343,11 @@ class TaggableBehavior extends ModelBehavior {
 		}
 	}
 
-
 /**
  * Delete associated Tags if record has no tags and deleteTagsOnEmptyField is true
  * @param object Model instance
  */
-	public function deleteTagged(Model $model){
+	public function deleteTagged(Model $model) {
 		extract($this->settings[$model->alias]);
 		$tagModel = $model->{$tagAlias};
 		$tagModel->{$taggedAlias}->deleteAll(
