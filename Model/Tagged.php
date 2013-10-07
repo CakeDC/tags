@@ -167,7 +167,7 @@ class Tagged extends TagsAppModel {
 					$query['fields'] = "COUNT(DISTINCT $Model->alias.$Model->primaryKey)";
 					$this->Behaviors->Containable->setup($this, array('autoFields' => false));
 				} else {
-					$query['fields'][] = "DISTINCT " . join(',', $this->getDataSource()->fields($Model));
+					array_unshift($query['fields'], "DISTINCT " . join(',', $this->getDataSource()->fields($Model)));
 				}
 
 				if (!empty($query['by'])) {
