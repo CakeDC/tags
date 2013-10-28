@@ -66,7 +66,7 @@ class Article extends CakeTestModel {
  * @package tags
  * @subpackage tags.tests.cases.behaviors
  */
-class TaggableTest extends CakeTestCase {
+class TaggableBehaviorTest extends CakeTestCase {
 
 /**
  * Plugin name used for fixtures loading
