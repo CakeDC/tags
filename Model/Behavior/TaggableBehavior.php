@@ -1,11 +1,11 @@
 <?php
 /**
- * Copyright 2009-2012, Cake Development Corporation (http://cakedc.com)
+ * Copyright 2009-2013, Cake Development Corporation (http://cakedc.com)
  *
  * Licensed under The MIT License
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright Copyright 2009-2012, Cake Development Corporation (http://cakedc.com)
+ * @copyright Copyright 2009-2013, Cake Development Corporation (http://cakedc.com)
  * @license MIT License (http://www.opensource.org/licenses/mit-license.php)
  */
 App::uses('ModelBehavior', 'Model');
@@ -155,6 +155,7 @@ class TaggableBehavior extends ModelBehavior {
 						$tagAlias . '.keyname',
 						$tagAlias . '.name',
 						$tagAlias . '.id')));
+
 				if (!empty($existingTags)) {
 					foreach ($existingTags as $existing) {
 						$existingTagKeyNames[] = $existing[$tagAlias]['keyname'];
@@ -178,6 +179,7 @@ class TaggableBehavior extends ModelBehavior {
 					$existingTagIds = $alreadyTagged = array();
 					$newTags = $tags;
 				}
+
 				foreach ($newTags as $key => $newTag) {
 					$tagModel->create();
 					$tagModel->save($newTag);
@@ -207,7 +209,7 @@ class TaggableBehavior extends ModelBehavior {
 						$deleteAll['NOT'] = array($taggedAlias . '.tag_id' => $alreadyTagged);
 					}
 
-					$newTagIds = $oldTagIds = array();
+					$oldTagIds = array();
 
 					if ($update == true) {
 						$oldTagIds = $tagModel->{$taggedAlias}->find('all', array(
@@ -233,7 +235,6 @@ class TaggableBehavior extends ModelBehavior {
 						$tagModel->{$taggedAlias}->save();
 					}
 
-					//To update occurrence
 					if ($this->settings[$model->alias]['cacheOccurrence']) {
 						$newTagIds = $tagModel->{$taggedAlias}->find('all', array(
 							'contain' => array(),
@@ -241,15 +242,14 @@ class TaggableBehavior extends ModelBehavior {
 								$taggedAlias . '.model' => $model->name,
 								$taggedAlias . '.foreign_key' => $foreignKey,
 								$taggedAlias . '.language' => Configure::read('Config.language')),
-							'fields' => 'Tagged.tag_id'));
+							'fields' => array(
+								$taggedAlias.  '.tag_id')));
 
-						$newTagIds = Set::extract($newTagIds, '{n}.Tagged.tag_id');
 						if (!empty($newTagIds)) {
 							$newTagIds = Set::extract($newTagIds, '{n}.Tagged.tag_id');
 						}
-						$tagIds = array_merge($oldTagIds, $newTagIds);
 
-						$this->cacheOccurrence($model, $tagIds);
+						$this->cacheOccurrence($model, array_merge($oldTagIds, $newTagIds));
 					}
 				}
 			}
@@ -261,8 +261,8 @@ class TaggableBehavior extends ModelBehavior {
 /**
  * Cache the weight or occurence of a tag in the tags table
  *
- * @param object $model instance of a model
- * @param string $tagId Tag UUID
+ * @param \Model|object $model instance of a model
+ * @param $tagIds
  * @return void
  */
 	public function cacheOccurrence(Model $model, $tagIds) {
@@ -274,7 +274,7 @@ class TaggableBehavior extends ModelBehavior {
 			$fieldName = Inflector::underscore($model->name) . '_occurrence';
 			$tagModel = $model->{$this->settings[$model->alias]['tagAlias']};
 			$taggedModel = $tagModel->{$this->settings[$model->alias]['taggedAlias']};
-			$data = array('id' => $tagId);
+			$data = array($tagModel->primaryKey => $tagId);
 
 			if ($tagModel->hasField($fieldName)) {
 				$data[$fieldName] = $taggedModel->find('count', array(
@@ -286,6 +286,7 @@ class TaggableBehavior extends ModelBehavior {
 			$data['occurrence'] = $taggedModel->find('count', array(
 				'conditions' => array(
 					'Tagged.tag_id' => $tagId)));
+
 			$tagModel->save($data, array('validate' => false, 'callbacks' => false));
 		}
 	}
@@ -334,7 +335,7 @@ class TaggableBehavior extends ModelBehavior {
  *
  * @param AppModel $model
  */
-	public function afterSave(Model $model, $created) {
+	public function afterSave(Model $model, $created, $options = array()) {
 		$hasTags = !empty($model->data[$model->alias][$this->settings[$model->alias]['field']]);
 		if ($this->settings[$model->alias]['automaticTagging'] == true && $hasTags) {
 			$this->saveTags($model, $model->data[$model->alias][$this->settings[$model->alias]['field']], $model->id);
@@ -366,7 +367,7 @@ class TaggableBehavior extends ModelBehavior {
  * @param boolean $primary
  * @return array
  */
-	public function afterFind(Model $model, $results, $primary) {
+	public function afterFind(Model $model, $results, $primary = false) {
 		extract($this->settings[$model->alias]);
 		foreach ($results as $key => $row) {
 			$row[$model->alias][$field] = '';
