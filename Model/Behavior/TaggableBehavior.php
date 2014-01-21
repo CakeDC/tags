@@ -76,6 +76,7 @@ class TaggableBehavior extends ModelBehavior {
 
 		$this->settings[$model->alias] = array_merge($this->settings[$model->alias], $config);
 		$this->settings[$model->alias]['withModel'] = $this->settings[$model->alias]['taggedClass'];
+		$this->bindTagAssociations($model);
 	}
 
 /**
