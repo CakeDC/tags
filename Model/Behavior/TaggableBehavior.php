@@ -359,7 +359,7 @@ class TaggableBehavior extends ModelBehavior {
  * @param boolean $primary
  * @return void
  */
-	public function afterSave(Model $model, $results, $primary = false) {
+	public function afterSave(Model $model, $created, $options = array()) {
 		$hasTags = !empty($model->data[$model->alias][$this->settings[$model->alias]['field']]);
 		if ($this->settings[$model->alias]['automaticTagging'] == true && $hasTags) {
 			$this->saveTags($model, $model->data[$model->alias][$this->settings[$model->alias]['field']], $model->id);
