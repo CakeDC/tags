@@ -26,7 +26,9 @@ class Tag extends TagsAppModel {
 	public $hasMany = array(
 		'Tagged' => array(
 			'className' => 'Tags.Tagged',
-			'foreignKey' => 'tag_id'));
+			'foreignKey' => 'tag_id'
+		)
+	);
 
 /**
  * HABTM associations
@@ -42,11 +44,13 @@ class Tag extends TagsAppModel {
  */
 	public $validate = array(
 		'name' => array('rule' => 'notEmpty'),
-		'keyname' => array('rule' => 'notEmpty'));
+		'keyname' => array('rule' => 'notEmpty')
+	);
 
 /**
  * Returns the data for a single tag
  *
+ * @throws CakeException
  * @param string keyname
  * @return array
  */
@@ -61,7 +65,6 @@ class Tag extends TagsAppModel {
 		return $result;
 	}
 
-
 /**
  * Pre-populates the tag table with entered tags
  *
@@ -70,13 +73,14 @@ class Tag extends TagsAppModel {
  */
 	public function add($postData = null) {
 		if (isset($postData[$this->alias]['tags'])) {
-			$this->Behaviors->attach('Tags.Taggable', array(
+			$this->Behaviors->load('Tags.Taggable', array(
 				'resetBinding' => true,
-				'automaticTagging' => false));
+				'automaticTagging' => false
+			));
 			$this->Tag = $this;
 			$result = $this->saveTags($postData[$this->alias]['tags'], false, false);
 			unset($this->Tag);
-			$this->Behaviors->detach('Tags.Taggable');
+			$this->Behaviors->unload('Tags.Taggable');
 			return $result;
 		}
 	}
@@ -84,6 +88,7 @@ class Tag extends TagsAppModel {
 /**
  * Edits an existing tag, allows only to modify upper/lowercased characters
  *
+ * @throws CakeException
  * @param string tag uuid
  * @param array controller post data usually $this->request->data
  * @return mixed True on successfully save else post data as array
@@ -92,7 +97,8 @@ class Tag extends TagsAppModel {
 		$tag = $this->find('first', array(
 			'contain' => array(),
 			'conditions' => array(
-				$this->alias . '.' . $this->primaryKey => $tagId)));
+				$this->alias . '.' . $this->primaryKey => $tagId)
+		));
 
 		$this->set($tag);
 		if (empty($tag)) {
@@ -113,4 +119,5 @@ class Tag extends TagsAppModel {
 			}
 		}
 	}
+
 }

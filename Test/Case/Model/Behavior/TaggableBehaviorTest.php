@@ -195,13 +195,13 @@ class TaggableBehaviorTest extends CakeTestCase {
  *
  * @return void
  */
-	function testSaveTimesTagged() {
+	public function testSaveTimesTagged() {
 		$this->Article->Behaviors->Taggable->settings['Article']['taggedCounter'] = true;
 		$tags = 'foo, bar , test';
 		$this->assertTrue($this->Article->saveTags($tags, 'article-1', false));
 		$this->assertTrue($this->Article->saveTags($tags, 'article-1', false));
 
-		$result =  $this->Article->Tagged->find('all', array(
+		$result = $this->Article->Tagged->find('all', array(
 			'conditions' => array('model' => 'Article'),
 			'contain' => array('Tag'),
 		));

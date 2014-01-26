@@ -13,6 +13,7 @@ class AllTagsPluginTest extends PHPUnit_Framework_TestSuite {
 		$Suite->addTestDirectory($path . DS . 'Controller');
 		$Suite->addTestDirectory($path . DS . 'View' . DS . 'Helper');
 		$Suite->addTestDirectory($path . DS . 'Model');
+		$Suite->addTestDirectory($path . DS . 'Model' . DS . 'Behavior');
 		return $Suite;
 	}
 
