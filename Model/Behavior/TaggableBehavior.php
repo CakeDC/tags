@@ -175,7 +175,10 @@ class TaggableBehavior extends ModelBehavior {
 						$tagAlias . '.identifier',
 						$tagAlias . '.keyname',
 						$tagAlias . '.name',
-						$tagAlias . '.id')));
+						$tagAlias . '.id'
+					)
+				));
+
 				if (!empty($existingTags)) {
 					foreach ($existingTags as $existing) {
 						$existingTagKeyNames[] = $existing[$tagAlias]['keyname'];
@@ -202,7 +205,7 @@ class TaggableBehavior extends ModelBehavior {
 				foreach ($newTags as $key => $newTag) {
 					$tagModel->create();
 					$tagModel->save($newTag);
-					$newTagIds[] = $tagModel->id;
+					$newTagIds[] = $tagModel->getLastInsertId();
 				}
 
 				if ($foreignKey !== false) {
@@ -216,7 +219,8 @@ class TaggableBehavior extends ModelBehavior {
 							$taggedAlias . '.foreign_key' => $foreignKey,
 							$taggedAlias . '.language' => Configure::read('Config.language'),
 							$taggedAlias . '.tag_id' => $existingTagIds),
-						'fields' => 'Tagged.tag_id'));
+						'fields' => 'Tagged.tag_id'
+					));
 
 					$deleteAll = array(
 						$taggedAlias . '.foreign_key' => $foreignKey,
@@ -228,7 +232,7 @@ class TaggableBehavior extends ModelBehavior {
 						$deleteAll['NOT'] = array($taggedAlias . '.tag_id' => $alreadyTagged);
 					}
 
-					$newTagIds = $oldTagIds = array();
+					$oldTagIds = array();
 
 					if ($update == true) {
 						$oldTagIds = $tagModel->{$taggedAlias}->find('all', array(
@@ -237,7 +241,8 @@ class TaggableBehavior extends ModelBehavior {
 								$taggedAlias . '.model' => $model->name,
 								$taggedAlias . '.foreign_key' => $foreignKey,
 								$taggedAlias . '.language' => Configure::read('Config.language')),
-							'fields' => 'Tagged.tag_id'));
+							'fields' => 'Tagged.tag_id'
+						));
 
 						$oldTagIds = Set::extract($oldTagIds, '/Tagged/tag_id');
 						$tagModel->{$taggedAlias}->deleteAll($deleteAll, false);
@@ -262,15 +267,15 @@ class TaggableBehavior extends ModelBehavior {
 								$taggedAlias . '.model' => $model->name,
 								$taggedAlias . '.foreign_key' => $foreignKey,
 								$taggedAlias . '.language' => Configure::read('Config.language')),
-							'fields' => 'Tagged.tag_id'));
+							'fields' => 'Tagged.tag_id'
+						));
 
 						$newTagIds = Set::extract($newTagIds, '{n}.Tagged.tag_id');
 						if (!empty($newTagIds)) {
 							$newTagIds = Set::extract($newTagIds, '{n}.Tagged.tag_id');
 						}
-						$tagIds = array_merge($oldTagIds, $newTagIds);
 
-						$this->cacheOccurrence($model, $tagIds);
+						$this->cacheOccurrence($model, array_merge($oldTagIds, $newTagIds));
 					}
 				}
 			}
@@ -295,19 +300,26 @@ class TaggableBehavior extends ModelBehavior {
 			$fieldName = Inflector::underscore($model->name) . '_occurrence';
 			$tagModel = $model->{$this->settings[$model->alias]['tagAlias']};
 			$taggedModel = $tagModel->{$this->settings[$model->alias]['taggedAlias']};
-			$data = array('id' => $tagId);
+			$data = array($tagModel->primaryKey => $tagId);
 
 			if ($tagModel->hasField($fieldName)) {
 				$data[$fieldName] = $taggedModel->find('count', array(
 					'conditions' => array(
 						'Tagged.tag_id' => $tagId,
-						'Tagged.model' => $model->name)));
+						'Tagged.model' => $model->name
+					)
+				));
 			}
 
 			$data['occurrence'] = $taggedModel->find('count', array(
 				'conditions' => array(
-					'Tagged.tag_id' => $tagId)));
-			$tagModel->save($data, array('validate' => false, 'callbacks' => false));
+					'Tagged.tag_id' => $tagId
+				)
+			));
+			$tagModel->save($data, array(
+				'validate' => false,
+				'callbacks' => false)
+			);
 		}
 	}
 
@@ -316,7 +328,7 @@ class TaggableBehavior extends ModelBehavior {
  *
  * @param Model $model
  * @param string Tag name string
- * @return string Multibyte safe key string
+ * @returns string Multibyte safe key string
  */
 	public function multibyteKey(Model $model, $string = null) {
 		$str = mb_strtolower($string);
@@ -355,8 +367,8 @@ class TaggableBehavior extends ModelBehavior {
  * afterSave callback
  *
  * @param Model $model
- * @param array $results
- * @param boolean $primary
+ * @param array $created
+ * @param array $options
  * @return void
  */
 	public function afterSave(Model $model, $created, $options = array()) {

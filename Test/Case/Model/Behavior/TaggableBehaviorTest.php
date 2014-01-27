@@ -296,11 +296,15 @@ class TaggableBehaviorTest extends CakeTestCase {
 		$this->assertTrue(is_array($result) && !empty($result));
 	}
 
-
+/**
+ * testSavingEmptyTagsDeleteAssociatedTags
+ *
+ * @return void
+ */
 	public function testSavingEmptyTagsDeleteAssociatedTags() {
 		$this->Article->Behaviors->Taggable->settings['Article']['deleteTagsOnEmptyField'] = true;
 		$data = $this->Article->findById('article-1');
-		$data['Article']['tags']= '';
+		$data['Article']['tags'] = '';
 		$this->Article->save($data, false);
 		$result = $this->Article->find('first', array(
 			'conditions' => array('id' => 'article-1')
@@ -309,16 +313,52 @@ class TaggableBehaviorTest extends CakeTestCase {
 		$this->assertEmpty($result['Tag']);
 	}
 
-	public function testSavingEmptyTags_DoNotDeleteAssociatedTags() {
+/**
+ * testSavingEmptyTagsDoNotDeleteAssociatedTags
+ *
+ * @return void
+ */
+	public function testSavingEmptyTagsDoNotDeleteAssociatedTags() {
 		$this->Article->Behaviors->Taggable->settings['Article']['deleteTagsOnEmptyField'] = false;
 		$data = $this->Article->findById('article-1');
-		$data['Article']['tags']= '';
+		$data['Article']['tags'] = '';
 		$this->Article->save($data, false);
 		$result = $this->Article->find('first', array(
 			'conditions' => array('id' => 'article-1')
 		));
 
 		$this->assertNotEmpty($result['Tag']);
+	}
+
+/**
+ * testSavingTagsDoesNotCreateEmptyRecords
+ *
+ * @return void
+ */
+	public function testSavingTagsDoesNotCreateEmptyRecords() {
+		$count = $this->Article->Tag->find('count', array(
+			'conditions' => array(
+				'Tag.name' => '',
+				'Tag.keyname' => '',
+			)
+		));
+		$this->assertEquals($count, 0);
+
+		$data['id'] = 'article-1';
+		$data['tags'] = 'foo, bar, test';
+		$this->Article->save($data, false);
+		$result = $this->Article->find('first', array(
+			'conditions' => array(
+				'id' => 'article-1')
+		));
+
+		$count = $this->Article->Tag->find('count', array(
+			'conditions' => array(
+				'Tag.name' => '',
+				'Tag.keyname' => '',
+			)
+		));
+		$this->assertEquals($count, 0);
 	}
 
 }
