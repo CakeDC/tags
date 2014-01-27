@@ -1,11 +1,11 @@
 <?php
 /**
- * Copyright 2009-2012, Cake Development Corporation (http://cakedc.com)
+ * Copyright 2009-2014, Cake Development Corporation (http://cakedc.com)
  *
  * Licensed under The MIT License
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright Copyright 2009-2012, Cake Development Corporation (http://cakedc.com)
+ * @copyright Copyright 2009-2014, Cake Development Corporation (http://cakedc.com)
  * @license MIT License (http://www.opensource.org/licenses/mit-license.php)
  */
 
@@ -66,7 +66,7 @@ class Article extends CakeTestModel {
  * @package tags
  * @subpackage tags.tests.cases.behaviors
  */
-class TaggableTest extends CakeTestCase {
+class TaggableBehaviorTest extends CakeTestCase {
 
 /**
  * Plugin name used for fixtures loading
@@ -195,13 +195,13 @@ class TaggableTest extends CakeTestCase {
  *
  * @return void
  */
-	function testSaveTimesTagged() {
+	public function testSaveTimesTagged() {
 		$this->Article->Behaviors->Taggable->settings['Article']['taggedCounter'] = true;
 		$tags = 'foo, bar , test';
 		$this->assertTrue($this->Article->saveTags($tags, 'article-1', false));
 		$this->assertTrue($this->Article->saveTags($tags, 'article-1', false));
 
-		$result =  $this->Article->Tagged->find('all', array(
+		$result = $this->Article->Tagged->find('all', array(
 			'conditions' => array('model' => 'Article'),
 			'contain' => array('Tag'),
 		));
@@ -296,11 +296,15 @@ class TaggableTest extends CakeTestCase {
 		$this->assertTrue(is_array($result) && !empty($result));
 	}
 
-
+/**
+ * testSavingEmptyTagsDeleteAssociatedTags
+ *
+ * @return void
+ */
 	public function testSavingEmptyTagsDeleteAssociatedTags() {
 		$this->Article->Behaviors->Taggable->settings['Article']['deleteTagsOnEmptyField'] = true;
 		$data = $this->Article->findById('article-1');
-		$data['Article']['tags']= '';
+		$data['Article']['tags'] = '';
 		$this->Article->save($data, false);
 		$result = $this->Article->find('first', array(
 			'conditions' => array('id' => 'article-1')
@@ -309,16 +313,52 @@ class TaggableTest extends CakeTestCase {
 		$this->assertEmpty($result['Tag']);
 	}
 
-	public function testSavingEmptyTags_DoNotDeleteAssociatedTags() {
+/**
+ * testSavingEmptyTagsDoNotDeleteAssociatedTags
+ *
+ * @return void
+ */
+	public function testSavingEmptyTagsDoNotDeleteAssociatedTags() {
 		$this->Article->Behaviors->Taggable->settings['Article']['deleteTagsOnEmptyField'] = false;
 		$data = $this->Article->findById('article-1');
-		$data['Article']['tags']= '';
+		$data['Article']['tags'] = '';
 		$this->Article->save($data, false);
 		$result = $this->Article->find('first', array(
 			'conditions' => array('id' => 'article-1')
 		));
 
 		$this->assertNotEmpty($result['Tag']);
+	}
+
+/**
+ * testSavingTagsDoesNotCreateEmptyRecords
+ *
+ * @return void
+ */
+	public function testSavingTagsDoesNotCreateEmptyRecords() {
+		$count = $this->Article->Tag->find('count', array(
+			'conditions' => array(
+				'Tag.name' => '',
+				'Tag.keyname' => '',
+			)
+		));
+		$this->assertEquals($count, 0);
+
+		$data['id'] = 'article-1';
+		$data['tags'] = 'foo, bar, test';
+		$this->Article->save($data, false);
+		$result = $this->Article->find('first', array(
+			'conditions' => array(
+				'id' => 'article-1')
+		));
+
+		$count = $this->Article->Tag->find('count', array(
+			'conditions' => array(
+				'Tag.name' => '',
+				'Tag.keyname' => '',
+			)
+		));
+		$this->assertEquals($count, 0);
 	}
 
 }

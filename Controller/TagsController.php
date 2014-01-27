@@ -1,11 +1,11 @@
 <?php
 /**
- * Copyright 2009-2012, Cake Development Corporation (http://cakedc.com)
+ * Copyright 2009-2014, Cake Development Corporation (http://cakedc.com)
  *
  * Licensed under The MIT License
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright Copyright 2009-2012, Cake Development Corporation (http://cakedc.com)
+ * @copyright Copyright 2009-2014, Cake Development Corporation (http://cakedc.com)
  * @license MIT License (http://www.opensource.org/licenses/mit-license.php)
  */
 App::uses('TagsAppController', 'Tags.Controller');
@@ -23,21 +23,28 @@ class TagsController extends TagsAppController {
  *
  * @var array
  */
-	public $uses = array('Tags.Tag');
+	public $uses = array(
+		'Tags.Tag'
+	);
 
 /**
  * Components
  *
  * @var array
  */
-	public $components = array('Session');
+	public $components = array(
+		'Session',
+		'Paginator'
+	);
 
 /**
  * Helpers
  *
  * @var array
  */
-	public $helpers = array('Html', 'Form');
+	public $helpers = array(
+		'Html', 'Form'
+	);
 
 /**
  * Index action
@@ -46,7 +53,7 @@ class TagsController extends TagsAppController {
  */
 	public function index() {
 		$this->Tag->recursive = 0;
-		$this->set('tags', $this->paginate());
+		$this->set('tags', $this->Paginator->paginate());
 	}
 
 /**
@@ -71,7 +78,7 @@ class TagsController extends TagsAppController {
  */
 	public function admin_index() {
 		$this->Tag->recursive = 0;
-		$this->set('tags', $this->paginate());
+		$this->set('tags', $this->Paginator->paginate());
 	}
 
 /**
