@@ -170,12 +170,12 @@ class TaggableBehavior extends ModelBehavior {
 				$existingTags = $tagModel->find('all', array(
 					'contain' => array(),
 					'conditions' => array(
-						$tagAlias . '.keyname' => Set::extract($tags, '{n}.keyname')),
+						$tagModel->alias . '.keyname' => Set::extract($tags, '{n}.keyname')),
 					'fields' => array(
-						$tagAlias . '.identifier',
-						$tagAlias . '.keyname',
-						$tagAlias . '.name',
-						$tagAlias . '.id'
+						$tagModel->alias . '.identifier',
+						$tagModel->alias . '.keyname',
+						$tagModel->alias . '.name',
+						$tagModel->alias . '.id'
 					)
 				));
 

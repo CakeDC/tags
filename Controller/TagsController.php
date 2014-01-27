@@ -52,7 +52,7 @@ class TagsController extends TagsAppController {
  * @return void
  */
 	public function index() {
-		$this->Tag->recursive = 0;
+		$this->{$this->modelClass}->recursive = 0;
 		$this->set('tags', $this->Paginator->paginate());
 	}
 
@@ -64,7 +64,7 @@ class TagsController extends TagsAppController {
  */
 	public function view($keyName = null) {
 		try {
-			$this->set('tag', $this->Tag->view($keyName));
+			$this->set('tag', $this->{$this->modelClass}->view($keyName));
 		} catch (Exception $e) {
 			$this->Session->setFlash($e->getMessage());
 			$this->redirect('/');
@@ -77,7 +77,7 @@ class TagsController extends TagsAppController {
  * @return void
  */
 	public function admin_index() {
-		$this->Tag->recursive = 0;
+		 $this->{$this->modelClass}->recursive = 0;
 		$this->set('tags', $this->Paginator->paginate());
 	}
 
@@ -89,7 +89,7 @@ class TagsController extends TagsAppController {
  */
 	public function admin_view($keyName) {
 		try {
-			$this->set('tag', $this->Tag->view($keyName));
+			$this->set('tag', $this->{$this->modelClass}->view($keyName));
 		} catch (Exception $e) {
 			$this->Session->setFlash($e->getMessage());
 			$this->redirect('/');
@@ -103,7 +103,7 @@ class TagsController extends TagsAppController {
  */
 	public function admin_add() {
 		if (!empty($this->request->data)) {
-			if ($this->Tag->add($this->request->data)) {
+			if ($this->{$this->modelClass}->add($this->request->data)) {
 				$this->Session->setFlash(__d('tags', 'The Tags has been saved.'));
 				$this->redirect(array('action' => 'index'));
 			}
@@ -118,7 +118,7 @@ class TagsController extends TagsAppController {
  */
 	public function admin_edit($tagId = null) {
 		try {
-			$result = $this->Tag->edit($tagId, $this->request->data);
+			$result = $this->{$this->modelClass}->edit($tagId, $this->request->data);
 			if ($result === true) {
 				$this->Session->setFlash(__d('tags', 'Tag saved.'));
 				$this->redirect(array('action' => 'index'));
@@ -131,7 +131,7 @@ class TagsController extends TagsAppController {
 		}
 
 		if (empty($this->request->data)) {
-			$this->request->data = $this->Tag->data;
+			$this->request->data = $this->{$this->modelClass}->data;
 		}
 	}
 
@@ -142,7 +142,7 @@ class TagsController extends TagsAppController {
  * @return void
  */
 	public function admin_delete($id = null) {
-		if ($this->Tag->delete($id)) {
+		if ($this->{$this->modelClass}->delete($id)) {
 			$this->Session->setFlash(__d('tags', 'Tag deleted.'));
 		} else {
 			$this->Session->setFlash(__d('tags', 'Invalid Tag.'));
