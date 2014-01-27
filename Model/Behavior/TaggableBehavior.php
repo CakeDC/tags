@@ -270,9 +270,8 @@ class TaggableBehavior extends ModelBehavior {
 							'fields' => 'Tagged.tag_id'
 						));
 
-						$newTagIds = Set::extract($newTagIds, '{n}.Tagged.tag_id');
 						if (!empty($newTagIds)) {
-							$newTagIds = Set::extract($newTagIds, '{n}.Tagged.tag_id');
+							$newTagIds = Hash::extract($newTagIds, '{n}.Tagged.tag_id');
 						}
 
 						$this->cacheOccurrence($model, array_merge($oldTagIds, $newTagIds));
@@ -292,7 +291,7 @@ class TaggableBehavior extends ModelBehavior {
  * @return void
  */
 	public function cacheOccurrence(Model $model, $tagIds) {
-		if (is_string($tagIds) || is_int($tagIds)) {
+		if (!is_array($tagIds)) {
 			$tagIds = array($tagIds);
 		}
 
