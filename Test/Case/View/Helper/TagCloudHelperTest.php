@@ -22,6 +22,32 @@ App::uses('TagCloudHelper', 'Tags.View/Helper');
 class TagCloudHelperTest extends CakeTestCase {
 
 /**
+ * Sample data for testing purposes
+ *
+ * @var array
+ */
+	public $sampleTags = array(
+		array(
+			'Tag' => array(
+				'id' => 1,
+				'identifier' => null,
+				'name' => 'CakePHP',
+				'keyname' => 'cakephp',
+				'weight' => 2,
+				'created' => '2008-06-02 18:18:11',
+				'modified' => '2008-06-02 18:18:37')),
+		array(
+			'Tag' => array(
+				'id' => 2,
+				'identifier' => null,
+				'name' => 'CakeDC',
+				'keyname' => 'cakedc',
+				'weight' => 2,
+				'created' => '2008-06-01 18:18:15',
+				'modified' => '2008-06-01 18:18:15')),
+	);
+
+/**
  * Helper being tested
  *
  * @var TagCloudHelper
@@ -47,26 +73,6 @@ class TagCloudHelperTest extends CakeTestCase {
  */
 	public function testDisplay() {
 		$this->assertEqual($this->TagCloud->display(), '');
-		$tags = array(
-			array(
-				'Tag' => array(
-					'id'  => 1,
-					'identifier'  => null,
-					'name'  => 'CakePHP',
-					'keyname'  => 'cakephp',
-					'weight' => 2,
-					'created'  => '2008-06-02 18:18:11',
-					'modified'  => '2008-06-02 18:18:37')),
-			array(
-				'Tag' => array(
-					'id'  => 2,
-					'identifier'  => null,
-					'name'  => 'CakeDC',
-					'keyname'  => 'cakedc',
-					'weight' => 2,
-					'created'  => '2008-06-01 18:18:15',
-					'modified'  => '2008-06-01 18:18:15')),
-		);
 
 		// Test tags shuffling
 		$options = array(
@@ -75,14 +81,14 @@ class TagCloudHelperTest extends CakeTestCase {
 		$i = 100;
 		do {
 			$i--;
-			$result = $this->TagCloud->display($tags, $options);
+			$result = $this->TagCloud->display($this->sampleTags, $options);
 		} while ($result == $expected && $i > 0);
 		$this->assertNotEqual($result, $expected);
 
 		// Test normal display
 		$options = array(
 			'shuffle' => false);
-		$result = $this->TagCloud->display($tags, $options);
+		$result = $this->TagCloud->display($this->sampleTags, $options);
 		$this->assertEqual($result, $expected);
 
 		// Test options
@@ -94,11 +100,12 @@ class TagCloudHelperTest extends CakeTestCase {
 			'url' => array('controller' => 'search', 'from' => 'twitter'),
 			'named' => 'query'
 		));
-		$result = $this->TagCloud->display($tags, $options);
+		$result = $this->TagCloud->display($this->sampleTags, $options);
 		$expected = '<span size="1"><a href="/search/index/from:twitter/query:cakephp" id="tag-1">CakePHP</a> </span><!-- size: 1 -->'.
 			'<span size="1"><a href="/search/index/from:twitter/query:cakedc" id="tag-2">CakeDC</a> </span><!-- size: 1 -->';
 		$this->assertEqual($result, $expected);
 
+		$tags = $this->sampleTags;
 		$tags[1]['Tag']['weight'] = 1;
 		$result = $this->TagCloud->display($tags, $options);
 		$expected = '<span size="100"><a href="/search/index/from:twitter/query:cakephp" id="tag-1">CakePHP</a> </span><!-- size: 100 -->'.
