@@ -113,6 +113,23 @@ class TagCloudHelperTest extends CakeTestCase {
 		$this->assertEqual($result, $expected);
 	}
 
+	public function testDisplayShouldDefineCorrectSizeWhenCustomWeightField() {
+		$tags = $this->sampleTags;
+		$tags[0]['Tag']['custom_weight'] = 6;
+		$tags[1]['Tag']['custom_weight'] = 3;
+
+		$options = array(
+			'before' => '<!-- size: %size% -->',
+			'shuffle' => false,
+			'extract' => '{n}.Tag.custom_weight',
+		);
+
+		$result = $this->TagCloud->display($tags, $options);
+		$expected = '<!-- size: 160 --><a href="/search/index/by:cakephp" id="tag-1">CakePHP</a> '.
+			'<!-- size: 80 --><a href="/search/index/by:cakedc" id="tag-2">CakeDC</a> ';
+		$this->assertEqual($result, $expected);
+	}
+
 /**
  * (non-PHPdoc)
  * @see cake/tests/lib/CakeTestCase#tearDown($method)
