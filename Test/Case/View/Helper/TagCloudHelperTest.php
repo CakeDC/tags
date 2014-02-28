@@ -72,7 +72,7 @@ class TagCloudHelperTest extends CakeTestCase {
  * @return void
  */
 	public function testDisplay() {
-		$this->assertEqual($this->TagCloud->display(), '');
+		$this->assertEquals($this->TagCloud->display(), '');
 
 		// Test tags shuffling
 		$options = array(
@@ -89,7 +89,7 @@ class TagCloudHelperTest extends CakeTestCase {
 		$options = array(
 			'shuffle' => false);
 		$result = $this->TagCloud->display($this->sampleTags, $options);
-		$this->assertEqual($result, $expected);
+		$this->assertEquals($result, $expected);
 
 		// Test options
 		$options = array_merge($options, array(
@@ -103,14 +103,14 @@ class TagCloudHelperTest extends CakeTestCase {
 		$result = $this->TagCloud->display($this->sampleTags, $options);
 		$expected = '<span size="1"><a href="/search/index/from:twitter/query:cakephp" id="tag-1">CakePHP</a> </span><!-- size: 1 -->'.
 			'<span size="1"><a href="/search/index/from:twitter/query:cakedc" id="tag-2">CakeDC</a> </span><!-- size: 1 -->';
-		$this->assertEqual($result, $expected);
+		$this->assertEquals($result, $expected);
 
 		$tags = $this->sampleTags;
 		$tags[1]['Tag']['weight'] = 1;
 		$result = $this->TagCloud->display($tags, $options);
 		$expected = '<span size="100"><a href="/search/index/from:twitter/query:cakephp" id="tag-1">CakePHP</a> </span><!-- size: 100 -->'.
 			'<span size="1"><a href="/search/index/from:twitter/query:cakedc" id="tag-2">CakeDC</a> </span><!-- size: 1 -->';
-		$this->assertEqual($result, $expected);
+		$this->assertEquals($result, $expected);
 	}
 
 	public function testDisplayShouldDefineCorrectSizeWhenCustomWeightField() {
@@ -127,7 +127,7 @@ class TagCloudHelperTest extends CakeTestCase {
 		$result = $this->TagCloud->display($tags, $options);
 		$expected = '<!-- size: 160 --><a href="/search/index/by:cakephp" id="tag-1">CakePHP</a> '.
 			'<!-- size: 80 --><a href="/search/index/by:cakedc" id="tag-2">CakeDC</a> ';
-		$this->assertEqual($result, $expected);
+		$this->assertEquals($result, $expected);
 	}
 
 /**

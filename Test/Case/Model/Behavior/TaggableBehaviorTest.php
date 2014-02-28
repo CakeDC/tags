@@ -137,7 +137,7 @@ class TaggableBehaviorTest extends CakeTestCase {
 			'conditions' => array(
 				'Tag.keyname' => 'cakephp')));
 
-		$this->assertEqual($resultAfter['Tag']['occurrence'] - $resultBefore['Tag']['occurrence'], 1);
+		$this->assertEquals($resultAfter['Tag']['occurrence'] - $resultBefore['Tag']['occurrence'], 1);
 
 		// updating the record to not have the cakephp tag anymore, decreases the occurrence
 		$data = array('id' => $this->Article->id, 'title' => 'Test Article', 'tags' => 'php, something, else');
@@ -146,7 +146,7 @@ class TaggableBehaviorTest extends CakeTestCase {
 			'contain' => array(),
 			'conditions' => array(
 				'Tag.keyname' => 'cakephp')));
-		$this->assertEqual($resultAfter['Tag']['occurrence'], 1);
+		$this->assertEquals($resultAfter['Tag']['occurrence'], 1);
 	}
 
 /**
@@ -171,7 +171,7 @@ class TaggableBehaviorTest extends CakeTestCase {
 				'id' => 'article-1')));
 
 		$this->assertTrue(!empty($result['Article']['tags']));
-		$this->assertEqual(3, count($result['Tag']));
+		$this->assertEquals(3, count($result['Tag']));
 
 
 		$data['tags'] = 'cakephp:foo, developer, cakephp:developer, cakephp:php';
@@ -183,7 +183,7 @@ class TaggableBehaviorTest extends CakeTestCase {
 				'Tag.identifier' => 'cakephp')));
 
 		$result = Set::extract($result, '{n}.Tag.keyname');
-		$this->assertEqual($result, array(
+		$this->assertEquals($result, array(
 			'developer', 'foo', 'php'));
 
 		$this->assertFalse($this->Article->saveTags('foo, bar', null));
@@ -206,13 +206,13 @@ class TaggableBehaviorTest extends CakeTestCase {
 			'contain' => array('Tag'),
 		));
 		$fooCount = Set::extract('/Tag[keyname=foo]/../Tagged/times_tagged', $result);
-		$this->assertEqual($fooCount, array(2));
+		$this->assertEquals($fooCount, array(2));
 
 		$barCount = Set::extract('/Tag[keyname=bar]/../Tagged/times_tagged', $result);
-		$this->assertEqual($barCount, array(2));
+		$this->assertEquals($barCount, array(2));
 
 		$testCount = Set::extract('/Tag[keyname=test]/../Tagged/times_tagged', $result);
-		$this->assertEqual($testCount, array(2));
+		$this->assertEquals($testCount, array(2));
 	}
 
 /**
@@ -243,10 +243,10 @@ class TaggableBehaviorTest extends CakeTestCase {
  */
 	public function testMultibyteKey() {
 		$result = $this->Article->multibyteKey('this is _ a Nice ! - _ key!');
-		$this->assertEqual('thisisanicekey', $result);
+		$this->assertEquals('thisisanicekey', $result);
 
 		$result = $this->Article->multibyteKey('Äü-Ü_ß');
-		$this->assertEqual('äüüß', $result);
+		$this->assertEquals('äüüß', $result);
 	}
 
 /**

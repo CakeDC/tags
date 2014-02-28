@@ -84,7 +84,7 @@ class TagTest extends CakeTestCase {
 				'article_occurrence' => 1,
 				'created'  => '2008-06-02 18:18:11',
 				'modified'  => '2008-06-02 18:18:37'));
-		$this->assertEqual($results, $expected);
+		$this->assertEquals($results, $expected);
 	}
 
 /**
@@ -95,7 +95,7 @@ class TagTest extends CakeTestCase {
 	public function testView() {
 		$result = $this->Tag->view('cakephp');
 		$this->assertTrue(is_array($result));
-		$this->assertEqual($result['Tag']['keyname'], 'cakephp');
+		$this->assertEquals($result['Tag']['keyname'], 'cakephp');
 
 		$this->expectException('CakeException');
 		$this->Tag->view('invalid-key!!!');
@@ -128,7 +128,7 @@ class TagTest extends CakeTestCase {
  */
 	public function testEdit() {
 		$this->assertNull($this->Tag->edit('tag-1'));
-		$this->assertEqual($this->Tag->data['Tag']['id'], 'tag-1');
+		$this->assertEquals($this->Tag->data['Tag']['id'], 'tag-1');
 
 		$data = array(
 			'Tag' => array(
@@ -147,7 +147,7 @@ class TagTest extends CakeTestCase {
 				'id' => 'tag-1',
 				'name' => 'CAKEPHP',
 				'keyname' => ''));
-		$this->assertEqual($this->Tag->edit('tag-1', $data), $data);
+		$this->assertEquals($this->Tag->edit('tag-1', $data), $data);
 
 		$this->expectException('CakeException');
 		$this->assertTrue($this->Tag->edit('invalid-id', array()));
