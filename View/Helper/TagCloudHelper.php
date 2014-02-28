@@ -76,7 +76,8 @@ class TagCloudHelper extends AppHelper {
 
 		$cloud = null;
 		foreach ($tags as $tag) {
-			$tagWeight = array_pop(Set::extract(array($tag), $options['extract']));
+			$data = Set::extract(array($tag), $options['extract']);
+			$tagWeight = array_pop($data);
 
 			$size = $options['minSize'] + (($tagWeight - $minWeight) * (($options['maxSize'] - $options['minSize']) / ($spread)));
 			$size = $tag[$options['tagModel']]['size'] = ceil($size);
