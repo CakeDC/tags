@@ -22,25 +22,3 @@ Tutorials
 ---------
 
 * [Quick Start](Tutorials/Quick-Start.md)
-
-
-public function createTeam($postData) {
-	$this->set($postData);
-	$this->User->set($postData);
-
-	if ($this->validates() && $this->User->validates()) {
-		$this->create();
-		$this->save($postData, array('validate' => false);
-		$this->User->create();
-		$this->User->save($postData, array('validate' => false);
-		$this->TeamsUser->create();
-		$this->TeamsUser->save(array(
-			'TeamsUser => array(
-				'user_id' => $this->getLastInsertId()
-				'team_id' => $this->User->getLastInsertId()
-			)
-		));
-		return true;
-	}
-	return false;
-}
