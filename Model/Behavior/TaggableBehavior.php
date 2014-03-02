@@ -271,7 +271,7 @@ class TaggableBehavior extends ModelBehavior {
 						));
 
 						if (!empty($newTagIds)) {
-							$newTagIds = Hash::extract($newTagIds, '{n}.Tagged.tag_id');
+							$newTagIds = Set::extract($newTagIds, '{n}.Tagged.tag_id');
 						}
 
 						$this->cacheOccurrence($model, array_merge($oldTagIds, $newTagIds));
