@@ -17,6 +17,7 @@ Documentation
 * [Overview](Documentation/Overview.md)
 * [Installation](Documentation/Installation.md)
 * [Configuration](Documentation/Configuration.md)
+* [The Tag Cloud Helper](Documentation/The-Tag-Cloud-Helper.md)
 
 Tutorials
 ---------

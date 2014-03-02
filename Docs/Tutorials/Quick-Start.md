@@ -6,7 +6,7 @@ Make sure the plugin is loaded in the application.
 ```php
 CakePlugin::load('Tags');
 // or
-CakePlugin::loadAlll();
+CakePlugin::loadAll();
 ```
 
 Add the behavior to your model class.
