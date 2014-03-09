@@ -1,4 +1,5 @@
-# Tags Plugin for CakePHP #
+Tags Plugin for CakePHP
+=======================
 
 The tags plugin includes the Taggable Behavior that allows you to simply tag everything.
 

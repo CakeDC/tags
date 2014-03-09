@@ -5,11 +5,11 @@ A Tag cloud is a user friendly way to display a tag list to users. The Tags plug
 
 Here are the necessary steps for displaying a tag cloud with some basic options.
 
-1. Add the TagCloud helper to your controller ```php public $helpers = array('Tags.TagCloud');```
-2. In you controller action, get a list of tags and pass it to the view. The Tagged model contains a custom find method `_findCloud()` which retrieves all the tags and populates values. Here is an example code from a RecipesController, where Recipe actsAs Taggable: ```php $this->set('tags', $this->Recipe->Tagged->find('cloud', array('limit' => 10)));```
+1. Add the TagCloud helper to your controller ```public $helpers = array('Tags.TagCloud');```
+2. In you controller action, get a list of tags and pass it to the view. The Tagged model contains a custom find method `_findCloud()` which retrieves all the tags and populates values. Here is an example code from a RecipesController, where Recipe actsAs Taggable: ```$this->set('tags', $this->Recipe->Tagged->find('cloud', array('limit' => 10)));```
 3. Call the `display()` helper method where you want to display the cloud. For instance:
 
-```html
+```php
 <ul id="tagcloud">
 <?php
 	echo $this->TagCloud->display($tags, array(
