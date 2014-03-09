@@ -23,3 +23,5 @@ Tutorials
 ---------
 
 * [Quick Start](Tutorials/Quick-Start.md)
+* [Find Tagged Objects](Tutorials/Find-Tagged-Objects.md)
+* [Manage Tags](Tutorials/Manage-Tags.md)
