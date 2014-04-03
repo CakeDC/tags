@@ -129,10 +129,10 @@ class TagsControllerTest extends CakeTestCase {
 	public function testView() {
 		$this->Tags->view('cakephp');
 		$this->assertTrue(!empty($this->Tags->viewVars['tag']));
-		$this->assertEqual($this->Tags->viewVars['tag']['Tag']['keyname'], 'cakephp');
+		$this->assertEquals($this->Tags->viewVars['tag']['Tag']['keyname'], 'cakephp');
 
 		$this->Tags->view('invalid-key-name!');
-		$this->assertEqual($this->Tags->redirectUrl, '/');
+		$this->assertEquals($this->Tags->redirectUrl, '/');
 	}
 
 /**
@@ -143,10 +143,10 @@ class TagsControllerTest extends CakeTestCase {
 	public function testAdminView() {
 		$this->Tags->admin_view('cakephp');
 		$this->assertTrue(!empty($this->Tags->viewVars['tag']));
-		$this->assertEqual($this->Tags->viewVars['tag']['Tag']['keyname'], 'cakephp');
+		$this->assertEquals($this->Tags->viewVars['tag']['Tag']['keyname'], 'cakephp');
 
 		$this->Tags->admin_view('invalid-key-name!');
-		$this->assertEqual($this->Tags->redirectUrl, '/');
+		$this->assertEquals($this->Tags->redirectUrl, '/');
 	}
 
 /**
@@ -177,10 +177,10 @@ class TagsControllerTest extends CakeTestCase {
 
 
 		$this->Tags->admin_delete('WRONG-ID!!!');
-		$this->assertEqual($this->Tags->redirectUrl, array('action' => 'index'));
+		$this->assertEquals($this->Tags->redirectUrl, array('action' => 'index'));
 
 		$this->Tags->admin_delete('tag-1');
-		$this->assertEqual($this->Tags->redirectUrl, array('action' => 'index'));
+		$this->assertEquals($this->Tags->redirectUrl, array('action' => 'index'));
 	}
 
 /**
@@ -193,7 +193,7 @@ class TagsControllerTest extends CakeTestCase {
 			'Tag' => array(
 				'tags' => 'tag1, tag2, tag3'));
 		$this->Tags->admin_add();
-		$this->assertEqual($this->Tags->redirectUrl, array('action' => 'index'));
+		$this->assertEquals($this->Tags->redirectUrl, array('action' => 'index'));
 	}
 
 /**
@@ -205,16 +205,16 @@ class TagsControllerTest extends CakeTestCase {
 		$this->Tags->admin_edit('tag-1');
 		$tag = array(
 			'Tag' => array(
-				'id'  => 'tag-1',
-				'identifier'  => null,
-				'name'  => 'CakePHP',
-				'keyname'  => 'cakephp',
+				'id' => 'tag-1',
+				'identifier' => null,
+				'name' => 'CakePHP',
+				'keyname' => 'cakephp',
 				'occurrence' => 1,
 				'article_occurrence' => 1,
-				'created'  => '2008-06-02 18:18:11',
-				'modified'  => '2008-06-02 18:18:37'));
+				'created' => '2008-06-02 18:18:11',
+				'modified' => '2008-06-02 18:18:37'));
 
-		$this->assertEqual($this->Tags->data, $tag);
+		$this->assertEquals($this->Tags->data, $tag);
 
 		$this->Tags->data = array(
 			'Tag' => array(
@@ -222,6 +222,6 @@ class TagsControllerTest extends CakeTestCase {
 				'name' => 'CAKEPHP'));
 		$this->Tags->admin_edit('tag-1');
 
-		$this->assertEqual($this->Tags->redirectUrl, array('action' => 'index'));
+		$this->assertEquals($this->Tags->redirectUrl, array('action' => 'index'));
 	}
 }

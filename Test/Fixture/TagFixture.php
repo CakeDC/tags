@@ -30,14 +30,14 @@ class TagFixture extends CakeTestFixture {
  * @var array $fields
  */
 	public $fields = array(
-		'id' => array('type' => 'string', 'null' => false, 'default' => NULL, 'length' => 36, 'key' => 'primary'),
-		'identifier' => array('type' => 'string', 'null' => true, 'default' => NULL, 'length' => 30, 'key' => 'index'),
-		'name' => array('type' => 'string', 'null' => false, 'default' => NULL, 'length' => 30),
-		'keyname' => array('type' => 'string', 'null' => false, 'default' => NULL, 'length' => 30),
+		'id' => array('type' => 'string', 'null' => false, 'default' => null, 'length' => 36, 'key' => 'primary'),
+		'identifier' => array('type' => 'string', 'null' => true, 'default' => null, 'length' => 30, 'key' => 'index'),
+		'name' => array('type' => 'string', 'null' => false, 'default' => null, 'length' => 30),
+		'keyname' => array('type' => 'string', 'null' => false, 'default' => null, 'length' => 30),
 		'occurrence' => array('type' => 'integer', 'null' => false, 'default' => 0, 'length' => 8),
 		'article_occurrence' => array('type' => 'integer', 'null' => false, 'default' => 0, 'length' => 8),
-		'created' => array('type' => 'datetime', 'null' => true, 'default' => NULL),
-		'modified' => array('type' => 'datetime', 'null' => true, 'default' => NULL),
+		'created' => array('type' => 'datetime', 'null' => true, 'default' => null),
+		'modified' => array('type' => 'datetime', 'null' => true, 'default' => null),
 		'indexes' => array(
 			'PRIMARY' => array('column' => 'id', 'unique' => 1),
 			'UNIQUE_TAG' => array('column' => array('identifier', 'keyname'), 'unique' => 1)
@@ -51,31 +51,33 @@ class TagFixture extends CakeTestFixture {
  */
 	public $records = array(
 		array(
-			'id'  => 'tag-1',
-			'identifier'  => null,
-			'name'  => 'CakePHP',
-			'keyname'  => 'cakephp',
+			'id' => 'tag-1',
+			'identifier' => null,
+			'name' => 'CakePHP',
+			'keyname' => 'cakephp',
 			'occurrence' => 1,
 			'article_occurrence' => 1,
-			'created'  => '2008-06-02 18:18:11',
-			'modified'  => '2008-06-02 18:18:37'),
+			'created' => '2008-06-02 18:18:11',
+			'modified' => '2008-06-02 18:18:37'),
 		array(
-			'id'  => 'tag-2',
-			'identifier'  => null,
-			'name'  => 'CakeDC',
-			'keyname'  => 'cakedc',
+			'id' => 'tag-2',
+			'identifier' => null,
+			'name' => 'CakeDC',
+			'keyname' => 'cakedc',
 			'occurrence' => 1,
 			'article_occurrence' => 1,
-			'created'  => '2008-06-01 18:18:15',
-			'modified'  => '2008-06-01 18:18:15'),
+			'created' => '2008-06-01 18:18:15',
+			'modified' => '2008-06-01 18:18:15'),
 		array(
-			'id'  => 'tag-3',
-			'identifier'  => null,
-			'name'  => 'CakeDC',
-			'keyname'  => 'cakedc',
+			'id' => 'tag-3',
+			'identifier' => null,
+			'name' => 'CakeDC',
+			'keyname' => 'cakedc',
 			'occurrence' => 1,
 			'article_occurrence' => 1,
-			'created'  => '2008-06-01 18:18:15',
-			'modified'  => '2008-06-01 18:18:15'));
+			'created' => '2008-06-01 18:18:15',
+			'modified' => '2008-06-01 18:18:15'
+		)
+	);
 
 }
