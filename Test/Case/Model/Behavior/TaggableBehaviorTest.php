@@ -216,7 +216,7 @@ class TaggableBehaviorTest extends CakeTestCase {
 	}
 
 /**
- * Testings Taggable::tagArrayToString()
+ * Testing Taggable::tagArrayToString()
  *
  * @return void
  */
@@ -230,10 +230,22 @@ class TaggableBehaviorTest extends CakeTestCase {
 		$result = $this->Article->tagArrayToString($result['Tag']);
 		$this->assertTrue(!empty($result));
 		$this->assertInternalType('string', $result);
+		$this->assertEquals($result, 'test, bar, foo');
 
 		$result = $this->Article->tagArrayToString();
 		$this->assertTrue(empty($result));
 		$this->assertInternalType('string', $result);
+
+		$data['tags'] = 'cakephp:foo, cakephp:bar';
+		$this->Article->save($data, false);
+		$result = $this->Article->find('first', array(
+			'conditions' => array(
+				'id' => 'article-1')));
+
+		$result = $this->Article->tagArrayToString($result['Tag']);
+		$this->assertTrue(!empty($result));
+		$this->assertInternalType('string', $result);
+		$this->assertEquals($result, 'cakephp:bar, cakephp:foo, bar, foo');
 	}
 
 /**

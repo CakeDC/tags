@@ -357,7 +357,15 @@ class TaggableBehavior extends ModelBehavior {
  */
 	public function tagArrayToString(Model $model, $data = null) {
 		if ($data) {
-			return join($this->settings[$model->alias]['separator'] . ' ', Set::extract($data, '{n}.name'));
+			$tags = array();
+			foreach ($data as $tag) {
+				if (!empty($tag['identifier'])) {
+					$tags[] = $tag['identifier'] . ':' . $tag['name'];
+				} else {
+					$tags[] =  $tag['name'];
+				}
+			}
+			return join($this->settings[$model->alias]['separator'] . ' ', $tags);
 		}
 		return '';
 	}
