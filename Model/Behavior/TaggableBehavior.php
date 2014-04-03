@@ -170,12 +170,12 @@ class TaggableBehavior extends ModelBehavior {
 				$existingTags = $tagModel->find('all', array(
 					'contain' => array(),
 					'conditions' => array(
-						$tagAlias . '.keyname' => Set::extract($tags, '{n}.keyname')),
+						$tagModel->alias . '.keyname' => Set::extract($tags, '{n}.keyname')),
 					'fields' => array(
-						$tagAlias . '.identifier',
-						$tagAlias . '.keyname',
-						$tagAlias . '.name',
-						$tagAlias . '.id'
+						$tagModel->alias . '.identifier',
+						$tagModel->alias . '.keyname',
+						$tagModel->alias . '.name',
+						$tagModel->alias . '.id'
 					)
 				));
 
@@ -271,7 +271,7 @@ class TaggableBehavior extends ModelBehavior {
 						));
 
 						if (!empty($newTagIds)) {
-							$newTagIds = Hash::extract($newTagIds, '{n}.Tagged.tag_id');
+							$newTagIds = Set::extract($newTagIds, '{n}.Tagged.tag_id');
 						}
 
 						$this->cacheOccurrence($model, array_merge($oldTagIds, $newTagIds));
@@ -357,7 +357,15 @@ class TaggableBehavior extends ModelBehavior {
  */
 	public function tagArrayToString(Model $model, $data = null) {
 		if ($data) {
-			return join($this->settings[$model->alias]['separator'] . ' ', Set::extract($data, '{n}.name'));
+			$tags = array();
+			foreach ($data as $tag) {
+				if (!empty($tag['identifier'])) {
+					$tags[] = $tag['identifier'] . ':' . $tag['name'];
+				} else {
+					$tags[] =  $tag['name'];
+				}
+			}
+			return join($this->settings[$model->alias]['separator'] . ' ', $tags);
 		}
 		return '';
 	}

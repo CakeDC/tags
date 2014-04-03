@@ -23,9 +23,10 @@ class ArticleFixture extends CakeTestFixture {
  * @var array
  */
 	public $fields = array(
-		'id' => array('type' => 'string', 'null' => false, 'default' => NULL, 'length' => 36),
+		'id' => array('type' => 'string', 'null' => false, 'default' => null, 'length' => 36),
 		'title' => array('type' => 'string', 'null' => false),
-		'user_id' => array('type' => 'string', 'null' => false, 'default' => NULL, 'length' => 36));
+		'user_id' => array('type' => 'string', 'null' => false, 'default' => null, 'length' => 36)
+	);
 
 /**
  * records property
@@ -44,5 +45,7 @@ class ArticleFixture extends CakeTestFixture {
 		array(
 			'id' => 'article-3',
 			'title' => 'Third Article',
-			'user_id' => 'user-3'));
+			'user_id' => 'user-3'
+		)
+	);
 }

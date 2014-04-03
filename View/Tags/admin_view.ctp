@@ -32,11 +32,6 @@
 			<?php echo $tag['Tag']['keyname']; ?>
 			&nbsp;
 		</dd>
-		<dt<?php if ($i % 2 == 0) echo $class;?>><?php echo __d('tags', 'Weight'); ?></dt>
-		<dd<?php if ($i++ % 2 == 0) echo $class;?>>
-			<?php echo $tag['Tag']['weight']; ?>
-			&nbsp;
-		</dd>
 		<dt<?php if ($i % 2 == 0) echo $class;?>><?php echo __d('tags', 'Created'); ?></dt>
 		<dd<?php if ($i++ % 2 == 0) echo $class;?>>
 			<?php echo $tag['Tag']['created']; ?>
