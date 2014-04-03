@@ -28,9 +28,8 @@ class TagsSchema extends CakeSchema {
 /**
  * Before callback
  *
- * @param string Event
+ * @param array Event
  * @return boolean
- * @access public
  */
 	public function before($event = array()) {
 		return true;
@@ -39,9 +38,8 @@ class TagsSchema extends CakeSchema {
 /**
  * After callback
  *
- * @param string Event
+ * @param array Event
  * @return boolean
- * @access public
  */
 	public function after($event = array()) {
 		return true;
@@ -54,14 +52,14 @@ class TagsSchema extends CakeSchema {
  * @access public
  */
 	public $tagged = array(
-		'id' => array('type' => 'string', 'null' => false, 'default' => NULL, 'length' => 36, 'key' => 'primary'),
-		'foreign_key' => array('type' => 'string', 'null' => false, 'default' => NULL, 'length' => 36),
-		'tag_id' => array('type' => 'string', 'null' => false, 'default' => NULL, 'length' => 36),
-		'model' => array('type' => 'string', 'null' => false, 'default' => NULL, 'key' => 'index'),
-		'language' => array('type' => 'string', 'null' => true, 'default' => NULL, 'length' => 6, 'key' => 'index'),
+		'id' => array('type' => 'string', 'null' => false, 'default' => null, 'length' => 36, 'key' => 'primary'),
+		'foreign_key' => array('type' => 'string', 'null' => false, 'default' => null, 'length' => 36),
+		'tag_id' => array('type' => 'string', 'null' => false, 'default' => null, 'length' => 36),
+		'model' => array('type' => 'string', 'null' => false, 'default' => null, 'key' => 'index'),
+		'language' => array('type' => 'string', 'null' => true, 'default' => null, 'length' => 6, 'key' => 'index'),
 		'times_tagged' => array('type' => 'integer', 'null' => false, 'default' => '1'),
-		'created' => array('type' => 'datetime', 'null' => true, 'default' => NULL),
-		'modified' => array('type' => 'datetime', 'null' => true, 'default' => NULL),
+		'created' => array('type' => 'datetime', 'null' => true, 'default' => null),
+		'modified' => array('type' => 'datetime', 'null' => true, 'default' => null),
 		'indexes' => array(
 			'PRIMARY' => array('column' => 'id', 'unique' => 1),
 			'UNIQUE_TAGGING' => array('column' => array('model', 'foreign_key', 'tag_id', 'language'), 'unique' => 1),
@@ -77,13 +75,12 @@ class TagsSchema extends CakeSchema {
  * @access public
  */
 	public $tags = array(
-		'id' => array('type' => 'string', 'null' => false, 'default' => NULL, 'length' => 36, 'key' => 'primary'),
-		'identifier' => array('type' => 'string', 'null' => true, 'default' => NULL, 'length' => 30, 'key' => 'index'),
-		'name' => array('type' => 'string', 'null' => false, 'default' => NULL, 'length' => 30),
-		'keyname' => array('type' => 'string', 'null' => false, 'default' => NULL, 'length' => 30),
-		'weight' => array('type' => 'integer', 'null' => false, 'default' => 0, 'length' => 2),
-		'created' => array('type' => 'datetime', 'null' => true, 'default' => NULL),
-		'modified' => array('type' => 'datetime', 'null' => true, 'default' => NULL),
+		'id' => array('type' => 'string', 'null' => false, 'default' => null, 'length' => 36, 'key' => 'primary'),
+		'identifier' => array('type' => 'string', 'null' => true, 'default' => null, 'length' => 30, 'key' => 'index'),
+		'name' => array('type' => 'string', 'null' => false, 'default' => null, 'length' => 30),
+		'keyname' => array('type' => 'string', 'null' => false, 'default' => null, 'length' => 30),
+		'created' => array('type' => 'datetime', 'null' => true, 'default' => null),
+		'modified' => array('type' => 'datetime', 'null' => true, 'default' => null),
 		'indexes' => array(
 			'PRIMARY' => array('column' => 'id', 'unique' => 1),
 			'UNIQUE_TAG' => array('column' => array('identifier', 'keyname'), 'unique' => 1)
@@ -91,4 +88,3 @@ class TagsSchema extends CakeSchema {
 	);
 
 }
-?>

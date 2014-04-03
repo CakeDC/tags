@@ -3,7 +3,7 @@ Tags Plugin for CakePHP
 
 The **Tags** plugin includes the TaggableBehavior that allows you to simply tag everything.
 
-It saves all tags in a sginle tags table and connects any kind of records to them through the tagged table.
+It saves all tags in a single tags table and connects any kind of records to them through the tagged table.
 
 [![Bake Status](https://secure.travis-ci.org/CakeDC/tags.png?branch=master)](http://travis-ci.org/CakeDC/tags)
 [![Test Coverage](https://coveralls.io/repos/CakeDC/tags/badge.png?branch=master)](https://coveralls.io/r/CakeDC/tags?branch=master)
