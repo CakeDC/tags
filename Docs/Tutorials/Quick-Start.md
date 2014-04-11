@@ -1,4 +1,4 @@
-Qick Start
+Quick Start
 ==========
 
 Make sure the plugin is loaded in the application.
