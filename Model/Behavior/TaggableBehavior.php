@@ -414,6 +414,11 @@ class TaggableBehavior extends ModelBehavior {
  */
 	public function afterFind(Model $model, $results, $primary = false) {
 		extract($this->settings[$model->alias]);
+
+		if ($model->alias === $tagAlias) {
+			return $results;
+		}
+
 		foreach ($results as $key => $row) {
 			$row[$model->alias][$field] = '';
 			if (isset($row[$tagAlias]) && !empty($row[$tagAlias])) {
