@@ -13,7 +13,7 @@ Add the behavior to your model class.
 
 ```php
 public $actsAs = array(
-	'Taggable.Tags'
+	'Tags.Taggable'
 );
 ```
 
