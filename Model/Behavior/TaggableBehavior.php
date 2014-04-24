@@ -415,7 +415,8 @@ class TaggableBehavior extends ModelBehavior {
 	public function afterFind(Model $model, $results, $primary = false) {
 		extract($this->settings[$model->alias]);
 
-		if ($model->name === $tagAlias) {
+		list($plugin, $class) = pluginSplit($tagClass);
+		if ($model->name === $class) {
 			return $results;
 		}
 
