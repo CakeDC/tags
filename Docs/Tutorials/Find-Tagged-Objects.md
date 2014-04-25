@@ -3,7 +3,8 @@ Find Tagged Objects
 
 The Tagged model has a custom `_findTagged()` method to find or paginate objects tagged with a given tag.
 
-h2. Find usage examples
+Find usage examples
+-------------------
 
 * To find all Articles having at least one Tag the call would be: `$this->Tagged->find('tagged', array('model' => 'Article'));`
 * To find all Articles tagged _cakephp_ the call would be: `$this->Tagged->find('tagged', array('by' => 'cakephp', 'model' => 'Article'));`

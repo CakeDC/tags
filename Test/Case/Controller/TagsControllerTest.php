@@ -194,6 +194,13 @@ class TagsControllerTest extends CakeTestCase {
 				'tags' => 'tag1, tag2, tag3'));
 		$this->Tags->admin_add();
 		$this->assertEquals($this->Tags->redirectUrl, array('action' => 'index'));
+
+		// adding same tags again.
+		$this->Tags->data = array(
+			'Tag' => array(
+				'tags' => 'tag1, tag2, tag3'));
+		$this->Tags->admin_add();
+		$this->assertEquals($this->Tags->redirectUrl, array('action' => 'index'));
 	}
 
 /**

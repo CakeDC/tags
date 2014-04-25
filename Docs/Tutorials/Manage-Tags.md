@@ -9,7 +9,7 @@ To link these actions, use a classic CakePHP array formatted url:
 echo $this->Html->link(__('List Tags'), array(
 	'plugin' => 'tags',
 	'controller' => 'tags',
-	'action' => 'index
+	'action' => 'index'
 ));
 ```
 
