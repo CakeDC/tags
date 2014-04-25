@@ -1,5 +1,5 @@
-Qick Start
-==========
+Quick Start
+===========
 
 Make sure the plugin is loaded in the application.
 
@@ -13,7 +13,7 @@ Add the behavior to your model class.
 
 ```php
 public $actsAs = array(
-	'Taggable.Tags'
+	'Tags.Taggable'
 );
 ```
 

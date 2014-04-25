@@ -119,6 +119,12 @@ class TagTest extends CakeTestCase {
 		$this->assertTrue(in_array('tag1', $result));
 		$this->assertTrue(in_array('tag2', $result));
 		$this->assertTrue(in_array('tag3', $result));
+
+		// adding same tags again.
+		$result = $this->Tag->add(
+			array('Tag' => array(
+				'tags' => 'tag1, tag2, tag3')));
+		$this->assertTrue($result);
 	}
 
 /**

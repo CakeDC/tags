@@ -236,7 +236,7 @@ class TaggableBehaviorTest extends CakeTestCase {
 		$this->assertTrue(empty($result));
 		$this->assertInternalType('string', $result);
 
-		$data['tags'] = 'cakephp:foo, cakephp:bar';
+		$data['tags'] = 'cakephp:foo, cakephp:bar, foo, bar';
 		$this->Article->save($data, false);
 		$result = $this->Article->find('first', array(
 			'conditions' => array(
@@ -373,4 +373,17 @@ class TaggableBehaviorTest extends CakeTestCase {
 		$this->assertEquals($count, 0);
 	}
 
+/**
+ * testSavingTagsWithDefferentIdentifier
+ *
+ * @return void
+ */
+	public function testSavingTagsWithDifferentIdentifier() {
+		$data = $this->Article->findById('article-1');
+		$data['Article']['tags'] = 'foo:cakephp, bar:cakephp';
+		$this->Article->save($data);
+		$data = $this->Article->findById('article-1');
+		$this->assertEquals('bar:cakephp, foo:cakephp', $data['Article']['tags']);
+
+	}
 }

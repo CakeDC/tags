@@ -60,9 +60,9 @@ foreach ($tags as $tag):
 	</tr>
 <?php endforeach; ?>
 </table>
-</div>
 <div class="paging">
 	<?php echo $this->Paginator->prev('<< '.__d('tags', 'previous'), array(), null, array('class'=>'disabled'));?>
  | 	<?php echo $this->Paginator->numbers();?>
 	<?php echo $this->Paginator->next(__d('tags', 'next').' >>', array(), null, array('class' => 'disabled'));?>
+</div>
 </div>
