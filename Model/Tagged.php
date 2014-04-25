@@ -32,7 +32,8 @@ class Tagged extends TagsAppModel {
  */
 	public $findMethods = array(
 		'cloud' => true,
-		'tagged' => true);
+		'tagged' => true
+	);
 
 /**
  * belongsTo associations
@@ -41,7 +42,9 @@ class Tagged extends TagsAppModel {
  */
 	public $belongsTo = array(
 		'Tag' => array(
-			'className' => 'Tags.Tag'));
+			'className' => 'Tags.Tag'
+		)
+	);
 
 /**
  * Returns a tag cloud
@@ -59,7 +62,7 @@ class Tagged extends TagsAppModel {
  * @link https://github.com/CakeDC/tags/issues/10
  */
 	public function _findCloud($state, $query, $results = array()) {
-		if ($state == 'before') {
+		if ($state === 'before') {
 			// Support old code without the occurrence cache
 			if (!$this->Tag->hasField('occurrence') || isset($query['occurrenceCache']) && $query['occurrenceCache'] === false) {
 				$fields = 'Tagged.tag_id, Tag.id, Tag.identifier, Tag.name, Tag.keyname, Tag.weight, COUNT(*) AS occurrence';
@@ -82,7 +85,8 @@ class Tagged extends TagsAppModel {
 				'contain' => 'Tag',
 				'conditions' => array(),
 				'fields' => $fields,
-				'group' => $groupBy);
+				'group' => $groupBy
+			);
 
 			foreach ($query as $key => $value) {
 				if (!empty($value)) {
@@ -144,7 +148,7 @@ class Tagged extends TagsAppModel {
  * @return mixed Query array if state is before, array of results or integer (count) if state is after
  */
 	public function _findTagged($state, $query, $results = array()) {
-		if ($state == 'before') {
+		if ($state === 'before') {
 			if (isset($query['model']) && $Model = ClassRegistry::init($query['model'])) {
 				$this->bindModel(array(
 					'belongsTo' => array(
@@ -167,7 +171,11 @@ class Tagged extends TagsAppModel {
 					$query['fields'] = "COUNT(DISTINCT $Model->alias.$Model->primaryKey)";
 					$this->Behaviors->Containable->setup($this, array('autoFields' => false));
 				} else {
-					$query['fields'][] = "DISTINCT " . join(',', $this->getDataSource()->fields($Model));
+					if ($query['fields'] === null) {
+						$query['fields'][] = "DISTINCT " . join(',', $this->getDataSource()->fields($Model));
+					} else {
+						array_unshift($query['fields'], "DISTINCT " . join(',', $this->getDataSource()->fields($Model)));
+					}
 				}
 
 				if (!empty($query['by'])) {
