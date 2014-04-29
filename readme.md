@@ -14,7 +14,7 @@ Requirements
 ------------
 
 * CakePHP 2.4+
-* PHP 5.2.8+
+* PHP 5.3+
 
 Documentation
 -------------
