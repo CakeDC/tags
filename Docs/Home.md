@@ -9,7 +9,7 @@ Requirements
 ------------
 
 * PHP version: PHP 5.3+
-* CakePHP version: 2.+ Stable
+* CakePHP version: 2.4+ Stable
 
 Documentation
 -------------
