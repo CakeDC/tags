@@ -48,7 +48,7 @@ The configuration above contains the default values for each setting. Here are s
 * **taggedClass:** Name of the HABTM join model. (Default: `Tags.Tagged`)
 * **foreignKey:** Name of the HABTM join model field containing the foreign key to the Tagable model. (Default: `foreign_key`)
 * **associationForeignKey:** Name of the HABTM join model field containing the foreign key to the Tag model. (Default: `tag_id`)
-* **automaticTagging:** Whether or not the behavior will automatically call saveTags() after each save. (Default: `tag_id`)
+* **automaticTagging:** Whether or not the behavior will automatically call saveTags() after each save. (Default: true)
 * **unsetInAfterFind:** Whether or not the related Tag entries have to be unset after a find. If this value is true, the ```$data['Tag']``` array will be unset and tags will only be available using the ```$data['Model']['tags']``` value. (Default: false)
 * **resetBinding:** Value passed as the second param of to the ```bindModel()``` call when creating the HABTM association. If set to true, the binding will last only one query. (Default: false)
 
