@@ -38,9 +38,9 @@ The plugin also provides a "composer.json" file, to easily use the plugin throug
 Database Setup
 --------------
 
-The recommended way to install and maintain the database is using the (CakeDC Migrations)[https://github.com/cakedc/migrations] plugin.
+The recommended way to install and maintain the database is using the [CakeDC Migrations](https://github.com/cakedc/migrations) plugin.
 
-To set up the Tags plugin tables run this command:
+To set up the **Tags** plugin tables run this command:
 
 ```
 .\Console\cake migrations.migration run all -p Tags
