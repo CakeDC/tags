@@ -8,8 +8,8 @@ It saves all tags in a tags table and connects any kind of records to them throu
 Requirements
 ------------
 
-* PHP version: PHP 5.2+
-* CakePHP version: 1.3 Stable
+* CakePHP 2.5+
+* PHP 5.2.8+
 
 Documentation
 -------------
