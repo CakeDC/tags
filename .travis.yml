@@ -19,15 +19,12 @@ matrix:
     - php: 5.3
       env:
         - CAKE_VERSION=master
-        - COVERALLS=1
     - php: 5.4
       env:
         - CAKE_VERSION=master
-        - COVERALLS=1
     - php: 5.5
       env:
         - CAKE_VERSION=master
-        - COVERALLS=1
 
 before_script:
   - git clone https://github.com/burzum/travis.git --depth 1 ../travis
