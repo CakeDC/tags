@@ -96,7 +96,8 @@ class TaggableBehavior extends ModelBehavior {
 					'associationForeignKey' => $associationForeignKey,
 					'unique' => true,
 					'conditions' => array(
-						'Tagged.model' => $model->name),
+						$taggedAlias . '.model' => $model->name
+					),
 					'fields' => '',
 					'dependent' => true,
 					'with' => $withModel
