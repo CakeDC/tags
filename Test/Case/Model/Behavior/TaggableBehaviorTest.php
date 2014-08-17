@@ -91,7 +91,8 @@ class TaggableBehaviorTest extends CakeTestCase {
 	public $fixtures = array(
 		'plugin.tags.tagged',
 		'plugin.tags.tag',
-		'plugin.tags.article');
+		'plugin.tags.article'
+	);
 
 /**
  * Method executed before each test
@@ -384,6 +385,60 @@ class TaggableBehaviorTest extends CakeTestCase {
 		$this->Article->save($data);
 		$data = $this->Article->findById('article-1');
 		$this->assertEquals('bar:cakephp, foo:cakephp', $data['Article']['tags']);
-
 	}
+
+/**
+ * testDeletingMoreThanOneTagAtATime
+ *
+ * @link https://github.com/CakeDC/tags/issues/86
+ * @return void
+ */
+	public function testDeletingMoreThanOneTagAtATime() {
+		// Adding five tags for testing
+		$data = array(
+			'Article' => array(
+				'id' => 'article-test-delete-tags',
+				'tags' => 'foo, bar, test, second, third',
+			)
+		);
+		$this->Article->create();
+		$this->Article->save($data, false);
+		$result = $this->Article->find('first', array(
+			'conditions' => array(
+				'id' => 'article-test-delete-tags'
+			)
+		));
+		$this->assertEquals($result['Article']['tags'], 'third, second, test, bar, foo');
+		// Removing three of the five previously added tags
+		$result['Article']['tags'] = 'third, second';
+		$this->Article->save($result, false);
+		$result = $this->Article->find('first', array(
+			'conditions' => array(
+				'id' => 'article-test-delete-tags'
+			)
+		));
+		$this->assertEquals($result['Article']['tags'], 'second, third');
+		// Removing all tags, empty string - WON'T work as expected because of deleteTagsOnEmptyField
+		$result['Article']['tags'] = '';
+		$this->Article->save($result, false);
+		$result = $this->Article->find('first', array(
+			'conditions' => array(
+				'id' => 'article-test-delete-tags'
+			)
+		));
+		$this->assertEquals($result['Article']['tags'], 'third, second');
+		// Now with deleteTagsOnEmptyField
+		$this->Article->Behaviors->load('Tags.Taggable', array(
+			'deleteTagsOnEmptyField' => true
+		));
+		$result['Article']['tags'] = '';
+		$this->Article->save($result, false);
+		$result = $this->Article->find('first', array(
+			'conditions' => array(
+				'id' => 'article-test-delete-tags'
+			)
+		));
+		$this->assertEquals($result['Article']['tags'], '');
+	}
+
 }

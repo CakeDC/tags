@@ -76,14 +76,14 @@ class TagTest extends CakeTestCase {
 
 		$expected = array(
 			'Tag' => array(
-				'id'  => 'tag-1',
-				'identifier'  => null,
-				'name'  => 'CakePHP',
-				'keyname'  => 'cakephp',
+				'id' => 'tag-1',
+				'identifier' => null,
+				'name' => 'CakePHP',
+				'keyname' => 'cakephp',
 				'occurrence' => 1,
 				'article_occurrence' => 1,
-				'created'  => '2008-06-02 18:18:11',
-				'modified'  => '2008-06-02 18:18:37'));
+				'created' => '2008-06-02 18:18:11',
+				'modified' => '2008-06-02 18:18:37'));
 		$this->assertEquals($results, $expected);
 	}
 
@@ -114,7 +114,9 @@ class TagTest extends CakeTestCase {
 		$result = $this->Tag->find('all', array(
 			'recursive' => -1,
 			'fields' => array(
-				'Tag.name')));
+				'Tag.name'
+			)
+		));
 		$result = Set::extract($result, '{n}.Tag.name');
 		$this->assertTrue(in_array('tag1', $result));
 		$this->assertTrue(in_array('tag2', $result));
@@ -123,7 +125,9 @@ class TagTest extends CakeTestCase {
 		// adding same tags again.
 		$result = $this->Tag->add(
 			array('Tag' => array(
-				'tags' => 'tag1, tag2, tag3')));
+				'tags' => 'tag1, tag2, tag3'
+			)
+		));
 		$this->assertTrue($result);
 	}
 

@@ -40,6 +40,7 @@ class TaggableBehavior extends ModelBehavior {
  * taggedCounter         	- true to update the number of times a particular tag was used for a specific record
  * unsetInAfterFind      	- unset 'Tag' results in afterFind
  * deleteTagsOnEmptyField 	- delete associated Tags if field is empty.
+ * resetBinding             - reset the bindModel() calls, default is false.
  *
  * @var array
  */
@@ -386,9 +387,13 @@ class TaggableBehavior extends ModelBehavior {
  * @return void
  */
 	public function afterSave(Model $model, $created, $options = array()) {
-		$hasTags = !empty($model->data[$model->alias][$this->settings[$model->alias]['field']]);
-		if ($this->settings[$model->alias]['automaticTagging'] == true && $hasTags) {
-			$this->saveTags($model, $model->data[$model->alias][$this->settings[$model->alias]['field']], $model->id);
+		if (!isset($model->data[$model->alias][$this->settings[$model->alias]['field']])) {
+			return;
+		}
+		$field = $model->data[$model->alias][$this->settings[$model->alias]['field']];
+		$hasTags = !empty($field);
+		if ($this->settings[$model->alias]['automaticTagging'] === true && $hasTags) {
+			$this->saveTags($model, $field, $model->id);
 		} else if (!$hasTags && $this->settings[$model->alias]['deleteTagsOnEmptyField']) {
 			$this->deleteTagged($model);
 		}
@@ -398,15 +403,19 @@ class TaggableBehavior extends ModelBehavior {
  * Delete associated Tags if record has no tags and deleteTagsOnEmptyField is true
  *
  * @param Model $model Model instance
+ * @param mixed $id Foreign key of the model, string for UUID or integer
  * @return void
  */
-	public function deleteTagged(Model $model) {
+	public function deleteTagged(Model $model, $id = null) {
 		extract($this->settings[$model->alias]);
 		$tagModel = $model->{$tagAlias};
+		if (is_null($id)) {
+			$id = $model->id;
+		}
 		$tagModel->{$taggedAlias}->deleteAll(
 			array(
 				$taggedAlias . '.model' => $model->name,
-				$taggedAlias . '.foreign_key' => $model->id,
+				$taggedAlias . '.foreign_key' => $id,
 			)
 		);
 	}
