@@ -1,11 +1,11 @@
 <?php
 /**
- * Copyright 2009-2012, Cake Development Corporation (http://cakedc.com)
+ * Copyright 2009-2014, Cake Development Corporation (http://cakedc.com)
  *
  * Licensed under The MIT License
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright Copyright 2009-2012, Cake Development Corporation (http://cakedc.com)
+ * @copyright Copyright 2009-2014, Cake Development Corporation (http://cakedc.com)
  * @license MIT License (http://www.opensource.org/licenses/mit-license.php)
  */
 
@@ -16,9 +16,17 @@ App::uses('Model', 'Model');
  * TagggedArticle Test Model
  */
 class TaggedArticle extends Model {
+
 	public $useTable = 'articles';
+
 	public $actsAs = array(
-		'Tags.Taggable');
+		'Tags.Taggable'
+	);
+
+	public $belongsTo = array(
+		'User'
+	);
+
 }
 
 /**
@@ -45,7 +53,8 @@ class TaggedTest extends CakeTestCase {
 		'plugin.tags.tagged',
 		'plugin.tags.tag',
 		'plugin.tags.article',
-		'plugin.tags.user');
+		'plugin.tags.user'
+	);
 
 /**
  * setUp
@@ -98,7 +107,7 @@ class TaggedTest extends CakeTestCase {
 				'created' => '2008-12-02 12:32:31',
 				'modified' => '2008-12-02 12:32:31'));
 
-		$this->assertEqual($result, $expected);
+		$this->assertEquals($result, $expected);
 	}
 
 /**
@@ -110,16 +119,16 @@ class TaggedTest extends CakeTestCase {
 		$result = $this->Tagged->find('cloud', array(
 			'model' => 'Article'));
 
-		$this->assertEqual(count($result), 3);
+		$this->assertEquals(count($result), 3);
 		$this->assertTrue(isset($result[0][0]['occurrence']));
-		$this->assertEqual($result[0][0]['occurrence'], 1);
+		$this->assertEquals($result[0][0]['occurrence'], 1);
 
 		$result = $this->Tagged->find('cloud');
 		$this->assertTrue(is_array($result) && !empty($result));
 
 		$result = $this->Tagged->find('cloud', array(
 			'limit' => 1));
-		$this->assertEqual(count($result), 1);
+		$this->assertEquals(count($result), 1);
 	}
 
 /**
@@ -132,18 +141,17 @@ class TaggedTest extends CakeTestCase {
 		$result = $this->Tagged->find('tagged', array(
 			'by' => 'cakephp',
 			'model' => 'Article'));
-		$this->assertEqual(count($result), 1);
-		$this->assertEqual($result[0]['Article']['id'], 'article-1');
+		$this->assertEquals(count($result), 1);
+		$this->assertEquals($result[0]['Article']['id'], 'article-1');
 
 		$result = $this->Tagged->find('tagged', array(
 			'model' => 'Article'));
-		$this->assertEqual(count($result), 2);
-
+		$this->assertEquals(count($result), 2);
 		// Test call to paginateCount by Controller::pagination()
 		$result = $this->Tagged->paginateCount(array(), 1, array(
 			'model' => 'Article',
 			'type' => 'tagged'));
-		$this->assertEqual($result, 2);
+		$this->assertEquals($result, 2);
 	}
 
 /**
@@ -157,14 +165,14 @@ class TaggedTest extends CakeTestCase {
 			'by' => 'cakephp',
 			'model' => 'Article',
 			'conditions' => array('Article.title LIKE' => 'Second %')));
-		$this->assertEqual(count($result), 0);
+		$this->assertEquals(count($result), 0);
 
 		$result = $this->Tagged->find('tagged', array(
 			'by' => 'cakephp',
 			'model' => 'Article',
 			'conditions' => array('Article.title LIKE' => 'First %')));
-		$this->assertEqual(count($result), 1);
-		$this->assertEqual($result[0]['Article']['id'], 'article-1');
+		$this->assertEquals(count($result), 1);
+		$this->assertEquals($result[0]['Article']['id'], 'article-1');
 	}
 
 /**
@@ -189,7 +197,7 @@ class TaggedTest extends CakeTestCase {
 				'Article' => array(
 					'User'))));
 
-		$this->assertEqual($result[0]['Article']['User']['name'], 'CakePHP');
+		$this->assertEquals($result[0]['Article']['User']['name'], 'CakePHP');
 	}
 
 /**
@@ -214,7 +222,7 @@ class TaggedTest extends CakeTestCase {
 				'Article' => array(
 				'User'))));
 
-		$this->assertEqual($result[0]['Article']['User']['name'], 'CakePHP');
+		$this->assertEquals($result[0]['Article']['User']['name'], 'CakePHP');
 	}
 
 }

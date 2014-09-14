@@ -1,11 +1,11 @@
 <?php
 /**
- * Copyright 2009-2012, Cake Development Corporation (http://cakedc.com)
+ * Copyright 2009-2014, Cake Development Corporation (http://cakedc.com)
  *
  * Licensed under The MIT License
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright Copyright 2009-2012, Cake Development Corporation (http://cakedc.com)
+ * @copyright Copyright 2009-2014, Cake Development Corporation (http://cakedc.com)
  * @license MIT License (http://www.opensource.org/licenses/mit-license.php)
  */
 
@@ -76,7 +76,10 @@ class TagCloudHelper extends AppHelper {
 
 		$cloud = null;
 		foreach ($tags as $tag) {
-			$size = $options['minSize'] + (($tag[$options['tagModel']]['weight'] - $minWeight) * (($options['maxSize'] - $options['minSize']) / ($spread)));
+			$data = Set::extract(array($tag), $options['extract']);
+			$tagWeight = array_pop($data);
+
+			$size = $options['minSize'] + (($tagWeight - $minWeight) * (($options['maxSize'] - $options['minSize']) / ($spread)));
 			$size = $tag[$options['tagModel']]['size'] = ceil($size);
 
 			$cloud .= $this->_replace($options['before'], $size);

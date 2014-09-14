@@ -1,11 +1,11 @@
 <?php
 /**
- * Copyright 2009-2012, Cake Development Corporation (http://cakedc.com)
+ * Copyright 2009-2014, Cake Development Corporation (http://cakedc.com)
  *
  * Licensed under The MIT License
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright Copyright 2009-2012, Cake Development Corporation (http://cakedc.com)
+ * @copyright Copyright 2009-2014, Cake Development Corporation (http://cakedc.com)
  * @license MIT License (http://www.opensource.org/licenses/mit-license.php)
  */
 ?>
@@ -23,7 +23,6 @@ echo $this->Paginator->counter(array(
 	<th><?php echo $this->Paginator->sort('identifier');?></th>
 	<th><?php echo $this->Paginator->sort('name');?></th>
 	<th><?php echo $this->Paginator->sort('keyname');?></th>
-	<th><?php echo $this->Paginator->sort('weight');?></th>
 	<th><?php echo $this->Paginator->sort('created');?></th>
 	<th><?php echo $this->Paginator->sort('modified');?></th>
 	<th class="actions"><?php echo __d('tags', 'Actions');?></th>
@@ -50,9 +49,6 @@ foreach ($tags as $tag):
 			<?php echo $tag['Tag']['keyname']; ?>
 		</td>
 		<td>
-			<?php echo $tag['Tag']['weight']; ?>
-		</td>
-		<td>
 			<?php echo $tag['Tag']['created']; ?>
 		</td>
 		<td>
@@ -64,9 +60,9 @@ foreach ($tags as $tag):
 	</tr>
 <?php endforeach; ?>
 </table>
-</div>
 <div class="paging">
 	<?php echo $this->Paginator->prev('<< '.__d('tags', 'previous'), array(), null, array('class'=>'disabled'));?>
  | 	<?php echo $this->Paginator->numbers();?>
 	<?php echo $this->Paginator->next(__d('tags', 'next').' >>', array(), null, array('class' => 'disabled'));?>
+</div>
 </div>
