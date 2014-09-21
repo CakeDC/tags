@@ -9,13 +9,17 @@
  * @license MIT License (http://www.opensource.org/licenses/mit-license.php)
  */
 
+namespace Tags\Test\Fixture;
+
+use Cake\TestSuite\Fixture\TestFixture;
+
 /**
  * UserFixture
  *
  * @package tags
  * @subpackage tags.tests.fixtures
  */
-class UserFixture extends CakeTestFixture {
+class UserFixture extends TestFixture {
 
 /**
  * fields property

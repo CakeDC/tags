@@ -8,7 +8,9 @@
  * @copyright Copyright 2009-2014, Cake Development Corporation (http://cakedc.com)
  * @license MIT License (http://www.opensource.org/licenses/mit-license.php)
  */
-App::uses('AppModel', 'Model');
+namespace Tags\ORM\Table;
+
+use App\ORM\AppModel;
 
 /**
  * Tags Plugin AppModel
@@ -23,7 +25,8 @@ class TagsAppModel extends AppModel {
  * @var array
  */
 	public $actsAs = array(
-		'Containable');
+		'Containable'
+	);
 
 /**
  * Customized paginateCount method

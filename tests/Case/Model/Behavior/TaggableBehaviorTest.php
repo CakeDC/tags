@@ -9,13 +9,17 @@
  * @license MIT License (http://www.opensource.org/licenses/mit-license.php)
  */
 
+namespace Tags\Test\TestCase\Model\Behavior;
+
+use Cake\TestSuite\TestCase;
+
 /**
  * Article model
  *
  * @package tags
  * @subpackage tags.tests.cases.behaviors
  */
-class Article extends CakeTestModel {
+class Article extends TestCase {
 
 /**
  * Use table

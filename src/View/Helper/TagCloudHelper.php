@@ -9,7 +9,9 @@
  * @license MIT License (http://www.opensource.org/licenses/mit-license.php)
  */
 
-App::uses('AppHelper', 'View/Helper');
+namespace Tags\View\Helper;
+
+use \Cake\View\Helper;
 
 /**
  * Tag cloud helper
@@ -17,14 +19,16 @@ App::uses('AppHelper', 'View/Helper');
  * @package tags
  * @subpackage tags.views.helpers
  */
-class TagCloudHelper extends AppHelper {
+class TagCloudHelper extends elper {
 
 /**
  * Other helpers to load
  *
  * @var public $helpers
  */
-	public $helpers = array('Html');
+	public $helpers = array(
+		'Html'
+	);
 
 /**
  * Method to output a tag-cloud formatted based on the weight of the tags

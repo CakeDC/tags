@@ -8,7 +8,10 @@
  * @copyright Copyright 2009-2014, Cake Development Corporation (http://cakedc.com)
  * @license MIT License (http://www.opensource.org/licenses/mit-license.php)
  */
-App::uses('ModelBehavior', 'Model');
+
+namespace Tags\Model\Behavior;
+
+use \Cake\Model\Behavior;
 
 /**
  * Taggable Behavior
@@ -16,7 +19,7 @@ App::uses('ModelBehavior', 'Model');
  * @package tags
  * @subpackage tags.models.behaviors
  */
-class TaggableBehavior extends ModelBehavior {
+class TaggableBehavior extends Behavior {
 
 /**
  * Settings array

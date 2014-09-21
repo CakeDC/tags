@@ -9,13 +9,15 @@
  * @license MIT License (http://www.opensource.org/licenses/mit-license.php)
  */
 
-App::uses('Tagged', 'Tags.Model');
-App::uses('Model', 'Model');
+namespace Tags\Test\TestCase\Model;
+
+use Cake\TestSuite\TestCase;
+use Cake\ORM\Table;
 
 /**
  * TagggedArticle Test Model
  */
-class TaggedArticle extends Model {
+class TaggedArticle extends Table {
 
 	public $useTable = 'articles';
 
@@ -35,7 +37,7 @@ class TaggedArticle extends Model {
  * @package tags
  * @subpackage tags.tests.cases.models
  */
-class TaggedTest extends CakeTestCase {
+class TaggedTest extends TestCase {
 
 /**
  * Tagged model

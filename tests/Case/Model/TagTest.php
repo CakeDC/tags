@@ -9,7 +9,9 @@
  * @license MIT License (http://www.opensource.org/licenses/mit-license.php)
  */
 
-App::uses('Tag', 'Tags.Model');
+namespace Tags\Test\TestCase\Model;
+
+use Cake\TestSuite\TestCase;
 
 /**
  * TagTest
@@ -17,7 +19,7 @@ App::uses('Tag', 'Tags.Model');
  * @package tags
  * @subpackage tags.tests.cases.models
  */
-class TagTest extends CakeTestCase {
+class TagTest extends TestCase {
 
 /**
  * Tag Instance
@@ -33,7 +35,8 @@ class TagTest extends CakeTestCase {
  */
 	public $fixtures = array(
 		'plugin.tags.tagged',
-		'plugin.tags.tag');
+		'plugin.tags.tag'
+	);
 
 /**
  * setUp

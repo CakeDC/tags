@@ -1,22 +1,22 @@
 {
-  "name": "cakedc/tags",
-  "type": "cakephp-plugin",
-  "description": "Tags plugin for CakePHP.",
-  "homepage": "http://github.com/CakeDC/tags",
-  "keywords": ["cakephp", "tags", "plugin"],
-  "license": "MIT",
-  "authors": [
-    {
-      "name": "Cake Development Corporation",
-      "email": "team@cakedc.com",
-      "homepage": "http://cakedc.com"
-    }
-  ],
-  "require": {
-    "php": ">=5.3.0",
-    "composer/installers": "*"
-  },
-  "extra": {
-    "installer-name": "Tags"
-  }
+	"name": "cakedc/tags",
+	"type": "cakephp-plugin",
+	"description": "Tags plugin for CakePHP.",
+	"homepage": "http://github.com/CakeDC/tags",
+	"keywords": ["cakephp", "tags", "plugin"],
+	"license": "MIT",
+	"authors": [
+		{
+			"name": "Cake Development Corporation",
+			"email": "team@cakedc.com",
+			"homepage": "http://cakedc.com"
+		}
+	],
+	"require": {
+		"php": ">=5.3.0",
+		"composer/installers": "*"
+	},
+	"extra": {
+		"installer-name": "Tags"
+	}
 }

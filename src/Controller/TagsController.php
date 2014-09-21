@@ -8,7 +8,8 @@
  * @copyright Copyright 2009-2014, Cake Development Corporation (http://cakedc.com)
  * @license MIT License (http://www.opensource.org/licenses/mit-license.php)
  */
-App::uses('TagsAppController', 'Tags.Controller');
+
+namespace Tags\Controller;
 
 /**
  * Tags Controller

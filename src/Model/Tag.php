@@ -8,7 +8,10 @@
  * @copyright Copyright 2009-2014, Cake Development Corporation (http://cakedc.com)
  * @license MIT License (http://www.opensource.org/licenses/mit-license.php)
  */
-App::uses('TagsAppModel', 'Tags.Model');
+
+namespace Tags\ORM\Table;
+
+use Tags\ORM\TagsAppModel;
 
 /**
  * Tag model
