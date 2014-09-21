@@ -26,30 +26,32 @@ class ArticleFixture extends TestFixture {
  *
  * @var array
  */
-	public $fields = array(
-		'id' => array('type' => 'string', 'null' => false, 'default' => null, 'length' => 36),
-		'title' => array('type' => 'string', 'null' => false),
-		'user_id' => array('type' => 'string', 'null' => false, 'default' => null, 'length' => 36)
-	);
+	public $fields = [
+		'id' =>['type' => 'string', 'null' => false, 'default' => null, 'length' => 36],
+		'title' =>['type' => 'string', 'null' => false],
+		'user_id' =>['type' => 'string', 'null' => false, 'default' => null, 'length' => 36]
+	];
 
 /**
  * records property
  *
  * @var array
  */
-	public $records = array(
-		array(
+	public $records =[
+		[
 			'id' => 'article-1',
 			'title' => 'First Article',
-			'user_id' => 'user-1'),
-		array(
+			'user_id' => 'user-1'
+		],
+		[
 			'id' => 'article-2',
 			'title' => 'Second Article',
-			'user_id' => 'user-2'),
-		array(
+			'user_id' => 'user-2'
+		],
+		[
 			'id' => 'article-3',
 			'title' => 'Third Article',
 			'user_id' => 'user-3'
-		)
-	);
+		]
+	];
 }

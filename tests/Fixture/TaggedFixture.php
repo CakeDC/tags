@@ -33,30 +33,30 @@ class TaggedFixture extends TestFixture {
  *
  * @var array $fields
  */
-	public $fields = array(
-		'id' => array('type' => 'string', 'null' => false, 'default' => null, 'length' => 36, 'key' => 'primary'),
-		'foreign_key' => array('type' => 'string', 'null' => false, 'default' => null, 'length' => 36),
-		'tag_id' => array('type' => 'string', 'null' => false, 'default' => null, 'length' => 36),
-		'model' => array('type' => 'string', 'null' => false, 'default' => null, 'key' => 'index'),
-		'language' => array('type' => 'string', 'null' => true, 'default' => null, 'length' => 6),
-		'times_tagged' => array('type' => 'integer', 'null' => false, 'default' => 1),
-		'created' => array('type' => 'datetime', 'null' => true, 'default' => null),
-		'modified' => array('type' => 'datetime', 'null' => true, 'default' => null),
-		'indexes' => array(
-			'PRIMARY' => array('column' => 'id', 'unique' => 1),
-			'UNIQUE_TAGGING' => array('column' => array('model', 'foreign_key', 'tag_id', 'language'), 'unique' => 1),
-			'INDEX_TAGGED' => array('column' => 'model', 'unique' => 0),
-			'INDEX_LANGUAGE' => array('column' => 'language', 'unique' => 0)
-		)
-	);
+	public $fields = [
+		'id' => ['type' => 'string', 'null' => false, 'default' => null, 'length' => 36, 'key' => 'primary'],
+		'foreign_key' => ['type' => 'string', 'null' => false, 'default' => null, 'length' => 36],
+		'tag_id' => ['type' => 'string', 'null' => false, 'default' => null, 'length' => 36],
+		'model' => ['type' => 'string', 'null' => false, 'default' => null, 'key' => 'index'],
+		'language' => ['type' => 'string', 'null' => true, 'default' => null, 'length' => 6],
+		'times_tagged' => ['type' => 'integer', 'null' => false, 'default' => 1],
+		'created' => ['type' => 'datetime', 'null' => true, 'default' => null],
+		'modified' => ['type' => 'datetime', 'null' => true, 'default' => null],
+		'_constraints' => [
+			'PRIMARY' => ['column' => 'id', 'unique' => 1],
+			'UNIQUE_TAGGING' => ['column' => ['model', 'foreign_key', 'tag_id', 'language'], 'unique' => 1],
+			'INDEX_TAGGED' => ['column' => 'model', 'unique' => 0],
+			'INDEX_LANGUAGE' => ['column' => 'language', 'unique' => 0]
+		]
+	];
 
 /**
  * Records
  *
  * @var array $records
  */
-	public $records = array(
-		array(
+	public $records = [
+		[
 			'id' => '49357f3f-c464-461f-86ac-a85d4a35e6b6',
 			'foreign_key' => 'article-1',
 			'tag_id' => 'tag-1', //cakephp
@@ -64,8 +64,8 @@ class TaggedFixture extends TestFixture {
 			'language' => 'eng',
 			'created' => '2008-12-02 12:32:31 ',
 			'modified' => '2008-12-02 12:32:31',
-		),
-		array(
+		],
+		[
 			'id' => '49357f3f-c66c-4300-a128-a85d4a35e6b6',
 			'foreign_key' => 'article-1',
 			'tag_id' => 'tag-2', //cakedc
@@ -73,8 +73,8 @@ class TaggedFixture extends TestFixture {
 			'language' => 'eng',
 			'created' => '2008-12-02 12:32:31 ',
 			'modified' => '2008-12-02 12:32:31',
-		),
-		array(
+		],
+		[
 			'id' => '493dac81-1b78-4fa1-a761-43ef4a35e6b2',
 			'foreign_key' => 'article-3',
 			'tag_id' => 'tag-3', //cakedc
@@ -82,6 +82,6 @@ class TaggedFixture extends TestFixture {
 			'language' => 'eng',
 			'created' => '2008-12-02 12:32:31 ',
 			'modified' => '2008-12-02 12:32:31',
-		),
-	);
+		],
+	];
 }
