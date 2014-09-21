@@ -38,15 +38,15 @@ class Tagged extends TagsAppModel {
 	);
 
 /**
- * belongsTo associations
+ * initialize
  *
- * @var string
+ * @return void
  */
-	public $belongsTo = array(
-		'Tag' => array(
+	public function initialize() {
+		$this->belongsTo('Tag', [
 			'className' => 'Tags.Tag'
-		)
-	);
+		]);
+	}
 
 /**
  * Returns a tag cloud

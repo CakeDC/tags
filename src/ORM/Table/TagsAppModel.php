@@ -10,14 +10,14 @@
  */
 namespace Tags\ORM\Table;
 
-use App\ORM\AppModel;
+use Cake\ORM\Table;
 
 /**
  * Tags Plugin AppModel
  *
  * @package tags
  */
-class TagsAppModel extends AppModel {
+class TagsAppModel extends Table {
 
 /**
  * Behaviors

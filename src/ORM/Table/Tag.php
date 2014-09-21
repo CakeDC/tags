@@ -22,25 +22,6 @@ use Tags\ORM\TagsAppModel;
 class Tag extends TagsAppModel {
 
 /**
- * hasMany associations
- *
- * @var array
- */
-	public $hasMany = array(
-		'Tagged' => array(
-			'className' => 'Tags.Tagged',
-			'foreignKey' => 'tag_id'
-		)
-	);
-
-/**
- * HABTM associations
- *
- * @var array $hasAndBelongsToMany
- */
-	public $hasAndBelongsToMany = array();
-
-/**
  * Validation rules
  *
  * @var array
@@ -49,6 +30,18 @@ class Tag extends TagsAppModel {
 		'name' => array('rule' => 'notEmpty'),
 		'keyname' => array('rule' => 'notEmpty')
 	);
+
+/**
+ * initialize
+ *
+ * @return void
+ */
+	public function initialize() {
+		$this->belongsTo('Tagged', [
+			'className' => 'Tags.Tagged',
+			'foreignKey' => 'tag_id'
+		]);
+	}
 
 /**
  * Returns the data for a single tag
