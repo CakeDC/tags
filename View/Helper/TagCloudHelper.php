@@ -114,7 +114,7 @@ class TagCloudHelper extends AppHelper {
  * @param string
  * @param float
  * @return string
-	 */
+ */
 	protected function _replace($string, $size) {
 		return str_replace("%size%", $size, $string);
 	}
