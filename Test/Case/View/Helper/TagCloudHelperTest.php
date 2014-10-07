@@ -150,7 +150,7 @@ class TagCloudHelperTest extends CakeTestCase {
 		$this->assertEquals($result, $expected);
 	}
 
-	/**
+/**
  * (non-PHPdoc)
  * @see cake/tests/lib/CakeTestCase#tearDown($method)
  */
