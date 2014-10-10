@@ -29,18 +29,19 @@ class TaggableBehavior extends ModelBehavior {
  * Default settings
  *
  * separator             	- separator used to enter a lot of tags, comma by default
+ * field                 	- the fieldname that contains the raw tags as string
  * tagAlias              	- model alias for Tag model
  * tagClass              	- class name of the table storing the tags
+ * taggedAlias           	- model alias for the HABTM join model
  * taggedClass           	- class name of the HABTM association table between tags and models
- * field                 	- the fieldname that contains the raw tags as string
  * foreignKey            	- foreignKey used in the HABTM association
  * associationForeignKey 	- associationForeignKey used in the HABTM association
+ * cacheOccurrence       	- cache the weight or occurence of a tag in the tags table
  * automaticTagging      	- if set to true you don't need to use saveTags() manually
- * language              	- only tags in a certain language, string or array
  * taggedCounter         	- true to update the number of times a particular tag was used for a specific record
  * unsetInAfterFind      	- unset 'Tag' results in afterFind
- * deleteTagsOnEmptyField 	- delete associated Tags if field is empty.
  * resetBinding             - reset the bindModel() calls, default is false.
+ * deleteTagsOnEmptyField 	- delete associated Tags if field is empty.
  *
  * @var array
  */
@@ -55,10 +56,10 @@ class TaggableBehavior extends ModelBehavior {
 		'associationForeignKey' => 'tag_id',
 		'cacheOccurrence' => true,
 		'automaticTagging' => true,
+		'taggedCounter' => false,
 		'unsetInAfterFind' => false,
 		'resetBinding' => false,
-		'taggedCounter' => false,
-		'deleteTagsOnEmptyField' => false
+		'deleteTagsOnEmptyField' => false,
 	);
 
 /**
