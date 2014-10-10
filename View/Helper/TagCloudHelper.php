@@ -56,7 +56,8 @@ class TagCloudHelper extends AppHelper {
 			'url' => array(
 				'controller' => 'search'
 			),
-			'named' => 'by'
+			'named' => 'by',
+			'paramType' => 'named'
 		);
 		$options = array_merge($defaults, $options);
 
@@ -98,7 +99,12 @@ class TagCloudHelper extends AppHelper {
  * @return array|string
  */
 	protected function _tagUrl($tag, $options) {
-		$options['url'][$options['named']] = $tag[$options['tagModel']]['keyname'];
+		if ($options['paramType'] === 'named') {
+			$options['url'][$options['named']] = $tag[$options['tagModel']]['keyname'];
+		} else {
+			$options['url']['?'][$options['named']] = $tag[$options['tagModel']]['keyname'];
+		}
+
 		return $options['url'];
 	}
 

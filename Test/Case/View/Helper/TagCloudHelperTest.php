@@ -131,6 +131,26 @@ class TagCloudHelperTest extends CakeTestCase {
 	}
 
 /**
+ * Test query string param type
+ */
+	public function testQueryStringUrlParams() {
+		$tags = $this->sampleTags;
+		$tags[0]['Tag']['custom_weight'] = 6;
+		$tags[1]['Tag']['custom_weight'] = 3;
+
+		$options = array(
+			'shuffle' => false,
+			'extract' => '{n}.Tag.custom_weight',
+			'paramType' => 'querystring'
+		);
+
+		$result = $this->TagCloud->display($tags, $options);
+		$expected = '<a href="/search?by=cakephp" id="tag-1">CakePHP</a> '.
+			'<a href="/search?by=cakedc" id="tag-2">CakeDC</a> ';
+		$this->assertEquals($result, $expected);
+	}
+
+/**
  * (non-PHPdoc)
  * @see cake/tests/lib/CakeTestCase#tearDown($method)
  */
