@@ -37,8 +37,9 @@ class TagCloudHelper extends AppHelper {
  *  - after: string to be displayed after each generated link. "%size%" will be replaced with tag size calculated from the weight [default: empty]
  *  - maxSize: size of the heaviest tag [default: 160]
  *  - minSize: size of the lightest tag [default: 80]
- *  - url: an array containing the default url
+ *  - url: an array containing the default URL
  *  - named: the named parameter used to send the tag [default: by]
+ *  - paramType: the type of URL parameters used (named or querystring) [default: named]
  * @return string
  */
 	public function display($tags = null, $options = array()) {
