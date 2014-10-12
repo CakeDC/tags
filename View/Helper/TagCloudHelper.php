@@ -29,7 +29,7 @@ class TagCloudHelper extends AppHelper {
 /**
  * Method to output a tag-cloud formatted based on the weight of the tags
  *
- * @param array $tags
+ * @param array $tags Tag data array
  * @param array $options Display options. Valid keys are:
  * 	- shuffle: true to shuffle the tag list, false to display them in the same order than passed [default: true]
  *  - extract: Set::extract() compatible format string. Path to extract weight values from the $tags array [default: {n}.Tag.weight]
@@ -95,8 +95,8 @@ class TagCloudHelper extends AppHelper {
 /**
  * Generates the URL for a tag
  *
- * @param array
- * @param array
+ * @param array $tag Tag data array
+ * @param array $options Display options
  * @return array|string
  */
 	protected function _tagUrl($tag, $options) {
@@ -112,8 +112,8 @@ class TagCloudHelper extends AppHelper {
 /**
  * Replaces %size% in strings with the calculated "size" of the tag
  *
- * @param string
- * @param float
+ * @param string $string Before or after string
+ * @param float $size Calculated size
  * @return string
  */
 	protected function _replace($string, $size) {

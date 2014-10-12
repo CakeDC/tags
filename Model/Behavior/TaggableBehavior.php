@@ -28,20 +28,20 @@ class TaggableBehavior extends ModelBehavior {
 /**
  * Default settings
  *
- * separator             	- separator used to enter a lot of tags, comma by default
- * field                 	- the fieldname that contains the raw tags as string
- * tagAlias              	- model alias for Tag model
- * tagClass              	- class name of the table storing the tags
- * taggedAlias           	- model alias for the HABTM join model
- * taggedClass           	- class name of the HABTM association table between tags and models
- * foreignKey            	- foreignKey used in the HABTM association
- * associationForeignKey 	- associationForeignKey used in the HABTM association
- * cacheOccurrence       	- cache the weight or occurence of a tag in the tags table
- * automaticTagging      	- if set to true you don't need to use saveTags() manually
- * taggedCounter         	- true to update the number of times a particular tag was used for a specific record
- * unsetInAfterFind      	- unset 'Tag' results in afterFind
- * resetBinding             - reset the bindModel() calls, default is false.
- * deleteTagsOnEmptyField 	- delete associated Tags if field is empty.
+ * separator              - separator used to enter a lot of tags, comma by default
+ * field                  - the fieldname that contains the raw tags as string
+ * tagAlias               - model alias for Tag model
+ * tagClass               - class name of the table storing the tags
+ * taggedAlias            - model alias for the HABTM join model
+ * taggedClass            - class name of the HABTM association table between tags and models
+ * foreignKey             - foreignKey used in the HABTM association
+ * associationForeignKey  - associationForeignKey used in the HABTM association
+ * cacheOccurrence        - cache the weight or occurence of a tag in the tags table
+ * automaticTagging       - if set to true you don't need to use saveTags() manually
+ * taggedCounter          - true to update the number of times a particular tag was used for a specific record
+ * unsetInAfterFind       - unset 'Tag' results in afterFind
+ * resetBinding           - reset the bindModel() calls, default is false
+ * deleteTagsOnEmptyField - delete associated Tags if field is empty
  *
  * @var array
  */
@@ -65,10 +65,8 @@ class TaggableBehavior extends ModelBehavior {
 /**
  * Setup
  *
- * @param Model $model
- * @param array $config
- *
- * @internal param array $settings
+ * @param Model $model Model instance that behavior is attached to
+ * @param array $config Configuration settings from model
  * @return void
  */
 	public function setup(Model $model, $config = array()) {
@@ -82,9 +80,9 @@ class TaggableBehavior extends ModelBehavior {
 	}
 
 /**
- * bindTagAssociations
+ * Bind tag assocations
  *
- * @param Model $model
+ * @param Model $model Model instance that behavior is attached to
  * @return void
  */
 	public function bindTagAssociations(Model $model) {
@@ -151,14 +149,14 @@ class TaggableBehavior extends ModelBehavior {
 /**
  * Saves a string of tags
  *
- * @param Model $model
+ * @param Model $model Model instance that behavior is attached to
  * @param string $string comma separeted list of tags to be saved
- *		Tags can contain special tokens called `identifiers´ to namespace tags or classify them into catageories.
- *		A valid string is "foo, bar, cakephp:special". The token `cakephp´ will end up as the identifier or category for the tag `special´
+ *     Tags can contain special tokens called `identifiers´ to namespace tags or classify them into catageories.
+ *     A valid string is "foo, bar, cakephp:special". The token `cakephp´ will end up as the identifier or category for the tag `special´
  * @param mixed $foreignKey the identifier for the record to associate the tags with
- * @param boolean $update true will remove tags that are not in the $string, false wont
- * do this and just add new tags without removing existing tags associated to
- * the current set foreign key
+ * @param bool $update True will remove tags that are not in the $string, false won't
+ *     do this and just add new tags without removing existing tags associated to
+ *     the current set foreign key
  * @return array
  */
 	public function saveTags(Model $model, $string = null, $foreignKey = null, $update = true) {
@@ -295,8 +293,8 @@ class TaggableBehavior extends ModelBehavior {
 /**
  * Cache the weight or occurence of a tag in the tags table
  *
- * @param Model $model instance of a model
- * @param int|string|array $tagIds
+ * @param Model $model Model instance that behavior is attached to
+ * @param int|string|array $tagIds Tag ID or list of tag IDs
  * @return void
  */
 	public function cacheOccurrence(Model $model, $tagIds) {
@@ -326,23 +324,23 @@ class TaggableBehavior extends ModelBehavior {
 			));
 			$tagModel->save($data, array(
 				'validate' => false,
-				'callbacks' => false)
-			);
+				'callbacks' => false,
+			));
 		}
 	}
 
 /**
  * Creates a multibyte safe unique key
  *
- * @param Model $model
- * @param string Tag name string
- * @returns string Multibyte safe key string
+ * @param Model $model Model instance that behavior is attached to
+ * @param string $string Tag name string
+ * @return string Multibyte safe key string
  */
 	public function multibyteKey(Model $model, $string = null) {
 		$str = mb_strtolower($string);
 		$str = preg_replace('/\xE3\x80\x80/', ' ', $str);
 		$str = str_replace(array('_', '-'), '', $str);
-		$str = preg_replace( '#[:\#\*"()~$^{}`@+=;,<>!&%\.\]\/\'\\\\|\[]#', "\x20", $str );
+		$str = preg_replace('#[:\#\*"()~$^{}`@+=;,<>!&%\.\]\/\'\\\\|\[]#', "\x20", $str);
 		$str = str_replace('?', '', $str);
 		$str = trim($str);
 		$str = preg_replace('#\x20+#', '', $str);
@@ -354,14 +352,15 @@ class TaggableBehavior extends ModelBehavior {
  * initialization of data for text input
  *
  * Example usage (only 'Tag.name' field is needed inside of method):
+ *
  * <code>
  * $this->Blog->hasAndBelongsToMany['Tag']['fields'] = array('name', 'keyname');
  * $blog = $this->Blog->read(null, 123);
  * $blog['Blog']['tags'] = $this->Blog->Tag->tagArrayToString($blog['Tag']);
  * </code>
  *
- * @param Model $model
- * @param array $data
+ * @param Model $model Model instance that behavior is attached to
+ * @param array $data Tag data array
  * @return string
  */
 	public function tagArrayToString(Model $model, $data = null) {
@@ -371,7 +370,7 @@ class TaggableBehavior extends ModelBehavior {
 				if (!empty($tag['identifier'])) {
 					$tags[] = $tag['identifier'] . ':' . $tag['name'];
 				} else {
-					$tags[] =  $tag['name'];
+					$tags[] = $tag['name'];
 				}
 			}
 			return join($this->settings[$model->alias]['separator'] . ' ', $tags);
@@ -382,9 +381,9 @@ class TaggableBehavior extends ModelBehavior {
 /**
  * afterSave callback
  *
- * @param Model $model
- * @param array $created
- * @param array $options
+ * @param Model $model Model instance that behavior is attached to
+ * @param bool $created True if this save created a new record
+ * @param array $options Options passed from Model::save()
  * @return void
  */
 	public function afterSave(Model $model, $created, $options = array()) {
@@ -395,7 +394,7 @@ class TaggableBehavior extends ModelBehavior {
 		$hasTags = !empty($field);
 		if ($this->settings[$model->alias]['automaticTagging'] === true && $hasTags) {
 			$this->saveTags($model, $field, $model->id);
-		} else if (!$hasTags && $this->settings[$model->alias]['deleteTagsOnEmptyField']) {
+		} elseif (!$hasTags && $this->settings[$model->alias]['deleteTagsOnEmptyField']) {
 			$this->deleteTagged($model);
 		}
 	}
@@ -403,7 +402,7 @@ class TaggableBehavior extends ModelBehavior {
 /**
  * Delete associated Tags if record has no tags and deleteTagsOnEmptyField is true
  *
- * @param Model $model Model instance
+ * @param Model $model Model instance that behavior is attached to
  * @param mixed $id Foreign key of the model, string for UUID or integer
  * @return void
  */
@@ -424,9 +423,9 @@ class TaggableBehavior extends ModelBehavior {
 /**
  * afterFind Callback
  *
- * @param Model $model
- * @param array $results
- * @param boolean $primary
+ * @param Model $model Model instance that behavior is attached to
+ * @param mixed $results The results of the find operation
+ * @param bool $primary Whether this model is being queried directly (vs. being queried as an association)
  * @return array
  */
 	public function afterFind(Model $model, $results, $primary = false) {

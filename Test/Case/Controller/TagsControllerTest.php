@@ -23,7 +23,7 @@ class TestTagsController extends TagsController {
 /**
  * Auto render
  *
- * @var boolean
+ * @var bool
  */
 	public $autoRender = false;
 
@@ -37,6 +37,9 @@ class TestTagsController extends TagsController {
 /**
  * Override controller method for testing
  *
+ * @param string|array $url URL to redirect to (copied to `$this->redirectUrl`)
+ * @param int $status Optional HTTP status code (eg: 404)
+ * @param bool $exit If true, exit() will be called after the redirect
  * @return void
  */
 	public function redirect($url, $status = null, $exit = true) {
@@ -46,11 +49,14 @@ class TestTagsController extends TagsController {
 /**
  * Override controller method for testing
  *
+ * @param string $view View to use for rendering
+ * @param string $layout Layout to use
  * @return void
  */
-	public function render($action = null, $layout = null, $file = null) {
-		$this->renderedView = $action;
+	public function render($view = null, $layout = null) {
+		$this->renderedView = $view;
 	}
+
 }
 
 /**
@@ -68,7 +74,8 @@ class TagsControllerTest extends CakeTestCase {
  */
 	public $fixtures = array(
 		'plugin.tags.tagged',
-		'plugin.tags.tag');
+		'plugin.tags.tag'
+	);
 
 /**
  * Tags Controller Instance
@@ -87,7 +94,8 @@ class TagsControllerTest extends CakeTestCase {
 		$this->Tags = new TestTagsController(new CakeRequest(null, false));
 		$this->Tags->params = array(
 			'named' => array(),
-			'url' => array());
+			'url' => array()
+		);
 		$this->Tags->constructClasses();
 		$this->Tags->Session = $this->getMock('SessionComponent', array(), array(), '', false);
 	}
@@ -175,7 +183,6 @@ class TagsControllerTest extends CakeTestCase {
 			->with($this->equalTo(__d('tags', 'Tag deleted.')))
 			->will($this->returnValue(true));
 
-
 		$this->Tags->admin_delete('WRONG-ID!!!');
 		$this->assertEquals($this->Tags->redirectUrl, array('action' => 'index'));
 
@@ -191,14 +198,18 @@ class TagsControllerTest extends CakeTestCase {
 	public function testAdminAdd() {
 		$this->Tags->data = array(
 			'Tag' => array(
-				'tags' => 'tag1, tag2, tag3'));
+				'tags' => 'tag1, tag2, tag3'
+			)
+		);
 		$this->Tags->admin_add();
 		$this->assertEquals($this->Tags->redirectUrl, array('action' => 'index'));
 
 		// adding same tags again.
 		$this->Tags->data = array(
 			'Tag' => array(
-				'tags' => 'tag1, tag2, tag3'));
+				'tags' => 'tag1, tag2, tag3'
+			)
+		);
 		$this->Tags->admin_add();
 		$this->assertEquals($this->Tags->redirectUrl, array('action' => 'index'));
 	}
@@ -219,14 +230,18 @@ class TagsControllerTest extends CakeTestCase {
 				'occurrence' => 1,
 				'article_occurrence' => 1,
 				'created' => '2008-06-02 18:18:11',
-				'modified' => '2008-06-02 18:18:37'));
+				'modified' => '2008-06-02 18:18:37'
+			)
+		);
 
 		$this->assertEquals($this->Tags->data, $tag);
 
 		$this->Tags->data = array(
 			'Tag' => array(
 				'id' => 'tag-1',
-				'name' => 'CAKEPHP'));
+				'name' => 'CAKEPHP'
+			)
+		);
 		$this->Tags->admin_edit('tag-1');
 
 		$this->assertEquals($this->Tags->redirectUrl, array('action' => 'index'));

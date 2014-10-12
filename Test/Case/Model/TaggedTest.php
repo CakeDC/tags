@@ -105,7 +105,9 @@ class TaggedTest extends CakeTestCase {
 				'language' => 'eng',
 				'times_tagged' => 1,
 				'created' => '2008-12-02 12:32:31',
-				'modified' => '2008-12-02 12:32:31'));
+				'modified' => '2008-12-02 12:32:31'
+			)
+		);
 
 		$this->assertEquals($result, $expected);
 	}
@@ -117,7 +119,8 @@ class TaggedTest extends CakeTestCase {
  */
 	public function testFindCloud() {
 		$result = $this->Tagged->find('cloud', array(
-			'model' => 'Article'));
+			'model' => 'Article'
+		));
 
 		$this->assertEquals(count($result), 3);
 		$this->assertTrue(isset($result[0][0]['occurrence']));
@@ -127,7 +130,8 @@ class TaggedTest extends CakeTestCase {
 		$this->assertTrue(is_array($result) && !empty($result));
 
 		$result = $this->Tagged->find('cloud', array(
-			'limit' => 1));
+			'limit' => 1
+		));
 		$this->assertEquals(count($result), 1);
 	}
 
@@ -140,17 +144,20 @@ class TaggedTest extends CakeTestCase {
 		$this->Tagged->recursive = -1;
 		$result = $this->Tagged->find('tagged', array(
 			'by' => 'cakephp',
-			'model' => 'Article'));
+			'model' => 'Article'
+		));
 		$this->assertEquals(count($result), 1);
 		$this->assertEquals($result[0]['Article']['id'], 'article-1');
 
 		$result = $this->Tagged->find('tagged', array(
-			'model' => 'Article'));
+			'model' => 'Article'
+		));
 		$this->assertEquals(count($result), 2);
 		// Test call to paginateCount by Controller::pagination()
 		$result = $this->Tagged->paginateCount(array(), 1, array(
 			'model' => 'Article',
-			'type' => 'tagged'));
+			'type' => 'tagged'
+		));
 		$this->assertEquals($result, 2);
 	}
 
@@ -164,13 +171,15 @@ class TaggedTest extends CakeTestCase {
 		$result = $this->Tagged->find('tagged', array(
 			'by' => 'cakephp',
 			'model' => 'Article',
-			'conditions' => array('Article.title LIKE' => 'Second %')));
+			'conditions' => array('Article.title LIKE' => 'Second %')
+		));
 		$this->assertEquals(count($result), 0);
 
 		$result = $this->Tagged->find('tagged', array(
 			'by' => 'cakephp',
 			'model' => 'Article',
-			'conditions' => array('Article.title LIKE' => 'First %')));
+			'conditions' => array('Article.title LIKE' => 'First %')
+		));
 		$this->assertEquals(count($result), 1);
 		$this->assertEquals($result[0]['Article']['id'], 'article-1');
 	}
@@ -186,16 +195,24 @@ class TaggedTest extends CakeTestCase {
 			'belongsTo' => array(
 				'Article' => array(
 					'className' => 'TaggedArticle',
-					'foreignKey' => 'foreign_key'))));
+					'foreignKey' => 'foreign_key'
+				)
+			)
+		));
 
 		$this->Tagged->Article->bindModel(array(
 			'hasOne' => array(
-				'User' => array())));
+				'User' => array()
+			)
+		));
 
 		$result = $this->Tagged->find('all', array(
 			'contain' => array(
 				'Article' => array(
-					'User'))));
+					'User'
+				)
+			)
+		));
 
 		$this->assertEquals($result[0]['Article']['User']['name'], 'CakePHP');
 	}
@@ -211,16 +228,24 @@ class TaggedTest extends CakeTestCase {
 			'belongsTo' => array(
 				'Article' => array(
 					'className' => 'TaggedArticle',
-					'foreignKey' => 'foreign_key'))));
+					'foreignKey' => 'foreign_key'
+				)
+			)
+		));
 
 		$this->Tagged->Article->bindModel(array(
 			'belongsTo' => array(
-				'User' => array())));
+				'User' => array()
+			)
+		));
 
 		$result = $this->Tagged->find('all', array(
 			'contain' => array(
 				'Article' => array(
-				'User'))));
+					'User'
+				)
+			)
+		));
 
 		$this->assertEquals($result[0]['Article']['User']['name'], 'CakePHP');
 	}

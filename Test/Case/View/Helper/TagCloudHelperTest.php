@@ -35,7 +35,9 @@ class TagCloudHelperTest extends CakeTestCase {
 				'keyname' => 'cakephp',
 				'weight' => 2,
 				'created' => '2008-06-02 18:18:11',
-				'modified' => '2008-06-02 18:18:37')),
+				'modified' => '2008-06-02 18:18:37'
+			)
+		),
 		array(
 			'Tag' => array(
 				'id' => 2,
@@ -44,7 +46,9 @@ class TagCloudHelperTest extends CakeTestCase {
 				'keyname' => 'cakedc',
 				'weight' => 2,
 				'created' => '2008-06-01 18:18:15',
-				'modified' => '2008-06-01 18:18:15')),
+				'modified' => '2008-06-01 18:18:15'
+			)
+		),
 	);
 
 /**
@@ -55,8 +59,9 @@ class TagCloudHelperTest extends CakeTestCase {
 	public $TagCloud;
 
 /**
- * (non-PHPdoc)
- * @see cake/tests/lib/CakeTestCase#setUp($method)
+ * Setup the test case
+ *
+ * @return void
  */
 	public function setUp() {
 		parent::setUp();
@@ -76,7 +81,8 @@ class TagCloudHelperTest extends CakeTestCase {
 
 		// Test tags shuffling
 		$options = array(
-			'shuffle' => true);
+			'shuffle' => true
+		);
 		$expected = '<a href="/search/index/by:cakephp" id="tag-1">CakePHP</a> <a href="/search/index/by:cakedc" id="tag-2">CakeDC</a> ';
 		$i = 100;
 		do {
@@ -87,7 +93,8 @@ class TagCloudHelperTest extends CakeTestCase {
 
 		// Test normal display
 		$options = array(
-			'shuffle' => false);
+			'shuffle' => false
+		);
 		$result = $this->TagCloud->display($this->sampleTags, $options);
 		$this->assertEquals($result, $expected);
 
@@ -101,18 +108,23 @@ class TagCloudHelperTest extends CakeTestCase {
 			'named' => 'query'
 		));
 		$result = $this->TagCloud->display($this->sampleTags, $options);
-		$expected = '<span size="1"><a href="/search/index/from:twitter/query:cakephp" id="tag-1">CakePHP</a> </span><!-- size: 1 -->'.
+		$expected = '<span size="1"><a href="/search/index/from:twitter/query:cakephp" id="tag-1">CakePHP</a> </span><!-- size: 1 -->' .
 			'<span size="1"><a href="/search/index/from:twitter/query:cakedc" id="tag-2">CakeDC</a> </span><!-- size: 1 -->';
 		$this->assertEquals($result, $expected);
 
 		$tags = $this->sampleTags;
 		$tags[1]['Tag']['weight'] = 1;
 		$result = $this->TagCloud->display($tags, $options);
-		$expected = '<span size="100"><a href="/search/index/from:twitter/query:cakephp" id="tag-1">CakePHP</a> </span><!-- size: 100 -->'.
+		$expected = '<span size="100"><a href="/search/index/from:twitter/query:cakephp" id="tag-1">CakePHP</a> </span><!-- size: 100 -->' .
 			'<span size="1"><a href="/search/index/from:twitter/query:cakedc" id="tag-2">CakeDC</a> </span><!-- size: 1 -->';
 		$this->assertEquals($result, $expected);
 	}
 
+/**
+ * Test that display method defines correct size when using custom weight fields
+ *
+ * @return void
+ */
 	public function testDisplayShouldDefineCorrectSizeWhenCustomWeightField() {
 		$tags = $this->sampleTags;
 		$tags[0]['Tag']['custom_weight'] = 6;
@@ -125,13 +137,15 @@ class TagCloudHelperTest extends CakeTestCase {
 		);
 
 		$result = $this->TagCloud->display($tags, $options);
-		$expected = '<!-- size: 160 --><a href="/search/index/by:cakephp" id="tag-1">CakePHP</a> '.
+		$expected = '<!-- size: 160 --><a href="/search/index/by:cakephp" id="tag-1">CakePHP</a> ' .
 			'<!-- size: 80 --><a href="/search/index/by:cakedc" id="tag-2">CakeDC</a> ';
 		$this->assertEquals($result, $expected);
 	}
 
 /**
  * Test query string param type
+ *
+ * @return void
  */
 	public function testQueryStringUrlParams() {
 		$tags = $this->sampleTags;
@@ -145,14 +159,15 @@ class TagCloudHelperTest extends CakeTestCase {
 		);
 
 		$result = $this->TagCloud->display($tags, $options);
-		$expected = '<a href="/search?by=cakephp" id="tag-1">CakePHP</a> '.
+		$expected = '<a href="/search?by=cakephp" id="tag-1">CakePHP</a> ' .
 			'<a href="/search?by=cakedc" id="tag-2">CakeDC</a> ';
 		$this->assertEquals($result, $expected);
 	}
 
 /**
- * (non-PHPdoc)
- * @see cake/tests/lib/CakeTestCase#tearDown($method)
+ * Tear down the test case
+ *
+ * @return void
  */
 	public function tearDown() {
 		parent::tearDown();

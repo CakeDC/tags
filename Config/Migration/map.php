@@ -17,10 +17,12 @@
 
 $map = array(
 	1 => array(
-		'001_initialize_tags_schema' => 'M49ac311a54844a9d87o822502jedc423'),
+		'001_initialize_tags_schema' => 'M49ac311a54844a9d87o822502jedc423',
+	),
 	2 => array(
-		'002_create_times_tagged_field' => 'M4c0d42bcd12c4db099c105f40e8f3d6d'),
+		'002_create_times_tagged_field' => 'M4c0d42bcd12c4db099c105f40e8f3d6d',
+	),
 	3 => array(
-		'003_occurrence_fields_for_tags' => 'M8d01880f01c11e0be500800200c9a66'),
+		'003_occurrence_fields_for_tags' => 'M8d01880f01c11e0be500800200c9a66',
+	),
 );
-?>

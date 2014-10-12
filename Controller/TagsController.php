@@ -59,7 +59,7 @@ class TagsController extends TagsAppController {
 /**
  * View
  *
- * @param string
+ * @param string $keyName Tag key name
  * @return void
  */
 	public function view($keyName = null) {
@@ -77,14 +77,14 @@ class TagsController extends TagsAppController {
  * @return void
  */
 	public function admin_index() {
-		 $this->{$this->modelClass}->recursive = 0;
+		$this->{$this->modelClass}->recursive = 0;
 		$this->set('tags', $this->Paginator->paginate());
 	}
 
 /**
  * Views a single tag
  *
- * @param string tag UUID
+ * @param string $keyName Tag key name
  * @return void
  */
 	public function admin_view($keyName) {
@@ -113,7 +113,7 @@ class TagsController extends TagsAppController {
 /**
  * Edits a tag
  *
- * @param string tag UUID
+ * @param string $tagId Tag UUID
  * @return void
  */
 	public function admin_edit($tagId = null) {
@@ -138,11 +138,11 @@ class TagsController extends TagsAppController {
 /**
  * Deletes a tag
  *
- * @param string tag UUID
+ * @param string $tagId Tag UUID
  * @return void
  */
-	public function admin_delete($id = null) {
-		if ($this->{$this->modelClass}->delete($id)) {
+	public function admin_delete($tagId = null) {
+		if ($this->{$this->modelClass}->delete($tagId)) {
 			$this->Session->setFlash(__d('tags', 'Tag deleted.'));
 		} else {
 			$this->Session->setFlash(__d('tags', 'Invalid Tag.'));

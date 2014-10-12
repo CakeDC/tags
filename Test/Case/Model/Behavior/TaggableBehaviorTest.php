@@ -126,7 +126,9 @@ class TaggableBehaviorTest extends CakeTestCase {
 		$resultBefore = $this->Article->Tag->find('first', array(
 			'contain' => array(),
 			'conditions' => array(
-				'Tag.keyname' => 'cakephp')));
+				'Tag.keyname' => 'cakephp'
+			)
+		));
 
 		// adding a new record with the cakephp tag to increase the occurrence
 		$data = array('title' => 'Test Article', 'tags' => 'cakephp, php');
@@ -136,7 +138,9 @@ class TaggableBehaviorTest extends CakeTestCase {
 		$resultAfter = $this->Article->Tag->find('first', array(
 			'contain' => array(),
 			'conditions' => array(
-				'Tag.keyname' => 'cakephp')));
+				'Tag.keyname' => 'cakephp'
+			)
+		));
 
 		$this->assertEquals($resultAfter['Tag']['occurrence'] - $resultBefore['Tag']['occurrence'], 1);
 
@@ -146,7 +150,9 @@ class TaggableBehaviorTest extends CakeTestCase {
 		$resultAfter = $this->Article->Tag->find('first', array(
 			'contain' => array(),
 			'conditions' => array(
-				'Tag.keyname' => 'cakephp')));
+				'Tag.keyname' => 'cakephp'
+			)
+		));
 		$this->assertEquals($resultAfter['Tag']['occurrence'], 1);
 	}
 
@@ -161,7 +167,9 @@ class TaggableBehaviorTest extends CakeTestCase {
 		$this->Article->save($data, false);
 		$result = $this->Article->find('first', array(
 			'conditions' => array(
-				'id' => 'article-1')));
+				'id' => 'article-1'
+			)
+		));
 		$this->assertTrue(!empty($result['Article']['tags']));
 
 		$data['tags'] = 'foo, developer, developer, php';
@@ -169,11 +177,12 @@ class TaggableBehaviorTest extends CakeTestCase {
 		$result = $this->Article->find('first', array(
 			'contain' => array('Tag'),
 			'conditions' => array(
-				'id' => 'article-1')));
+				'id' => 'article-1'
+			)
+		));
 
 		$this->assertTrue(!empty($result['Article']['tags']));
 		$this->assertEquals(3, count($result['Tag']));
-
 
 		$data['tags'] = 'cakephp:foo, developer, cakephp:developer, cakephp:php';
 		$this->Article->save($data, false);
@@ -181,11 +190,14 @@ class TaggableBehaviorTest extends CakeTestCase {
 			'recursive' => -1,
 			'order' => 'Tag.identifier DESC, Tag.name ASC',
 			'conditions' => array(
-				'Tag.identifier' => 'cakephp')));
+				'Tag.identifier' => 'cakephp'
+			)
+		));
 
 		$result = Set::extract($result, '{n}.Tag.keyname');
 		$this->assertEquals($result, array(
-			'developer', 'foo', 'php'));
+			'developer', 'foo', 'php'
+		));
 
 		$this->assertFalse($this->Article->saveTags('foo, bar', null));
 		$this->assertFalse($this->Article->saveTags(array('foo', 'bar'), 'something'));
@@ -227,7 +239,9 @@ class TaggableBehaviorTest extends CakeTestCase {
 		$this->Article->save($data, false);
 		$result = $this->Article->find('first', array(
 			'conditions' => array(
-				'id' => 'article-1')));
+				'id' => 'article-1'
+			)
+		));
 		$result = $this->Article->tagArrayToString($result['Tag']);
 		$this->assertTrue(!empty($result));
 		$this->assertInternalType('string', $result);
@@ -241,7 +255,9 @@ class TaggableBehaviorTest extends CakeTestCase {
 		$this->Article->save($data, false);
 		$result = $this->Article->find('first', array(
 			'conditions' => array(
-				'id' => 'article-1')));
+				'id' => 'article-1'
+			)
+		));
 
 		$result = $this->Article->tagArrayToString($result['Tag']);
 		$this->assertTrue(!empty($result));
@@ -274,13 +290,17 @@ class TaggableBehaviorTest extends CakeTestCase {
 
 		$result = $this->Article->find('first', array(
 			'conditions' => array(
-				'id' => 'article-1')));
+				'id' => 'article-1'
+			)
+		));
 		$this->assertTrue(isset($result['Tag']));
 
 		$this->Article->Behaviors->Taggable->settings['Article']['unsetInAfterFind'] = true;
 		$result = $this->Article->find('first', array(
 			'conditions' => array(
-				'id' => 'article-1')));
+				'id' => 'article-1'
+			)
+		));
 		$this->assertTrue(!isset($result['Tag']));
 	}
 
@@ -293,7 +313,8 @@ class TaggableBehaviorTest extends CakeTestCase {
 		$this->Article->Behaviors->detach('Taggable');
 		$results = $this->Article->find('first', array(
 			'recursive' => -1,
-			'fields' => array('id')));
+			'fields' => array('id')
+		));
 		$expected = array($this->Article->alias => array('id' => 'article-1'));
 		$this->assertIdentical($results, $expected);
 	}
@@ -362,7 +383,8 @@ class TaggableBehaviorTest extends CakeTestCase {
 		$this->Article->save($data, false);
 		$result = $this->Article->find('first', array(
 			'conditions' => array(
-				'id' => 'article-1')
+				'id' => 'article-1'
+			)
 		));
 
 		$count = $this->Article->Tag->find('count', array(
