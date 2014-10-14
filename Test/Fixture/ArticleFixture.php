@@ -37,11 +37,13 @@ class ArticleFixture extends CakeTestFixture {
 		array(
 			'id' => 'article-1',
 			'title' => 'First Article',
-			'user_id' => 'user-1'),
+			'user_id' => 'user-1'
+		),
 		array(
 			'id' => 'article-2',
 			'title' => 'Second Article',
-			'user_id' => 'user-2'),
+			'user_id' => 'user-2'
+		),
 		array(
 			'id' => 'article-3',
 			'title' => 'Third Article',

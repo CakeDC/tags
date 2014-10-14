@@ -12,26 +12,6 @@
 class TagSchema extends CakeSchema {
 
 /**
- * Before callback
- *
- * @param array Event
- * @return boolean
- */
-	public function before($event = array()) {
-		return true;
-	}
-
-/**
- * After callback
- *
- * @param array Event
- * @return boolean
- */
-	public function after($event = array()) {
-		return true;
-	}
-
-/**
  * Schema for taggeds table
  *
  * @var array

@@ -23,14 +23,15 @@ class TagsAppModel extends AppModel {
  * @var array
  */
 	public $actsAs = array(
-		'Containable');
+		'Containable'
+	);
 
 /**
  * Customized paginateCount method
  *
- * @param array
- * @param integer
- * @param array
+ * @param array $conditions Query conditions
+ * @param int $recursive Recursive setting
+ * @param array $extra Extra settings
  * @return array
  */
 	public function paginateCount($conditions = array(), $recursive = 0, $extra = array()) {

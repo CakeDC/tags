@@ -25,16 +25,20 @@ After adding the TaggableBehavior to your model, you will need to update your vi
 ```php
 public $actsAs = array(
 	'Tags.Taggable' => array(
-		'separator' => '',
-		'field' => 'tags',
+		'separator' => ',',
 		'tagAlias' => 'Tag',
 		'tagClass' => 'Tags.Tag',
+		'taggedAlias' => 'Tagged',
 		'taggedClass' => 'Tags.Tagged',
+		'field' => 'tags',
 		'foreignKey' => 'foreign_key',
 		'associationForeignKey' => 'tag_id',
+		'cacheOccurrence' => true,
 		'automaticTagging' => true,
+		'taggedCounter' => false,
 		'unsetInAfterFind' => false,
 		'resetBinding' => false,
+		'deleteTagsOnEmptyField' => false,
 	)
 );
 ```
@@ -44,16 +48,16 @@ The configuration above contains the default values for each setting. Here are s
 * **separator:** String used to separate tags in the Model.tags value. (Default: ```,```)
 * **tagAlias:** Alias for the HABTM relationship between your Model and Tag. (Default: ```Tag```)
 * **tagClass**: Name of the model representing Tags. (Default: ```Tags.Tag```)
+* **taggedAlias:** Alias for the HABTM join model. (Default: ```Tagged```)
 * **taggedClass:** Name of the HABTM join model. (Default: ```Tags.Tagged```)
 * **field:** Name of the Model field containing the tag list. (Default: ```tags```)
 * **foreignKey:** Name of the HABTM join model field containing the foreign key to the Tagable model. (Default: ```foreign_key```)
 * **associationForeignKey:** Name of the HABTM join model field containing the foreign key to the Tag model. (Default: ```tag_id```)
+* **cacheOccurrence:** Name of the HABTM join model field containing the foreign key to the Tag model. (Default: ```true```)
 * **automaticTagging:** Whether or not the behavior will automatically call saveTags() after each save. (Default: ```true```)
-* **language:** Only tags in a certain language, string or array.
 * **taggedCounter:** True to update the number of times a particular tag was used for a specific record.
 * **unsetInAfterFind:** Whether or not the related Tag entries have to be unset after a find. If this value is true, the ```$data['Tag']``` array will be unset and tags will only be available using the ```$data['Model']['tags']``` value. (Default: false)
 * **resetBinding:** Value passed as the second param of to the ```bindModel()``` call when creating the HABTM association. If set to true, the binding will last only one query. (Default: false)
 * **deleteTagsOnEmptyField:** Delete associated Tags if field is empty or empty string.
-* **resetBinding:** Reset the `bindModel()` calls, default is false.
 
 Note that the ```tagClass```, ```taggedClass```, ```foreignKey``` and ```associationForeignKey``` values must not be changed if you use the plugin as it is shipped. Use these settings when you want to use your own models / tables structure.

@@ -42,13 +42,13 @@ class M49ac311a54844a9d87o822502jedc423 extends CakeMigration {
 		'up' => array(
 			'create_table' => array(
 				'tagged' => array(
-					'id' => array('type' => 'string', 'null' => false, 'default' => NULL, 'length' => 36, 'key' => 'primary'),
-					'foreign_key' => array('type' => 'string', 'null' => false, 'default' => NULL, 'length' => 36),
-					'tag_id' => array('type' => 'string', 'null' => false, 'default' => NULL, 'length' => 36),
-					'model' => array('type' => 'string', 'null' => false, 'default' => NULL, 'key' => 'index'),
-					'language' => array('type' => 'string', 'null' => true, 'default' => NULL, 'length' => 6),
-					'created' => array('type' => 'datetime', 'null' => true, 'default' => NULL),
-					'modified' => array('type' => 'datetime', 'null' => true, 'default' => NULL),
+					'id' => array('type' => 'string', 'null' => false, 'default' => null, 'length' => 36, 'key' => 'primary'),
+					'foreign_key' => array('type' => 'string', 'null' => false, 'default' => null, 'length' => 36),
+					'tag_id' => array('type' => 'string', 'null' => false, 'default' => null, 'length' => 36),
+					'model' => array('type' => 'string', 'null' => false, 'default' => null, 'key' => 'index'),
+					'language' => array('type' => 'string', 'null' => true, 'default' => null, 'length' => 6),
+					'created' => array('type' => 'datetime', 'null' => true, 'default' => null),
+					'modified' => array('type' => 'datetime', 'null' => true, 'default' => null),
 					'indexes' => array(
 						'PRIMARY' => array('column' => 'id', 'unique' => 1),
 						'UNIQUE_TAGGING' => array('column' => array('model', 'foreign_key', 'tag_id', 'language'), 'unique' => 1),
@@ -57,13 +57,13 @@ class M49ac311a54844a9d87o822502jedc423 extends CakeMigration {
 					)
 				),
 				'tags' => array(
-					'id' => array('type' => 'string', 'null' => false, 'default' => NULL, 'length' => 36, 'key' => 'primary'),
-					'identifier' => array('type' => 'string', 'null' => true, 'default' => NULL, 'length' => 30, 'key' => 'index'),
-					'name' => array('type' => 'string', 'null' => false, 'default' => NULL, 'length' => 30),
-					'keyname' => array('type' => 'string', 'null' => false, 'default' => NULL, 'length' => 30),
+					'id' => array('type' => 'string', 'null' => false, 'default' => null, 'length' => 36, 'key' => 'primary'),
+					'identifier' => array('type' => 'string', 'null' => true, 'default' => null, 'length' => 30, 'key' => 'index'),
+					'name' => array('type' => 'string', 'null' => false, 'default' => null, 'length' => 30),
+					'keyname' => array('type' => 'string', 'null' => false, 'default' => null, 'length' => 30),
 					'weight' => array('type' => 'integer', 'null' => false, 'default' => 0, 'length' => 2),
-					'created' => array('type' => 'datetime', 'null' => true, 'default' => NULL),
-					'modified' => array('type' => 'datetime', 'null' => true, 'default' => NULL),
+					'created' => array('type' => 'datetime', 'null' => true, 'default' => null),
+					'modified' => array('type' => 'datetime', 'null' => true, 'default' => null),
 					'indexes' => array(
 						'PRIMARY' => array('column' => 'id', 'unique' => 1),
 						'UNIQUE_TAG' => array('column' => array('identifier', 'keyname'), 'unique' => 1)
@@ -76,27 +76,4 @@ class M49ac311a54844a9d87o822502jedc423 extends CakeMigration {
 		)
 	);
 
-/**
- * Before migration callback
- *
- * @param string $direction, up or down direction of migration process
- * @return boolean Should process continue
- * @access public
- */
-	public function before($direction) {
-		return true;
-	}
-
-/**
- * After migration callback
- *
- * @param string $direction, up or down direction of migration process
- * @return boolean Should process continue
- * @access public
- */
-	public function after($direction) {
-		return true;
-	}
-
 }
-?>
