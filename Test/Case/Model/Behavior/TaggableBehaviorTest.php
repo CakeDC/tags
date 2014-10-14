@@ -61,6 +61,40 @@ class Article extends CakeTestModel {
 }
 
 /**
+ * Custom tag model
+ *
+ * @package tags
+ * @subpackage tags.tests.cases.behaviors
+ */
+class CustomTag extends CakeTestModel {
+
+/**
+ * Use table
+ *
+ * @var string
+ */
+	public $useTable = 'tags';
+
+}
+
+/**
+ * Custom tagged model
+ *
+ * @package tags
+ * @subpackage tags.tests.cases.behaviors
+ */
+class CustomTagged extends CakeTestModel {
+
+/**
+ * Use table
+ *
+ * @var string
+ */
+	public $useTable = 'tagged';
+
+}
+
+/**
  * TaggableTest
  *
  * @package tags
@@ -95,6 +129,48 @@ class TaggableBehaviorTest extends CakeTestCase {
 	);
 
 /**
+ * Behavior settings.
+ *
+ * @var array
+ */
+	public $behaviorSettings = array();
+
+/**
+ * Default behavior settings.
+ *
+ * @var array
+ */
+	public $defaultBehaviorSettings = array();
+
+/**
+ * Custom behavior settings.
+ *
+ * @var array
+ */
+	public $customBehaviorSettings = array(
+		'tagAlias' => 'CustomTagAlias',
+		'taggedAlias' => 'CustomTaggedAlias',
+		'tagClass' => 'Tags.CustomTag',
+		'taggedClass' => 'Tags.CustomTagged',
+	);
+
+/**
+ * Run test cases multiple times with different behavior settings
+ *
+ * @param PHPUnit_Framework_TestResult $result The test result object
+ * @return PHPUnit_Framework_TestResult
+ */
+	public function run(PHPUnit_Framework_TestResult $result = null) {
+		$this->behaviorSettings = $this->defaultBehaviorSettings;
+		$result = parent::run($result);
+
+		$this->behaviorSettings = $this->customBehaviorSettings;
+		$result = parent::run($result);
+
+		return $result;
+	}
+
+/**
  * Method executed before each test
  *
  * @return void
@@ -103,7 +179,7 @@ class TaggableBehaviorTest extends CakeTestCase {
 		parent::setUp();
 		$this->Article = ClassRegistry::init('Article');
 		Configure::write('Config.language', 'eng');
-		$this->Article->Behaviors->attach('Tags.Taggable', array());
+		$this->Article->Behaviors->attach('Tags.Taggable', $this->behaviorSettings);
 	}
 
 /**
@@ -123,10 +199,12 @@ class TaggableBehaviorTest extends CakeTestCase {
  * @return void
  */
 	public function testOccurrenceCache() {
-		$resultBefore = $this->Article->Tag->find('first', array(
+		$tagAlias = $this->Article->Behaviors->Taggable->settings['Article']['tagAlias'];
+
+		$resultBefore = $this->Article->{$tagAlias}->find('first', array(
 			'contain' => array(),
 			'conditions' => array(
-				'Tag.keyname' => 'cakephp'
+				$tagAlias . '.keyname' => 'cakephp'
 			)
 		));
 
@@ -135,25 +213,25 @@ class TaggableBehaviorTest extends CakeTestCase {
 		$this->Article->create();
 		$this->Article->save($data, false);
 
-		$resultAfter = $this->Article->Tag->find('first', array(
+		$resultAfter = $this->Article->{$tagAlias}->find('first', array(
 			'contain' => array(),
 			'conditions' => array(
-				'Tag.keyname' => 'cakephp'
+				$tagAlias . '.keyname' => 'cakephp'
 			)
 		));
 
-		$this->assertEquals($resultAfter['Tag']['occurrence'] - $resultBefore['Tag']['occurrence'], 1);
+		$this->assertEquals($resultAfter[$tagAlias]['occurrence'] - $resultBefore[$tagAlias]['occurrence'], 1);
 
 		// updating the record to not have the cakephp tag anymore, decreases the occurrence
 		$data = array('id' => $this->Article->id, 'title' => 'Test Article', 'tags' => 'php, something, else');
 		$this->Article->save($data, false);
-		$resultAfter = $this->Article->Tag->find('first', array(
+		$resultAfter = $this->Article->{$tagAlias}->find('first', array(
 			'contain' => array(),
 			'conditions' => array(
-				'Tag.keyname' => 'cakephp'
+				$tagAlias . '.keyname' => 'cakephp'
 			)
 		));
-		$this->assertEquals($resultAfter['Tag']['occurrence'], 1);
+		$this->assertEquals($resultAfter[$tagAlias]['occurrence'], 1);
 	}
 
 /**
@@ -284,6 +362,8 @@ class TaggableBehaviorTest extends CakeTestCase {
  * @return void
  */
 	public function testAfterFind() {
+		$tagAlias = $this->Article->Behaviors->Taggable->settings['Article']['tagAlias'];
+
 		$data['id'] = 'article-1';
 		$data['tags'] = 'foo, bar, test';
 		$this->Article->save($data, false);
@@ -293,7 +373,7 @@ class TaggableBehaviorTest extends CakeTestCase {
 				'id' => 'article-1'
 			)
 		));
-		$this->assertTrue(isset($result['Tag']));
+		$this->assertTrue(isset($result[$tagAlias]));
 
 		$this->Article->Behaviors->Taggable->settings['Article']['unsetInAfterFind'] = true;
 		$result = $this->Article->find('first', array(
@@ -301,7 +381,7 @@ class TaggableBehaviorTest extends CakeTestCase {
 				'id' => 'article-1'
 			)
 		));
-		$this->assertTrue(!isset($result['Tag']));
+		$this->assertTrue(!isset($result[$tagAlias]));
 	}
 
 /**
