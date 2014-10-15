@@ -212,8 +212,9 @@ class TaggableBehavior extends ModelBehavior {
 				}
 				foreach ($newTags as $key => $newTag) {
 					$tagModel->create();
-					$tagModel->save($newTag);
-					$newTagIds[] = $tagModel->getLastInsertId();
+					if ($tagModel->save($newTag)) {
+						$newTagIds[] = $tagModel->getLastInsertId();
+					}
 				}
 
 				if ($foreignKey !== false) {
