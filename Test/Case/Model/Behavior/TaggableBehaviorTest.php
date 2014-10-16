@@ -133,25 +133,18 @@ class TaggableBehaviorTest extends CakeTestCase {
  *
  * @var array
  */
-	public $behaviorSettings = array();
-
-/**
- * Default behavior settings.
- *
- * @var array
- */
-	public $defaultBehaviorSettings = array();
-
-/**
- * Custom behavior settings.
- *
- * @var array
- */
-	public $customBehaviorSettings = array(
-		'tagAlias' => 'CustomTagAlias',
-		'taggedAlias' => 'CustomTaggedAlias',
-		'tagClass' => 'Tags.CustomTag',
-		'taggedClass' => 'Tags.CustomTagged',
+	public $behaviorSettings = array(
+		'default' => array(),
+		'noPluginPrefix' => array(
+			'tagClass' => 'Tag',
+			'taggedClass' => 'Tagged',
+		),
+		'customAliasAndClass' => array(
+			'tagAlias' => 'CustomTagAlias',
+			'taggedAlias' => 'CustomTaggedAlias',
+			'tagClass' => 'Tags.CustomTag',
+			'taggedClass' => 'Tags.CustomTagged',
+		),
 	);
 
 /**
@@ -161,11 +154,10 @@ class TaggableBehaviorTest extends CakeTestCase {
  * @return PHPUnit_Framework_TestResult
  */
 	public function run(PHPUnit_Framework_TestResult $result = null) {
-		$this->behaviorSettings = $this->defaultBehaviorSettings;
-		$result = parent::run($result);
-
-		$this->behaviorSettings = $this->customBehaviorSettings;
-		$result = parent::run($result);
+		foreach ($this->behaviorSettings as $behaviorSettings) {
+			$this->behaviorSettings = $behaviorSettings;
+			$result = parent::run($result);
+		}
 
 		return $result;
 	}
