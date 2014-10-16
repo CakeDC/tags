@@ -88,7 +88,7 @@ class TaggableBehavior extends ModelBehavior {
 	public function bindTagAssociations(Model $model) {
 		extract($this->settings[$model->alias]);
 
-		$withClass = substr($withModel, strrpos($withModel, '.') + 1);
+		list($plugin, $withClass) = pluginSplit($withModel, true);
 		$model->bindModel(array(
 			'hasAndBelongsToMany' => array(
 				$tagAlias => array(
