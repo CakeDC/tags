@@ -44,7 +44,7 @@ class TaggableBehavior extends Behavior {
 		'separator' => ',',
 		'field' => 'tags',
 		'tagAlias' => 'Tag',
-		'tagClass' => 'Tags.Tag',
+		'tagClass' => 'Tags.Tags',
 		'taggedAlias' => 'Tagged',
 		'taggedClass' => 'Tags.Tagged',
 		'foreignKey' => 'foreign_key',

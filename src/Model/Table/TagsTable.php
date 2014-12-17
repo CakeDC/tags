@@ -11,7 +11,7 @@
 
 namespace Tags\Model\Table;
 
-use Tags\ORM\TagsAppModel;
+use Tags\Model\Table\TagsAppTable;
 
 /**
  * Tag model
@@ -19,7 +19,7 @@ use Tags\ORM\TagsAppModel;
  * @package tags
  * @subpackage tags.models
  */
-class Tag extends TagsAppModel {
+class TagsTable extends TagsAppTable {
 
 /**
  * Validation rules

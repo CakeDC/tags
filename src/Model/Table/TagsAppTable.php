@@ -17,7 +17,7 @@ use Cake\ORM\Table;
  *
  * @package tags
  */
-class TagsAppModel extends Table {
+class TagsAppTable extends Table {
 
 /**
  * Behaviors

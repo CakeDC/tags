@@ -10,7 +10,7 @@
  */
 namespace Tags\Model\Table;
 
-use Tags\ORM\TagsAppModel;
+use Tags\Model\Table\TagsAppTable;
 
 /**
  * Tagged model
@@ -18,7 +18,7 @@ use Tags\ORM\TagsAppModel;
  * @package tags
  * @subpackage tags.models
  */
-class Tagged extends TagsAppModel {
+class Tagged extends TagsAppTable {
 
 /**
  * Table that is used
