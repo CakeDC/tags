@@ -9,7 +9,7 @@
  * @license MIT License (http://www.opensource.org/licenses/mit-license.php)
  */
 
-namespace Tags\Test\TestCase\Model;
+namespace Tags\Test\TestCase\Model\Table;
 
 use Cake\TestSuite\TestCase;
 use Cake\ORM\Table;

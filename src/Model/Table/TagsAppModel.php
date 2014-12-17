@@ -8,7 +8,7 @@
  * @copyright Copyright 2009-2014, Cake Development Corporation (http://cakedc.com)
  * @license MIT License (http://www.opensource.org/licenses/mit-license.php)
  */
-namespace Tags\ORM\Table;
+namespace Tags\Model\Table;
 
 use Cake\ORM\Table;
 

@@ -9,7 +9,7 @@
  * @license MIT License (http://www.opensource.org/licenses/mit-license.php)
  */
 
-namespace Tags\ORM\Table;
+namespace Tags\Model\Table;
 
 use Tags\ORM\TagsAppModel;
 
