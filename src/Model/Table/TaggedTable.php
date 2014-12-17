@@ -42,7 +42,7 @@ class Tagged extends TagsAppTable {
  *
  * @return void
  */
-	public function initialize() {
+	public function initialize(array $config) {
 		$this->belongsTo('Tag', [
 			'className' => 'Tags.Tag'
 		]);

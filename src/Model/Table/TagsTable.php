@@ -36,7 +36,7 @@ class TagsTable extends TagsAppTable {
  *
  * @return void
  */
-	public function initialize() {
+	public function initialize(array $config) {
 		$this->belongsTo('Tagged', [
 			'className' => 'Tags.Tagged',
 			'foreignKey' => 'tag_id'
