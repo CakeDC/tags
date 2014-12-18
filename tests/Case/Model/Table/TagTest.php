@@ -45,7 +45,7 @@ class TagTest extends TestCase {
  */
 	public function setUp() {
 		parent::setUp();
-		$this->Tag = ClassRegistry::init('Tags.Tag');
+		$this->Tag = TableRegistry::get('Tags.Tag');
 	}
 
 /**
