@@ -49,7 +49,7 @@ class TaggableBehavior extends Behavior {
 		'taggedAlias' => 'Tagged',
 		'taggedClass' => 'Tags.Tagged',
 		'foreignKey' => 'foreign_key',
-		'associationForeignKey' => 'tag_id',
+		'targetForeignKey' => 'tag_id',
 		'cacheOccurrence' => true,
 		'automaticTagging' => true,
 		'unsetInAfterFind' => false,
@@ -80,11 +80,16 @@ class TaggableBehavior extends Behavior {
 	public function bindTagAssociations() {
 		extract($this->_config);
 
+		$this->_table->hasMany($taggedAlias, [
+			'propertyName' => 'tagged',
+			'className' => $taggedClass
+		]);
+
 		$this->_table->belongsToMany($tagAlias, [
 			'propertyName' => 'tags',
 			'className' => $tagClass,
 			'foreignKey' => $foreignKey,
-			'targetForeignKey' => $associationForeignKey,
+			'targetForeignKey' => $targetForeignKey,
 			'joinTable' => 'tagged',
 			'unique' => true,
 			'conditions' => array(
@@ -93,11 +98,6 @@ class TaggableBehavior extends Behavior {
 			'fields' => '',
 			'dependent' => true,
 			'with' => $withModel
-		]);
-
-		$this->_table->hasMany($taggedAlias, [
-			'propertyName' => 'tagged',
-			'className' => $taggedClass
 		]);
 	}
 
@@ -206,7 +206,9 @@ class TaggableBehavior extends Behavior {
 						$existingTagIds = array_merge($existingTagIds, $newTagIds);
 					}
 					$tagged = $tagModel->{$taggedAlias}->find('all', array(
-						'contain' => array(),
+						'contain' => array(
+							'Tagged'
+						),
 						'conditions' => array(
 							$taggedAlias . '.model' => $this->name(),
 							$taggedAlias . '.foreign_key' => $foreignKey,
@@ -229,7 +231,9 @@ class TaggableBehavior extends Behavior {
 
 					if ($update == true) {
 						$oldTagIds = $tagModel->{$taggedAlias}->find('all', array(
-							'contain' => array(),
+							'contain' => array(
+								'Tagged'
+							),
 							'conditions' => array(
 								$taggedAlias . '.model' => $this->name(),
 								$taggedAlias . '.foreign_key' => $foreignKey,
@@ -255,7 +259,9 @@ class TaggableBehavior extends Behavior {
 					//To update occurrence
 					if ($this->_config['cacheOccurrence']) {
 						$newTagIds = $tagModel->{$taggedAlias}->find('all', array(
-							'contain' => array(),
+							'contain' => array(
+								'Tagged'
+							),
 							'conditions' => array(
 								$taggedAlias . '.model' => $this->name(),
 								$taggedAlias . '.foreign_key' => $foreignKey,

@@ -22,7 +22,7 @@ use Cake\ORM\TableRegistry;
  * @package tags
  * @subpackage tags.tests.cases.behaviors
  */
-class Article extends Table {
+class ArticlesTable extends Table {
 	public function initialize(array $config) {
 		$this->table('articles');
 		$this->addBehavior('Tags.Taggable');
@@ -70,7 +70,7 @@ class TaggableBehaviorTest extends TestCase {
  */
 	public function setUp() {
 		parent::setUp();
-		$this->Article = TableRegistry::get('Article');
+		$this->Article = TableRegistry::get('Articles');
 		Configure::write('Config.language', 'eng');
 		$this->Article->addBehavior('Tags.Taggable');
 	}
@@ -93,9 +93,11 @@ class TaggableBehaviorTest extends TestCase {
  */
 	public function testOccurrenceCache() {
 		$resultBefore = $this->Article->Tag->find('all', array(
-			'contain' => array(),
+			'contain' => array(
+				'Tagged'
+			),
 			'conditions' => array(
-				'Tag.keyname' => 'cakephp'
+				'keyname' => 'cakephp'
 			)
 		))->first();
 
@@ -106,7 +108,9 @@ class TaggableBehaviorTest extends TestCase {
 		$resultAfter = $this->Article->Tag->find('all', array(
 			'contain' => array(),
 			'conditions' => array(
-				'Tag.keyname' => 'cakephp')))->first();
+				'Tag.keyname' => 'cakephp'
+			)
+		))->first();
 
 		$this->assertEquals($resultAfter['Tag']['occurrence'] - $resultBefore['Tag']['occurrence'], 1);
 
@@ -131,20 +135,25 @@ class TaggableBehaviorTest extends TestCase {
 	public function testTagSaving() {
 		$data['id'] = 'article-1';
 		$data['tags'] = 'foo, bar, test';
+
 		$data = $this->Article->newEntity($data);
 		$this->Article->save($data, false);
-		$result = $this->Article->find('first', array(
+		$result = $this->Article->find('all', array(
 			'conditions' => array(
-				'id' => 'article-1')));
+				'id' => 'article-1'
+			)
+		))->first;
 		$this->assertTrue(!empty($result['Article']['tags']));
 
 		$data['tags'] = 'foo, developer, developer, php';
 		$data = $this->Article->newEntity($data);
 		$this->Article->save($data, false);
-		$result = $this->Article->find('first', array(
+		$result = $this->Article->find('all', array(
 			'contain' => array('Tag'),
 			'conditions' => array(
-				'id' => 'article-1')));
+				'id' => 'article-1'
+			)
+		))->first();
 
 		$this->assertTrue(!empty($result['Article']['tags']));
 		$this->assertEquals(3, count($result['Tag']));
