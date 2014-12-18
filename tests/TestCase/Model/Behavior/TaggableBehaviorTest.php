@@ -14,6 +14,7 @@ namespace Tags\Test\TestCase\Model\Behavior;
 use Cake\Core\Configure;
 use Cake\TestSuite\TestCase;
 use Cake\ORM\Table;
+use Cake\ORM\TableRegistry;
 
 /**
  * Article model
@@ -22,7 +23,7 @@ use Cake\ORM\Table;
  * @subpackage tags.tests.cases.behaviors
  */
 class Article extends Table {
-	public function initialize() {
+	public function initialize(array $config) {
 		$this->table('articles');
 		$this->addBehavior('Tags.Taggable');
 	}

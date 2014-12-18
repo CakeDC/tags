@@ -18,7 +18,7 @@ use Tags\Model\Table\TagsAppTable;
  * @package tags
  * @subpackage tags.models
  */
-class Tagged extends TagsAppTable {
+class TaggedTable extends TagsAppTable {
 
 /**
  * Table that is used
