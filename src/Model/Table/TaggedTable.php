@@ -10,6 +10,7 @@
  */
 namespace Tags\Model\Table;
 
+use Cake\Utility\Hash;
 use Tags\Model\Table\TagsAppTable;
 
 /**
@@ -41,6 +42,7 @@ class TaggedTable extends TagsAppTable
 /**
  * initialize
  *
+ * @param array $config Configuration array.
  * @return void
  */
     public function initialize(array $config)
@@ -60,9 +62,9 @@ class TaggedTable extends TagsAppTable
  * size of the tag font.
  *
  * @todo Ideas to improve this are welcome
- * @param string $state
- * @param array $query
- * @param array $results
+ * @param string $state Find state (before or after).
+ * @param array $query Query array.
+ * @param array $results Results array.
  * @return array
  * @link https://github.com/CakeDC/tags/issues/10
  */
@@ -70,9 +72,9 @@ class TaggedTable extends TagsAppTable
     {
         if ($state === 'before') {
             // Support old code without the occurrence cache
-            if (!$this->Tag->hasField('occurrence') || isset($query['occurrenceCache']) && $query['occurrenceCache'] === false) {
-                $fields = 'Tagged.tag_id, Tag.id, Tag.identifier, Tag.name, Tag.keyname, Tag.weight, COUNT(*) AS occurrence';
+            if (!$this->Tag->hasField('occurrence') || Hash::get($query, 'occurrenceCache') === false) {
                 $groupBy = array('Tagged.tag_id', 'Tag.id', 'Tag.identifier', 'Tag.name', 'Tag.keyname', 'Tag.weight');
+                $fields = implode(', ', $groupBy + array('COUNT(*) AS occurrence'));
             } else {
                 // This is related to https://github.com/CakeDC/tags/issues/10 to work around a limitation of postgres
                 $field = $this->getDataSource()->fields($this->Tag);
@@ -129,7 +131,11 @@ class TaggedTable extends TagsAppTable
                 }
 
                 foreach ($results as $key => $result) {
-                    $size = $query['minSize'] + (($result['Tag']['occurrence'] - $minWeight) * (($query['maxSize'] - $query['minSize']) / ($spread)));
+                    $size = $query['minSize'] + (
+                        ($result['Tag']['occurrence'] - $minWeight) * (
+                            ($query['maxSize'] - $query['minSize']) / ($spread)
+                        )
+                    );
                     $results[$key]['Tag']['weight'] = ceil($size);
                 }
             }
@@ -148,9 +154,9 @@ class TaggedTable extends TagsAppTable
  * </code
  *
  * @TODO Find a way to populate the "magic" field Article.tags
- * @param string $state
- * @param array $query
- * @param array $results
+ * @param string $state Find state (before or after).
+ * @param array $query Query array.
+ * @param array $results Results array.
  * @return mixed Query array if state is before, array of results or integer (count) if state is after
  */
     public function _findTagged($state, $query, $results = array())
@@ -171,7 +177,8 @@ class TaggedTable extends TagsAppTable
                 }
 
                 if ($query['recursive'] == -1) {
-                    throw new InvalidArgumentException(__d('tags', 'Find tagged will not work with a recursive level of -1, you need at least 0.', true), E_USER_ERROR);
+                    $message = 'Find tagged will not work with a recursive level of -1, you need at least 0.';
+                    throw new InvalidArgumentException(__d('tags', $message, true), E_USER_ERROR);
                 }
 
                 if (isset($query['operation']) && $query['operation'] == 'count') {
@@ -181,7 +188,8 @@ class TaggedTable extends TagsAppTable
                     if ($query['fields'] === null) {
                         $query['fields'][] = "DISTINCT " . join(',', $this->getDataSource()->fields($Model));
                     } else {
-                        array_unshift($query['fields'], "DISTINCT " . join(',', $this->getDataSource()->fields($Model)));
+                        $distinctFields = join(',', $this->getDataSource()->fields($Model));
+                        array_unshift($query['fields'], "DISTINCT " . $distinctFields);
                     }
                 }
 

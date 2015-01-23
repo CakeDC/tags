@@ -11,9 +11,9 @@
 
 namespace Tags\Test\TestCase\Model\Table;
 
+use Cake\ORM\Table;
 use Cake\ORM\TableRegistry;
 use Cake\TestSuite\TestCase;
-use Cake\ORM\Table;
 
 /**
  * TagggedArticle Test Model

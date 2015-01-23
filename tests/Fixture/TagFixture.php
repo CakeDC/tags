@@ -34,18 +34,18 @@ class TagFixture extends TestFixture
  *
  * @var array $fields
  */
-    public $fields =[
-        'id' =>['type' => 'string', 'null' => false, 'default' => null, 'length' => 36],
-        'identifier' =>['type' => 'string', 'null' => true, 'default' => null, 'length' => 30],
-        'name' =>['type' => 'string', 'null' => false, 'default' => null, 'length' => 30],
-        'keyname' =>['type' => 'string', 'null' => false, 'default' => null, 'length' => 30],
-        'occurrence' =>['type' => 'integer', 'null' => false, 'default' => 0, 'length' => 8],
-        'article_occurrence' =>['type' => 'integer', 'null' => false, 'default' => 0, 'length' => 8],
-        'created' =>['type' => 'datetime', 'null' => true, 'default' => null],
-        'modified' =>['type' => 'datetime', 'null' => true, 'default' => null],
+    public $fields = [
+        'id' => ['type' => 'string', 'null' => false, 'default' => null, 'length' => 36],
+        'identifier' => ['type' => 'string', 'null' => true, 'default' => null, 'length' => 30],
+        'name' => ['type' => 'string', 'null' => false, 'default' => null, 'length' => 30],
+        'keyname' => ['type' => 'string', 'null' => false, 'default' => null, 'length' => 30],
+        'occurrence' => ['type' => 'integer', 'null' => false, 'default' => 0, 'length' => 8],
+        'article_occurrence' => ['type' => 'integer', 'null' => false, 'default' => 0, 'length' => 8],
+        'created' => ['type' => 'datetime', 'null' => true, 'default' => null],
+        'modified' => ['type' => 'datetime', 'null' => true, 'default' => null],
         '_constraints' => [
-            'PRIMARY' =>['type' => 'primary', 'columns' => ['id']],
-            'UNIQUE_TAG' =>['type' => 'unique', 'columns' =>['identifier', 'keyname']]
+            'PRIMARY' => ['type' => 'primary', 'columns' => ['id']],
+            'UNIQUE_TAG' => ['type' => 'unique', 'columns' => ['identifier', 'keyname']]
         ]
     ];
 
@@ -54,7 +54,7 @@ class TagFixture extends TestFixture
  *
  * @var array $records
  */
-    public $records =[
+    public $records = [
         [
             'id' => 'tag-1',
             'identifier' => null,

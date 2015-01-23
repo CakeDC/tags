@@ -35,6 +35,7 @@ class TagsTable extends TagsAppTable
 /**
  * initialize
  *
+ * @param array $config Configuration array.
  * @return void
  */
     public function initialize(array $config)
@@ -49,9 +50,9 @@ class TagsTable extends TagsAppTable
 /**
  * Returns the data for a single tag
  *
- * @throws CakeException
- * @param string keyname
- * @return array
+ * @param string $keyName Key of tag to return.
+ * @return array Tag array.
+ * @throws CakeException If no matching tag found.
  */
     public function view($keyName = null)
     {
@@ -69,8 +70,8 @@ class TagsTable extends TagsAppTable
 /**
  * Pre-populates the tag table with entered tags
  *
- * @param array post data, should be Contoller->data
- * @return boolean
+ * @param array $postData Controller POST data.
+ * @return bool
  */
     public function add($postData = null)
     {
@@ -90,10 +91,10 @@ class TagsTable extends TagsAppTable
 /**
  * Edits an existing tag, allows only to modify upper/lowercased characters
  *
- * @throws CakeException
- * @param string tag uuid
- * @param array controller post data usually $this->request->data
- * @return mixed True on successfully save else post data as array
+ * @param string $tagId Tag UUID.
+ * @param array $postData Controller POST data.
+ * @return mixed True on successful save, otherwise POST data as array.
+ * @throws CakeException If no matching tag found.
  */
     public function edit($tagId = null, $postData = null)
     {

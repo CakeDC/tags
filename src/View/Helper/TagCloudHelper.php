@@ -34,16 +34,19 @@ class TagCloudHelper extends Helper
 /**
  * Method to output a tag-cloud formatted based on the weight of the tags
  *
- * @param array $tags
+ * @param array $tags Tag array to display.
  * @param array $options Display options. Valid keys are:
  *  - shuffle: true to shuffle the tag list, false to display them in the same order than passed [default: true]
- *  - extract: Set::extract() compatible format string. Path to extract weight values from the $tags array [default: {n}.Tag.weight]
- *  - before: string to be displayed before each generated link. "%size%" will be replaced with tag size calculated from the weight [default: empty]
- *  - after: string to be displayed after each generated link. "%size%" will be replaced with tag size calculated from the weight [default: empty]
+ *  - extract: Set::extract() compatible format string. Path to extract weight values from the $tags array
+ *      [default: {n}.Tag.weight]
+ *  - before: string to be displayed before each generated link. "%size%" will be replaced with tag size calculated
+ *      from the weight [default: empty]
+ *  - after: string to be displayed after each generated link. "%size%" will be replaced with tag size calculated from
+ *      the weight [default: empty]
  *  - maxSize: size of the heaviest tag [default: 160]
  *  - minSize: size of the lightest tag [default: 80]
  *  - url: an array containing the default url
- *  - named: the named parameter used to send the tag [default: by]
+ *  - named: the named parameter used to send the tag [default: by].
  * @return string
  */
     public function display($tags = null, $options = array())
@@ -85,11 +88,19 @@ class TagCloudHelper extends Helper
             $data = Set::extract(array($tag), $options['extract']);
             $tagWeight = array_pop($data);
 
-            $size = $options['minSize'] + (($tagWeight - $minWeight) * (($options['maxSize'] - $options['minSize']) / ($spread)));
+            $size = $options['minSize'] + (
+                ($tagWeight - $minWeight) * (
+                    ($options['maxSize'] - $options['minSize']) / $spread
+                )
+            );
             $size = $tag[$options['tagModel']]['size'] = ceil($size);
 
             $cloud .= $this->_replace($options['before'], $size);
-            $cloud .= $this->Html->link($tag[$options['tagModel']]['name'], $this->_tagUrl($tag, $options), array('id' => 'tag-' . $tag[$options['tagModel']]['id'])) . ' ';
+            $cloud .= $this->Html->link(
+                $tag[$options['tagModel']]['name'],
+                $this->_tagUrl($tag, $options),
+                array('id' => 'tag-' . $tag[$options['tagModel']]['id'])
+            ) . ' ';
             $cloud .= $this->_replace($options['after'], $size);
         }
 
@@ -99,9 +110,9 @@ class TagCloudHelper extends Helper
 /**
  * Generates the URL for a tag
  *
- * @param array
- * @param array
- * @return array|string
+ * @param array $tag Tag to generate URL for.
+ * @param array $options Tag options.
+ * @return array|string Tag URL.
  */
     protected function _tagUrl($tag, $options)
     {
@@ -112,9 +123,9 @@ class TagCloudHelper extends Helper
 /**
  * Replaces %size% in strings with the calculated "size" of the tag
  *
- * @param string
- * @param float
- * @return string
+ * @param string $string Template string.
+ * @param float $size Replacement size.
+ * @return string Final string.
  */
     protected function _replace($string, $size)
     {

@@ -11,8 +11,8 @@
 
 namespace Tags\Model\Behavior;
 
-use Cake\ORM\Table;
 use Cake\ORM\Behavior;
+use Cake\ORM\Table;
 
 /**
  * Taggable Behavior
@@ -76,7 +76,6 @@ class TaggableBehavior extends Behavior
 /**
  * bindTagAssociations
  *
- * @param Model $model
  * @return void
  */
     public function bindTagAssociations()
@@ -105,12 +104,11 @@ class TaggableBehavior extends Behavior
     }
 
 /**
- * Disassembles the incoming tag string by its separator and identifiers and trims the tags
+ * Disassembles the incoming tag string by its separator and identifiers and trims the tags.
  *
- * @param Model $model Model instance
- * @param string $string incoming tag string
- * @param string $separator separator character
- * @return array Array of 'tags' and 'identifiers', use extract to get both vars out of the array if needed
+ * @param string $string Incoming tag string.
+ * @param string $separator Separator character.
+ * @return array Array of 'tags' and 'identifiers', use extract to get both vars out of the array if needed.
  */
     public function disassembleTags($string = '', $separator = ',')
     {
@@ -138,15 +136,14 @@ class TaggableBehavior extends Behavior
     }
 
 /**
- * Saves a string of tags
+ * Saves a string of tags.
  *
- * @param string $string comma separeted list of tags to be saved
- *      Tags can contain special tokens called `identifiers´ to namespace tags or classify them into catageories.
- *      A valid string is "foo, bar, cakephp:special". The token `cakephp´ will end up as the identifier or category for the tag `special´
- * @param mixed $foreignKey the identifier for the record to associate the tags with
- * @param bool $update true will remove tags that are not in the $string, false wont
- * do this and just add new tags without removing existing tags associated to
- * the current set foreign key
+ * @param string $string Comma separeted list of tags to be saved. Tags can contain special tokens called `identifiers´
+ *     to namespace tags or classify them into catageories. A valid string is "foo, bar, cakephp:special". The token
+ *     `cakephp´ will end up as the identifier or category for the tag `special´.
+ * @param mixed $foreignKey The identifier for the record to associate the tags with.
+ * @param bool $update True will remove tags that are not in the $string, false won't do this and just add new tags
+ *      without removing existing tags associated to the current set foreign key.
  * @return array
  */
     public function saveTags($string = null, $foreignKey = null, $update = true)
@@ -249,7 +246,10 @@ class TaggableBehavior extends Behavior
                         $oldTagIds = Set::extract($oldTagIds, '/Tagged/tag_id');
                         $tagModel->{$taggedAlias}->deleteAll($deleteAll, false);
                     } elseif ($this->_config['taggedCounter'] && !empty($alreadyTagged)) {
-                        $tagModel->{$taggedAlias}->updateAll(array('times_tagged' => 'times_tagged + 1'), array('Tagged.tag_id' => $alreadyTagged));
+                        $tagModel->{$taggedAlias}->updateAll(
+                            array('times_tagged' => 'times_tagged + 1'),
+                            array('Tagged.tag_id' => $alreadyTagged)
+                        );
                     }
 
                     foreach ($existingTagIds as $tagId) {
@@ -290,8 +290,7 @@ class TaggableBehavior extends Behavior
 /**
  * Cache the weight or occurence of a tag in the tags table
  *
- * @param Model $model instance of a model
- * @param int|string|array $tagIds
+ * @param int|string|array $tagIds List of tag UUIDs.
  * @return void
  */
     public function cacheOccurrence($tagIds)
@@ -328,10 +327,10 @@ class TaggableBehavior extends Behavior
     }
 
 /**
- * Creates a multibyte safe unique key
+ * Creates a multibyte safe unique key.
  *
- * @param string Tag name string
- * @returns string Multibyte safe key string
+ * @param string $string Tag name string.
+ * @return string Multibyte safe key string.
  */
     public function multibyteKey($string = null)
     {
@@ -356,7 +355,7 @@ class TaggableBehavior extends Behavior
  * $blog['Blog']['tags'] = $this->Blog->Tag->tagArrayToString($blog['Tag']);
  * </code>
  *
- * @param array $data
+ * @param array $data Tag data array to convert to string.
  * @return string
  */
     public function tagArrayToString($data = null)
@@ -367,7 +366,7 @@ class TaggableBehavior extends Behavior
                 if (!empty($tag['identifier'])) {
                     $tags[] = $tag['identifier'] . ':' . $tag['name'];
                 } else {
-                    $tags[] =  $tag['name'];
+                    $tags[] = $tag['name'];
                 }
             }
             return join($this->_config['separator'] . ' ', $tags);
@@ -376,10 +375,10 @@ class TaggableBehavior extends Behavior
     }
 
 /**
- * afterSave callback
+ * afterSave callback.
  *
- * @param array $created
- * @param array $options
+ * @param array $created True if new record, false otherwise.
+ * @param array $options Options array.
  * @return void
  */
     public function afterSave($created, $options = array())
@@ -397,10 +396,9 @@ class TaggableBehavior extends Behavior
     }
 
 /**
- * Delete associated Tags if record has no tags and deleteTagsOnEmptyField is true
+ * Delete associated Tags if record has no tags and deleteTagsOnEmptyField is true.
  *
- * @param Model $model Model instance
- * @param mixed $id Foreign key of the model, string for UUID or integer
+ * @param mixed $id Foreign key of the model, string for UUID or integer.
  * @return void
  */
     public function deleteTagged($id = null)
@@ -421,8 +419,8 @@ class TaggableBehavior extends Behavior
 /**
  * afterFind Callback
  *
- * @param array $results
- * @param bool $primary
+ * @param array $results Find results.
+ * @param bool $primary True if primary model, false if associated.
  * @return array
  */
     public function afterFind($results, $primary = false)
@@ -447,6 +445,11 @@ class TaggableBehavior extends Behavior
         return $results;
     }
 
+/**
+ * Get name of table.
+ *
+ * @return string Name of table.
+ */
     public function name()
     {
         return get_class($this->_table);

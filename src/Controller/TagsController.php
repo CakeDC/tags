@@ -62,13 +62,13 @@ class TagsController extends TagsAppController
 /**
  * View
  *
- * @param string
+ * @param string $id Tag UUID.
  * @return void
  */
-    public function view($keyName = null)
+    public function view($id = null)
     {
         try {
-            $this->set('tag', $this->{$this->modelClass}->view($keyName));
+            $this->set('tag', $this->{$this->modelClass}->view($id));
         } catch (Exception $e) {
             $this->Session->setFlash($e->getMessage());
             $this->redirect('/');
@@ -89,13 +89,13 @@ class TagsController extends TagsAppController
 /**
  * Views a single tag
  *
- * @param string tag UUID
+ * @param string $id Tag UUID.
  * @return void
  */
-    public function admin_view($keyName)
+    public function admin_view($id)
     {
         try {
-            $this->set('tag', $this->{$this->modelClass}->view($keyName));
+            $this->set('tag', $this->{$this->modelClass}->view($id));
         } catch (Exception $e) {
             $this->Session->setFlash($e->getMessage());
             $this->redirect('/');
@@ -120,13 +120,13 @@ class TagsController extends TagsAppController
 /**
  * Edits a tag
  *
- * @param string tag UUID
+ * @param string $id Tag UUID.
  * @return void
  */
-    public function admin_edit($tagId = null)
+    public function admin_edit($id = null)
     {
         try {
-            $result = $this->{$this->modelClass}->edit($tagId, $this->request->data);
+            $result = $this->{$this->modelClass}->edit($id, $this->request->data);
             if ($result === true) {
                 $this->Session->setFlash(__d('tags', 'Tag saved.'));
                 $this->redirect(array('action' => 'index'));
@@ -146,7 +146,7 @@ class TagsController extends TagsAppController
 /**
  * Deletes a tag
  *
- * @param string tag UUID
+ * @param string $id Tag UUID.
  * @return void
  */
     public function admin_delete($id = null)

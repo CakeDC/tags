@@ -28,11 +28,11 @@ class ArticleFixture extends TestFixture
  * @var array
  */
     public $fields = [
-        'id' =>['type' => 'string', 'null' => false, 'default' => null, 'length' => 36],
-        'title' =>['type' => 'string', 'null' => false],
-        'user_id' =>['type' => 'string', 'null' => false, 'default' => null, 'length' => 36],
+        'id' => ['type' => 'string', 'null' => false, 'default' => null, 'length' => 36],
+        'title' => ['type' => 'string', 'null' => false],
+        'user_id' => ['type' => 'string', 'null' => false, 'default' => null, 'length' => 36],
         '_constraints' => [
-            'PRIMARY' =>['type' => 'primary', 'columns' => ['id']],
+            'PRIMARY' => ['type' => 'primary', 'columns' => ['id']],
         ]
     ];
 
@@ -41,7 +41,7 @@ class ArticleFixture extends TestFixture
  *
  * @var array
  */
-    public $records =[
+    public $records = [
         [
             'id' => 'article-1',
             'title' => 'First Article',

@@ -80,7 +80,8 @@ class TagCloudHelperTest extends TestCase
         // Test tags shuffling
         $options = array(
             'shuffle' => true);
-        $expected = '<a href="/search/index/by:cakephp" id="tag-1">CakePHP</a> <a href="/search/index/by:cakedc" id="tag-2">CakeDC</a> ';
+        $expected = '<a href="/search/index/by:cakephp" id="tag-1">CakePHP</a> ' .
+            '<a href="/search/index/by:cakedc" id="tag-2">CakeDC</a> ';
         $i = 100;
         do {
             $i--;
@@ -104,15 +105,19 @@ class TagCloudHelperTest extends TestCase
             'named' => 'query'
         ));
         $result = $this->TagCloud->display($this->sampleTags, $options);
-        $expected = '<span size="1"><a href="/search/index/from:twitter/query:cakephp" id="tag-1">CakePHP</a> </span><!-- size: 1 -->'.
-            '<span size="1"><a href="/search/index/from:twitter/query:cakedc" id="tag-2">CakeDC</a> </span><!-- size: 1 -->';
+        $expected = '<span size="1"><a href="/search/index/from:twitter/query:cakephp" id="tag-1">CakePHP</a> ' .
+            '</span><!-- size: 1 -->' .
+            '<span size="1"><a href="/search/index/from:twitter/query:cakedc" id="tag-2">CakeDC</a> ' .
+            '</span><!-- size: 1 -->';
         $this->assertEquals($result, $expected);
 
         $tags = $this->sampleTags;
         $tags[1]['Tag']['weight'] = 1;
         $result = $this->TagCloud->display($tags, $options);
-        $expected = '<span size="100"><a href="/search/index/from:twitter/query:cakephp" id="tag-1">CakePHP</a> </span><!-- size: 100 -->'.
-            '<span size="1"><a href="/search/index/from:twitter/query:cakedc" id="tag-2">CakeDC</a> </span><!-- size: 1 -->';
+        $expected = '<span size="100"><a href="/search/index/from:twitter/query:cakephp" id="tag-1">CakePHP</a> ' .
+            '</span><!-- size: 100 -->' .
+            '<span size="1"><a href="/search/index/from:twitter/query:cakedc" id="tag-2">CakeDC</a> ' .
+            '</span><!-- size: 1 -->';
         $this->assertEquals($result, $expected);
     }
 
@@ -129,7 +134,7 @@ class TagCloudHelperTest extends TestCase
         );
 
         $result = $this->TagCloud->display($tags, $options);
-        $expected = '<!-- size: 160 --><a href="/search/index/by:cakephp" id="tag-1">CakePHP</a> '.
+        $expected = '<!-- size: 160 --><a href="/search/index/by:cakephp" id="tag-1">CakePHP</a> ' .
             '<!-- size: 80 --><a href="/search/index/by:cakedc" id="tag-2">CakeDC</a> ';
         $this->assertEquals($result, $expected);
     }

@@ -12,9 +12,9 @@
 namespace Tags\Test\TestCase\Model\Behavior;
 
 use Cake\Core\Configure;
-use Cake\TestSuite\TestCase;
 use Cake\ORM\Table;
 use Cake\ORM\TableRegistry;
+use Cake\TestSuite\TestCase;
 
 /**
  * Article model
@@ -121,7 +121,11 @@ class TaggableBehaviorTest extends TestCase
         $this->assertEquals($resultAfter['Tag']['occurrence'] - $resultBefore['Tag']['occurrence'], 1);
 
         // updating the record to not have the cakephp tag anymore, decreases the occurrence
-        $entity = $this->Article->newEntity(array('id' => $this->Article->id, 'title' => 'Test Article', 'tags' => 'php, something, else'));
+        $entity = $this->Article->newEntity(array(
+            'id' => $this->Article->id,
+            'title' => 'Test Article',
+            'tags' => 'php, something, else'
+        ));
         $entity->isNew(false);
         $this->Article->save($entity, false);
         $resultAfter = $this->Article->Tag->find('all', array(

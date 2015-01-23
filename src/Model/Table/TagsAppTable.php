@@ -32,9 +32,9 @@ class TagsAppTable extends Table
 /**
  * Customized paginateCount method
  *
- * @param array
- * @param int
- * @param array
+ * @param array $conditions Query conditions.
+ * @param int $recursive Recursive setting.
+ * @param array $extra Extra configuration.
  * @return array
  */
     public function paginateCount($conditions = array(), $recursive = 0, $extra = array())
