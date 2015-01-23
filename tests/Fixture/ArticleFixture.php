@@ -19,42 +19,43 @@ use Cake\TestSuite\Fixture\TestFixture;
  * @package tags
  * @subpackage tags.tests.fixtures
  */
-class ArticleFixture extends TestFixture {
+class ArticleFixture extends TestFixture
+{
 
 /**
  * fields property
  *
  * @var array
  */
-	public $fields = [
-		'id' =>['type' => 'string', 'null' => false, 'default' => null, 'length' => 36],
-		'title' =>['type' => 'string', 'null' => false],
-		'user_id' =>['type' => 'string', 'null' => false, 'default' => null, 'length' => 36],
-		'_constraints' => [
-			'PRIMARY' =>['type' => 'primary', 'columns' => ['id']],
-		]
-	];
+    public $fields = [
+        'id' =>['type' => 'string', 'null' => false, 'default' => null, 'length' => 36],
+        'title' =>['type' => 'string', 'null' => false],
+        'user_id' =>['type' => 'string', 'null' => false, 'default' => null, 'length' => 36],
+        '_constraints' => [
+            'PRIMARY' =>['type' => 'primary', 'columns' => ['id']],
+        ]
+    ];
 
 /**
  * records property
  *
  * @var array
  */
-	public $records =[
-		[
-			'id' => 'article-1',
-			'title' => 'First Article',
-			'user_id' => 'user-1'
-		],
-		[
-			'id' => 'article-2',
-			'title' => 'Second Article',
-			'user_id' => 'user-2'
-		],
-		[
-			'id' => 'article-3',
-			'title' => 'Third Article',
-			'user_id' => 'user-3'
-		]
-	];
+    public $records =[
+        [
+            'id' => 'article-1',
+            'title' => 'First Article',
+            'user_id' => 'user-1'
+        ],
+        [
+            'id' => 'article-2',
+            'title' => 'Second Article',
+            'user_id' => 'user-2'
+        ],
+        [
+            'id' => 'article-3',
+            'title' => 'Third Article',
+            'user_id' => 'user-3'
+        ]
+    ];
 }

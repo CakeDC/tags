@@ -17,36 +17,37 @@ use Cake\ORM\Table;
  *
  * @package tags
  */
-class TagsAppTable extends Table {
+class TagsAppTable extends Table
+{
 
 /**
  * Behaviors
  *
  * @var array
  */
-	public $actsAs = array(
-		'Containable'
-	);
+    public $actsAs = array(
+        'Containable'
+    );
 
 /**
  * Customized paginateCount method
  *
  * @param array
- * @param integer
+ * @param int
  * @param array
  * @return array
  */
-	public function paginateCount($conditions = array(), $recursive = 0, $extra = array()) {
-		$parameters = compact('conditions');
-		if ($recursive != $this->recursive) {
-			$parameters['recursive'] = $recursive;
-		}
-		if (isset($extra['type']) && isset($this->findMethods[$extra['type']])) {
-			$extra['operation'] = 'count';
-			return $this->find($extra['type'], array_merge($parameters, $extra));
-		} else {
-			return $this->find('count', array_merge($parameters, $extra));
-		}
-	}
-
+    public function paginateCount($conditions = array(), $recursive = 0, $extra = array())
+    {
+        $parameters = compact('conditions');
+        if ($recursive != $this->recursive) {
+            $parameters['recursive'] = $recursive;
+        }
+        if (isset($extra['type']) && isset($this->findMethods[$extra['type']])) {
+            $extra['operation'] = 'count';
+            return $this->find($extra['type'], array_merge($parameters, $extra));
+        } else {
+            return $this->find('count', array_merge($parameters, $extra));
+        }
+    }
 }

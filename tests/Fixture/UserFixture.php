@@ -19,39 +19,40 @@ use Cake\TestSuite\Fixture\TestFixture;
  * @package tags
  * @subpackage tags.tests.fixtures
  */
-class UserFixture extends TestFixture {
+class UserFixture extends TestFixture
+{
 
 /**
  * fields property
  *
  * @var array
  */
-	public $fields = [
-		'id' => ['type' => 'string', 'null' => false, 'default' => NULL, 'length' => 36],
-		'name' => ['type' => 'string', 'null' => false],
-		'article_id' => ['type' => 'string', 'null' => false, 'default' => NULL, 'length' => 36]
-	];
+    public $fields = [
+        'id' => ['type' => 'string', 'null' => false, 'default' => null, 'length' => 36],
+        'name' => ['type' => 'string', 'null' => false],
+        'article_id' => ['type' => 'string', 'null' => false, 'default' => null, 'length' => 36]
+    ];
 
 /**
  * records property
  *
  * @var array
  */
-	public $records = [
-		[
-			'id' => 'user-1',
-			'name' => 'CakePHP',
-			'article_id' => 'article-1'
-		],
-		[
-			'id' => 'user-2',
-			'name' => 'Second User',
-			'article_id' => 'article-2'
-		],
-		[
-			'id' => 'user-3',
-			'name' => 'Third User',
-			'article_id' => 'article-3'
-		]
-	];
+    public $records = [
+        [
+            'id' => 'user-1',
+            'name' => 'CakePHP',
+            'article_id' => 'article-1'
+        ],
+        [
+            'id' => 'user-2',
+            'name' => 'Second User',
+            'article_id' => 'article-2'
+        ],
+        [
+            'id' => 'user-3',
+            'name' => 'Third User',
+            'article_id' => 'article-3'
+        ]
+    ];
 }

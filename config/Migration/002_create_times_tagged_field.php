@@ -18,10 +18,11 @@
 /**
  * Short description for class.
  *
- * @package		plugins.tags
- * @subpackage	plugins.tags.config.migrations
+ * @package         plugins.tags
+ * @subpackage  plugins.tags.config.migrations
  */
-class M4c0d42bcd12c4db099c105f40e8f3d6d extends CakeMigration {
+class M4c0d42bcd12c4db099c105f40e8f3d6d extends CakeMigration
+{
 
 /**
  * Migration description
@@ -29,7 +30,7 @@ class M4c0d42bcd12c4db099c105f40e8f3d6d extends CakeMigration {
  * @var string
  * @access public
  */
-	public $description = 'Adds the column times_tagged to track the number of times a record has been tagged';
+    public $description = 'Adds the column times_tagged to track the number of times a record has been tagged';
 
 /**
  * Actions to be performed
@@ -37,20 +38,20 @@ class M4c0d42bcd12c4db099c105f40e8f3d6d extends CakeMigration {
  * @var array $migration
  * @access public
  */
-	public $migration = array(
-		'up' => array(
-			'create_field' => array(
-				'tagged' => array(
-					'times_tagged' => array('type' => 'integer', 'null' => false, 'default' => 1),
-					)
-				),
-		),
-		'down' => array(
-			'drop_field' => array(
-				'tagged' => array('times_tagged')
-			),
-		),
-	);
+    public $migration = array(
+        'up' => array(
+            'create_field' => array(
+                'tagged' => array(
+                    'times_tagged' => array('type' => 'integer', 'null' => false, 'default' => 1),
+                    )
+                ),
+        ),
+        'down' => array(
+            'drop_field' => array(
+                'tagged' => array('times_tagged')
+            ),
+        ),
+    );
 
 /**
  * Before migration callback
@@ -59,9 +60,10 @@ class M4c0d42bcd12c4db099c105f40e8f3d6d extends CakeMigration {
  * @return boolean Should process continue
  * @access public
  */
-	public function before($direction) {
-		return true;
-	}
+    public function before($direction)
+    {
+        return true;
+    }
 
 /**
  * After migration callback
@@ -70,8 +72,8 @@ class M4c0d42bcd12c4db099c105f40e8f3d6d extends CakeMigration {
  * @return boolean Should process continue
  * @access public
  */
-	public function after($direction) {
-		return true;
-	}
+    public function after($direction)
+    {
+        return true;
+    }
 }
-?>

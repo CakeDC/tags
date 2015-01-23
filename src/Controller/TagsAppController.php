@@ -18,5 +18,6 @@ use App\Controller\AppController;
  *
  * @package tags
  */
-class TagsAppController extends AppController {
+class TagsAppController extends AppController
+{
 }

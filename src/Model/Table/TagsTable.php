@@ -19,30 +19,32 @@ use Tags\Model\Table\TagsAppTable;
  * @package tags
  * @subpackage tags.models
  */
-class TagsTable extends TagsAppTable {
+class TagsTable extends TagsAppTable
+{
 
 /**
  * Validation rules
  *
  * @var array
  */
-	public $validate = array(
-		'name' => array('rule' => 'notEmpty'),
-		'keyname' => array('rule' => 'notEmpty')
-	);
+    public $validate = array(
+        'name' => array('rule' => 'notEmpty'),
+        'keyname' => array('rule' => 'notEmpty')
+    );
 
 /**
  * initialize
  *
  * @return void
  */
-	public function initialize(array $config) {
-		$this->belongsTo('Tagged', [
-			'propertyName' => 'tagged',
-			'className' => 'Tags.Tagged',
-			'foreignKey' => 'tag_id'
-		]);
-	}
+    public function initialize(array $config)
+    {
+        $this->belongsTo('Tagged', [
+            'propertyName' => 'tagged',
+            'className' => 'Tags.Tagged',
+            'foreignKey' => 'tag_id'
+        ]);
+    }
 
 /**
  * Returns the data for a single tag
@@ -51,17 +53,18 @@ class TagsTable extends TagsAppTable {
  * @param string keyname
  * @return array
  */
-	public function view($keyName = null) {
-		$result = $this->find('first', array(
-			'conditions' => array(
-				$this->alias . '.keyname' => $keyName
-			)
-		));
-		if (empty($result)) {
-			throw new CakeException(__d('tags', 'Invalid Tag.'));
-		}
-		return $result;
-	}
+    public function view($keyName = null)
+    {
+        $result = $this->find('first', array(
+            'conditions' => array(
+                $this->alias . '.keyname' => $keyName
+            )
+        ));
+        if (empty($result)) {
+            throw new CakeException(__d('tags', 'Invalid Tag.'));
+        }
+        return $result;
+    }
 
 /**
  * Pre-populates the tag table with entered tags
@@ -69,19 +72,20 @@ class TagsTable extends TagsAppTable {
  * @param array post data, should be Contoller->data
  * @return boolean
  */
-	public function add($postData = null) {
-		if (isset($postData[$this->alias]['tags'])) {
-			$this->addBehavior('Tags.Taggable', array(
-				'resetBinding' => true,
-				'automaticTagging' => false
-			));
-			$this->Tag = $this;
-			$result = $this->saveTags($postData[$this->alias]['tags'], false, false);
-			unset($this->Tag);
-			$this->removeBehavior('Tags.Taggable');
-			return $result;
-		}
-	}
+    public function add($postData = null)
+    {
+        if (isset($postData[$this->alias]['tags'])) {
+            $this->addBehavior('Tags.Taggable', array(
+                'resetBinding' => true,
+                'automaticTagging' => false
+            ));
+            $this->Tag = $this;
+            $result = $this->saveTags($postData[$this->alias]['tags'], false, false);
+            unset($this->Tag);
+            $this->removeBehavior('Tags.Taggable');
+            return $result;
+        }
+    }
 
 /**
  * Edits an existing tag, allows only to modify upper/lowercased characters
@@ -91,31 +95,31 @@ class TagsTable extends TagsAppTable {
  * @param array controller post data usually $this->request->data
  * @return mixed True on successfully save else post data as array
  */
-	public function edit($tagId = null, $postData = null) {
-		$tag = $this->find('first', array(
-			'contain' => array(),
-			'conditions' => array(
-				$this->alias . '.' . $this->primaryKey => $tagId)
-		));
+    public function edit($tagId = null, $postData = null)
+    {
+        $tag = $this->find('first', array(
+            'contain' => array(),
+            'conditions' => array(
+                $this->alias . '.' . $this->primaryKey => $tagId)
+        ));
 
-		$this->set($tag);
-		if (empty($tag)) {
-			throw new CakeException(__d('tags', 'Invalid Tag.'));
-		}
+        $this->set($tag);
+        if (empty($tag)) {
+            throw new CakeException(__d('tags', 'Invalid Tag.'));
+        }
 
-		if (!empty($postData[$this->alias]['name'])) {
-			if (strcasecmp($tag['Tag']['name'], $postData[$this->alias]['name']) !== 0) {
-				return false;
-			}
-			$this->set($postData);
-			$result = $this->save(null, true);
-			if ($result) {
-				$this->data = $result;
-				return true;
-			} else {
-				return $postData;
-			}
-		}
-	}
-
+        if (!empty($postData[$this->alias]['name'])) {
+            if (strcasecmp($tag['Tag']['name'], $postData[$this->alias]['name']) !== 0) {
+                return false;
+            }
+            $this->set($postData);
+            $result = $this->save(null, true);
+            if ($result) {
+                $this->data = $result;
+                return true;
+            } else {
+                return $postData;
+            }
+        }
+    }
 }
