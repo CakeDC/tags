@@ -19,7 +19,7 @@ use \Cake\View\Helper;
  * @package tags
  * @subpackage tags.views.helpers
  */
-class TagCloudHelper extends elper {
+class TagCloudHelper extends Helper {
 
 /**
  * Other helpers to load
