@@ -9,8 +9,9 @@
  * @license MIT License (http://www.opensource.org/licenses/mit-license.php)
  */
 
-namespace Tags\Test\Controller;
+namespace Tags\Test\TestCase\Controller;
 
+use Cake\Network\Request;
 use Cake\TestSuite\TestCase;
 use Tags\Controller\TagsController;
 
@@ -86,7 +87,7 @@ class TagsControllerTest extends TestCase {
  */
 	public function setUp() {
 		parent::setUp();
-		$this->Tags = new TestTagsController(new CakeRequest(null, false));
+		$this->Tags = new TestTagsController(new Request());
 		$this->Tags->params = array(
 			'named' => array(),
 			'url' => array());

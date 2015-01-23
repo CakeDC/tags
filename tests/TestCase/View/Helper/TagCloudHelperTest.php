@@ -9,7 +9,7 @@
  * @license MIT License (http://www.opensource.org/licenses/mit-license.php)
  */
 
-namespace Tags\Test\View\Helper;
+namespace Tags\Test\TestCase\View\Helper;
 
 use Cake\TestSuite\TestCase;
 
