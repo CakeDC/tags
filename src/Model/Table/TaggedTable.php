@@ -8,9 +8,9 @@
  * @copyright Copyright 2009-2014, Cake Development Corporation (http://cakedc.com)
  * @license MIT License (http://www.opensource.org/licenses/mit-license.php)
  */
-namespace Tags\ORM\Table;
+namespace Tags\Model\Table;
 
-use Tags\ORM\TagsAppModel;
+use Tags\Model\Table\TagsAppTable;
 
 /**
  * Tagged model
@@ -18,7 +18,7 @@ use Tags\ORM\TagsAppModel;
  * @package tags
  * @subpackage tags.models
  */
-class Tagged extends TagsAppModel {
+class TaggedTable extends TagsAppTable {
 
 /**
  * Table that is used
@@ -42,8 +42,9 @@ class Tagged extends TagsAppModel {
  *
  * @return void
  */
-	public function initialize() {
+	public function initialize(array $config) {
 		$this->belongsTo('Tag', [
+			'propertyName' => 'tag',
 			'className' => 'Tags.Tag'
 		]);
 	}

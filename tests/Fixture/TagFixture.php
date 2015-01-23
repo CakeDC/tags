@@ -34,8 +34,8 @@ class TagFixture extends TestFixture {
  * @var array $fields
  */
 	public $fields =[
-		'id' =>['type' => 'string', 'null' => false, 'default' => null, 'length' => 36, 'key' => 'primary'],
-		'identifier' =>['type' => 'string', 'null' => true, 'default' => null, 'length' => 30, 'key' => 'index'],
+		'id' =>['type' => 'string', 'null' => false, 'default' => null, 'length' => 36],
+		'identifier' =>['type' => 'string', 'null' => true, 'default' => null, 'length' => 30],
 		'name' =>['type' => 'string', 'null' => false, 'default' => null, 'length' => 30],
 		'keyname' =>['type' => 'string', 'null' => false, 'default' => null, 'length' => 30],
 		'occurrence' =>['type' => 'integer', 'null' => false, 'default' => 0, 'length' => 8],
@@ -43,8 +43,8 @@ class TagFixture extends TestFixture {
 		'created' =>['type' => 'datetime', 'null' => true, 'default' => null],
 		'modified' =>['type' => 'datetime', 'null' => true, 'default' => null],
 		'_constraints' => [
-			'PRIMARY' =>['column' => 'id', 'unique' => 1],
-			'UNIQUE_TAG' =>['column' =>['identifier', 'keyname'], 'unique' => 1]
+			'PRIMARY' =>['type' => 'primary', 'columns' => ['id']],
+			'UNIQUE_TAG' =>['type' => 'unique', 'columns' =>['identifier', 'keyname']]
 		]
 	];
 

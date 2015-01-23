@@ -9,8 +9,9 @@
  * @license MIT License (http://www.opensource.org/licenses/mit-license.php)
  */
 
-namespace Tags\Test\TestCase\Model;
+namespace Tags\Test\TestCase\Model\Table;
 
+use Cake\ORM\TableRegistry;
 use Cake\TestSuite\TestCase;
 use Cake\ORM\Table;
 
@@ -65,7 +66,7 @@ class TaggedTest extends TestCase {
  */
 	public function setUp() {
 		parent::setUp();
-		$this->Tagged = ClassRegistry::init('Tags.Tagged');
+		$this->Tagged = TableRegistry::get('Tags.Tagged');
 	}
 
 /**
@@ -76,7 +77,7 @@ class TaggedTest extends TestCase {
 	public function tearDown() {
 		parent::tearDown();
 		unset($this->Tagged);
-		ClassRegistry::flush();
+		TableRegistry::clear();
 	}
 
 /**
