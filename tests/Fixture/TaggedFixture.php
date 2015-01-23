@@ -34,19 +34,19 @@ class TaggedFixture extends TestFixture {
  * @var array $fields
  */
 	public $fields = [
-		'id' => ['type' => 'string', 'null' => false, 'default' => null, 'length' => 36, 'key' => 'primary'],
+		'id' => ['type' => 'string', 'null' => false, 'default' => null, 'length' => 36],
 		'foreign_key' => ['type' => 'string', 'null' => false, 'default' => null, 'length' => 36],
 		'tag_id' => ['type' => 'string', 'null' => false, 'default' => null, 'length' => 36],
-		'model' => ['type' => 'string', 'null' => false, 'default' => null, 'key' => 'index'],
+		'model' => ['type' => 'string', 'null' => false, 'default' => null],
 		'language' => ['type' => 'string', 'null' => true, 'default' => null, 'length' => 6],
 		'times_tagged' => ['type' => 'integer', 'null' => false, 'default' => 1],
 		'created' => ['type' => 'datetime', 'null' => true, 'default' => null],
 		'modified' => ['type' => 'datetime', 'null' => true, 'default' => null],
 		'_constraints' => [
-			'PRIMARY' => ['column' => 'id', 'unique' => 1],
-			'UNIQUE_TAGGING' => ['column' => ['model', 'foreign_key', 'tag_id', 'language'], 'unique' => 1],
-			'INDEX_TAGGED' => ['column' => 'model', 'unique' => 0],
-			'INDEX_LANGUAGE' => ['column' => 'language', 'unique' => 0]
+			'PRIMARY' => ['type' => 'primary', 'columns' => ['id']],
+			'UNIQUE_TAGGING' => ['type' => 'unique', 'columns' => ['model', 'foreign_key', 'tag_id', 'language']],
+			//'INDEX_TAGGED' => ['type' => 'index', 'columns' => ['model']],
+			//'INDEX_LANGUAGE' => ['type' => 'index', 'columns' => ['language']]
 		]
 	];
 

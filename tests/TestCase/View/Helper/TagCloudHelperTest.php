@@ -137,6 +137,6 @@ class TagCloudHelperTest extends TestCase {
 	public function tearDown() {
 		parent::tearDown();
 		unset($this->TagCloud, $this->View);
-		ClassRegistry::flush();
+		TableRegistry::clear();
 	}
 }

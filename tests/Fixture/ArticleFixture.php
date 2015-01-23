@@ -29,7 +29,10 @@ class ArticleFixture extends TestFixture {
 	public $fields = [
 		'id' =>['type' => 'string', 'null' => false, 'default' => null, 'length' => 36],
 		'title' =>['type' => 'string', 'null' => false],
-		'user_id' =>['type' => 'string', 'null' => false, 'default' => null, 'length' => 36]
+		'user_id' =>['type' => 'string', 'null' => false, 'default' => null, 'length' => 36],
+		'_constraints' => [
+			'PRIMARY' =>['type' => 'primary', 'columns' => ['id']],
+		]
 	];
 
 /**

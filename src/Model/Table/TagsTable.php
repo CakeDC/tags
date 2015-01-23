@@ -9,9 +9,9 @@
  * @license MIT License (http://www.opensource.org/licenses/mit-license.php)
  */
 
-namespace Tags\ORM\Table;
+namespace Tags\Model\Table;
 
-use Tags\ORM\TagsAppModel;
+use Tags\Model\Table\TagsAppTable;
 
 /**
  * Tag model
@@ -19,7 +19,7 @@ use Tags\ORM\TagsAppModel;
  * @package tags
  * @subpackage tags.models
  */
-class Tag extends TagsAppModel {
+class TagsTable extends TagsAppTable {
 
 /**
  * Validation rules
@@ -36,8 +36,9 @@ class Tag extends TagsAppModel {
  *
  * @return void
  */
-	public function initialize() {
+	public function initialize(array $config) {
 		$this->belongsTo('Tagged', [
+			'propertyName' => 'tagged',
 			'className' => 'Tags.Tagged',
 			'foreignKey' => 'tag_id'
 		]);
@@ -53,8 +54,9 @@ class Tag extends TagsAppModel {
 	public function view($keyName = null) {
 		$result = $this->find('first', array(
 			'conditions' => array(
-				$this->alias . '.keyname' => $keyName)));
-
+				$this->alias . '.keyname' => $keyName
+			)
+		));
 		if (empty($result)) {
 			throw new CakeException(__d('tags', 'Invalid Tag.'));
 		}
@@ -69,14 +71,14 @@ class Tag extends TagsAppModel {
  */
 	public function add($postData = null) {
 		if (isset($postData[$this->alias]['tags'])) {
-			$this->Behaviors->load('Tags.Taggable', array(
+			$this->addBehavior('Tags.Taggable', array(
 				'resetBinding' => true,
 				'automaticTagging' => false
 			));
 			$this->Tag = $this;
 			$result = $this->saveTags($postData[$this->alias]['tags'], false, false);
 			unset($this->Tag);
-			$this->Behaviors->unload('Tags.Taggable');
+			$this->removeBehavior('Tags.Taggable');
 			return $result;
 		}
 	}

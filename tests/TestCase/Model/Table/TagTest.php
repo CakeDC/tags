@@ -9,7 +9,7 @@
  * @license MIT License (http://www.opensource.org/licenses/mit-license.php)
  */
 
-namespace Tags\Test\TestCase\Model;
+namespace Tags\Test\TestCase\Model\Table;
 
 use Cake\TestSuite\TestCase;
 
@@ -45,7 +45,7 @@ class TagTest extends TestCase {
  */
 	public function setUp() {
 		parent::setUp();
-		$this->Tag = ClassRegistry::init('Tags.Tag');
+		$this->Tag = TableRegistry::get('Tags.Tag');
 	}
 
 /**

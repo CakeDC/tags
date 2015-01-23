@@ -11,7 +11,10 @@
 
 namespace Tags\Test\TestCase\Model\Behavior;
 
+use Cake\Core\Configure;
 use Cake\TestSuite\TestCase;
+use Cake\ORM\Table;
+use Cake\ORM\TableRegistry;
 
 /**
  * Article model
@@ -19,49 +22,11 @@ use Cake\TestSuite\TestCase;
  * @package tags
  * @subpackage tags.tests.cases.behaviors
  */
-class Article extends TestCase {
-
-/**
- * Use table
- *
- * @var string
- */
-	public $useTable = 'articles';
-
-/**
- * Belongs to associations
- *
- * @var array
- */
-	public $belongsTo = array();
-
-/**
- * HABTM associations
- *
- * @var array
- */
-	public $hasAndBelongsToMany = array();
-
-/**
- * Has Many Associations
- *
- * @var array
- */
-	public $hasMany = array();
-
-/**
- * Has One associations
- *
- * @var array
- */
-	public $hasOne = array();
-
-/**
- * Behaviors
- *
- * @var array
- */
-	public $actsAs = array('Tags.Taggable');
+class ArticlesTable extends Table {
+	public function initialize(array $config) {
+		$this->table('articles');
+		$this->addBehavior('Tags.Taggable');
+	}
 }
 
 /**
@@ -70,7 +35,7 @@ class Article extends TestCase {
  * @package tags
  * @subpackage tags.tests.cases.behaviors
  */
-class TaggableBehaviorTest extends CakeTestCase {
+class TaggableBehaviorTest extends TestCase {
 
 /**
  * Plugin name used for fixtures loading
@@ -105,9 +70,9 @@ class TaggableBehaviorTest extends CakeTestCase {
  */
 	public function setUp() {
 		parent::setUp();
-		$this->Article = ClassRegistry::init('Article');
+		$this->Article = TableRegistry::get('Articles');
 		Configure::write('Config.language', 'eng');
-		$this->Article->Behaviors->attach('Tags.Taggable', array());
+		$this->Article->addBehavior('Tags.Taggable');
 	}
 
 /**
@@ -118,7 +83,7 @@ class TaggableBehaviorTest extends CakeTestCase {
 	public function tearDown() {
 		parent::tearDown();
 		unset($this->Article);
-		ClassRegistry::flush();
+		TableRegistry::clear();
 	}
 
 /**
@@ -127,30 +92,38 @@ class TaggableBehaviorTest extends CakeTestCase {
  * @return void
  */
 	public function testOccurrenceCache() {
-		$resultBefore = $this->Article->Tag->find('first', array(
-			'contain' => array(),
+		$resultBefore = $this->Article->Tag->find('all', array(
+			'contain' => array(
+				'Tagged'
+			),
 			'conditions' => array(
-				'Tag.keyname' => 'cakephp')));
+				'keyname' => 'cakephp'
+			)
+		))->first();
 
 		// adding a new record with the cakephp tag to increase the occurrence
-		$data = array('title' => 'Test Article', 'tags' => 'cakephp, php');
-		$this->Article->create();
-		$this->Article->save($data, false);
+		$entity = $this->Article->newEntity(array('title' => 'Test Article', 'tags' => 'cakephp, php'));
+		$this->Article->save($entity, false);
 
-		$resultAfter = $this->Article->Tag->find('first', array(
+		$resultAfter = $this->Article->Tag->find('all', array(
 			'contain' => array(),
 			'conditions' => array(
-				'Tag.keyname' => 'cakephp')));
+				'Tag.keyname' => 'cakephp'
+			)
+		))->first();
 
 		$this->assertEquals($resultAfter['Tag']['occurrence'] - $resultBefore['Tag']['occurrence'], 1);
 
 		// updating the record to not have the cakephp tag anymore, decreases the occurrence
-		$data = array('id' => $this->Article->id, 'title' => 'Test Article', 'tags' => 'php, something, else');
-		$this->Article->save($data, false);
-		$resultAfter = $this->Article->Tag->find('first', array(
+		$entity = $this->Article->newEntity(array('id' => $this->Article->id, 'title' => 'Test Article', 'tags' => 'php, something, else'));
+		$entity->isNew(false);
+		$this->Article->save($entity, false);
+		$resultAfter = $this->Article->Tag->find('all', array(
 			'contain' => array(),
 			'conditions' => array(
-				'Tag.keyname' => 'cakephp')));
+				'Tag.keyname' => 'cakephp'
+			)
+		))->first();
 		$this->assertEquals($resultAfter['Tag']['occurrence'], 1);
 	}
 
@@ -162,24 +135,32 @@ class TaggableBehaviorTest extends CakeTestCase {
 	public function testTagSaving() {
 		$data['id'] = 'article-1';
 		$data['tags'] = 'foo, bar, test';
+
+		$data = $this->Article->newEntity($data);
 		$this->Article->save($data, false);
-		$result = $this->Article->find('first', array(
+		$result = $this->Article->find('all', array(
 			'conditions' => array(
-				'id' => 'article-1')));
+				'id' => 'article-1'
+			)
+		))->first;
 		$this->assertTrue(!empty($result['Article']['tags']));
 
 		$data['tags'] = 'foo, developer, developer, php';
+		$data = $this->Article->newEntity($data);
 		$this->Article->save($data, false);
-		$result = $this->Article->find('first', array(
+		$result = $this->Article->find('all', array(
 			'contain' => array('Tag'),
 			'conditions' => array(
-				'id' => 'article-1')));
+				'id' => 'article-1'
+			)
+		))->first();
 
 		$this->assertTrue(!empty($result['Article']['tags']));
 		$this->assertEquals(3, count($result['Tag']));
 
 
 		$data['tags'] = 'cakephp:foo, developer, cakephp:developer, cakephp:php';
+		$data = $this->Article->newEntity($data);
 		$this->Article->save($data, false);
 		$result = $this->Article->Tag->find('all', array(
 			'recursive' => -1,
@@ -228,10 +209,14 @@ class TaggableBehaviorTest extends CakeTestCase {
 	public function testTagArrayToString() {
 		$data['id'] = 'article-1';
 		$data['tags'] = 'foo, bar, test';
+		$data = $this->Article->newEntity($data);
+		$data->isNew(false);
 		$this->Article->save($data, false);
-		$result = $this->Article->find('first', array(
+		$result = $this->Article->find('all', array(
 			'conditions' => array(
-				'id' => 'article-1')));
+				'id' => 'article-1'
+			)
+		))->first();
 		$result = $this->Article->tagArrayToString($result['Tag']);
 		$this->assertTrue(!empty($result));
 		$this->assertInternalType('string', $result);
@@ -242,10 +227,13 @@ class TaggableBehaviorTest extends CakeTestCase {
 		$this->assertInternalType('string', $result);
 
 		$data['tags'] = 'cakephp:foo, cakephp:bar, foo, bar';
+		$data = $this->Article->newEntity($data);
 		$this->Article->save($data, false);
 		$result = $this->Article->find('first', array(
 			'conditions' => array(
-				'id' => 'article-1')));
+				'id' => 'article-1'
+			)
+		));
 
 		$result = $this->Article->tagArrayToString($result['Tag']);
 		$this->assertTrue(!empty($result));
@@ -274,17 +262,22 @@ class TaggableBehaviorTest extends CakeTestCase {
 	public function testAfterFind() {
 		$data['id'] = 'article-1';
 		$data['tags'] = 'foo, bar, test';
+		$data = $this->Article->newEntity($data);
 		$this->Article->save($data, false);
 
-		$result = $this->Article->find('first', array(
+		$result = $this->Article->find('all', array(
 			'conditions' => array(
-				'id' => 'article-1')));
+				'id' => 'article-1'
+			)
+		))->first();
 		$this->assertTrue(isset($result['Tag']));
 
 		$this->Article->Behaviors->Taggable->settings['Article']['unsetInAfterFind'] = true;
-		$result = $this->Article->find('first', array(
+		$result = $this->Article->find('all', array(
 			'conditions' => array(
-				'id' => 'article-1')));
+				'id' => 'article-1'
+			)
+		))->first();
 		$this->assertTrue(!isset($result['Tag']));
 	}
 
@@ -294,10 +287,11 @@ class TaggableBehaviorTest extends CakeTestCase {
  * @return void
  */
 	public function testAfterFindFields() {
-		$this->Article->Behaviors->detach('Taggable');
-		$results = $this->Article->find('first', array(
+		$this->Article->removeBehavior('Taggable');
+		$results = $this->Article->find('all', array(
 			'recursive' => -1,
-			'fields' => array('id')));
+			'fields' => array('id')
+		))->first();
 		$expected = array($this->Article->alias => array('id' => 'article-1'));
 		$this->assertIdentical($results, $expected);
 	}
@@ -386,6 +380,7 @@ class TaggableBehaviorTest extends CakeTestCase {
 	public function testSavingTagsWithDifferentIdentifier() {
 		$data = $this->Article->findById('article-1');
 		$data['Article']['tags'] = 'foo:cakephp, bar:cakephp';
+		$data = $this->Article->newEntity($data);
 		$this->Article->save($data);
 		$data = $this->Article->findById('article-1');
 		$this->assertEquals('bar:cakephp, foo:cakephp', $data['Article']['tags']);
@@ -405,43 +400,43 @@ class TaggableBehaviorTest extends CakeTestCase {
 				'tags' => 'foo, bar, test, second, third',
 			)
 		);
-		$this->Article->create();
-		$this->Article->save($data, false);
-		$result = $this->Article->find('first', array(
+		$entity = $this->Article->newEntity($data);
+		$this->Article->save($entity, false);
+		$result = $this->Article->find('all', array(
 			'conditions' => array(
 				'id' => 'article-test-delete-tags'
 			)
-		));
+		))->first();
 		$this->assertEquals($result['Article']['tags'], 'third, second, test, bar, foo');
 		// Removing three of the five previously added tags
 		$result['Article']['tags'] = 'third, second';
 		$this->Article->save($result, false);
-		$result = $this->Article->find('first', array(
+		$result = $this->Article->find('all', array(
 			'conditions' => array(
 				'id' => 'article-test-delete-tags'
 			)
-		));
+		))->first();
 		$this->assertEquals($result['Article']['tags'], 'second, third');
 		// Removing all tags, empty string - WON'T work as expected because of deleteTagsOnEmptyField
 		$result['Article']['tags'] = '';
 		$this->Article->save($result, false);
-		$result = $this->Article->find('first', array(
+		$result = $this->Article->find('all', array(
 			'conditions' => array(
 				'id' => 'article-test-delete-tags'
 			)
-		));
+		))->first();
 		$this->assertEquals($result['Article']['tags'], 'third, second');
 		// Now with deleteTagsOnEmptyField
-		$this->Article->Behaviors->load('Tags.Taggable', array(
+		$this->Article->addBehavior('Tags.Taggable', array(
 			'deleteTagsOnEmptyField' => true
 		));
 		$result['Article']['tags'] = '';
 		$this->Article->save($result, false);
-		$result = $this->Article->find('first', array(
+		$result = $this->Article->find('all', array(
 			'conditions' => array(
 				'id' => 'article-test-delete-tags'
 			)
-		));
+		))->first();
 		$this->assertEquals($result['Article']['tags'], '');
 	}
 
