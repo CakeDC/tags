@@ -43,8 +43,8 @@ class Tag extends TagsAppModel {
  * @var array
  */
 	public $validate = array(
-		'name' => array('rule' => 'notEmpty'),
-		'keyname' => array('rule' => 'notEmpty')
+		'name' => array('rule' => 'notBlank'),
+		'keyname' => array('rule' => 'notBlank')
 	);
 
 /**
