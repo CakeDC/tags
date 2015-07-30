@@ -49,7 +49,8 @@ To set up the **Tags** plugin tables run this command:
 Alternately you can use the build in [Schema Shell](http://book.cakephp.org/2.0/en/console-and-shells/schema-management-and-migrations.html) of CakePHP:
 
 ```
-.\Console\cake schema create --plugin Tags
+./Console/cake schema create tag --plugin Tags
+
 ```
 
 
