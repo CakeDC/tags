@@ -43,9 +43,26 @@ class Tag extends TagsAppModel {
  * @var array
  */
 	public $validate = array(
-		'name' => array('rule' => 'notEmpty'),
-		'keyname' => array('rule' => 'notEmpty')
+		'name' => array('rule' => 'notBlank'),
+		'keyname' => array('rule' => 'notBlank')
 	);
+
+/**
+ * Custom validation for keeping BC to CakePHP version below 2.7
+ *
+ * @param array $check
+ * @return bool
+ */
+	public function notBlank($check) {
+		$value = array_values($check);
+		$value = $value[0];
+		if (method_exists('Validation', 'notBlank')) {
+			return Validation::notBlank($value);
+		} else {
+			// below 2.7
+			return Validation::notEmpty($value);
+		}
+	}
 
 /**
  * Returns the data for a single tag
