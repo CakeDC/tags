@@ -42,8 +42,8 @@ class M8d01880f01c11e0be500800200c9a66 extends CakeMigration {
 			'create_field' => array(
 				'tags' => array(
 					'occurrence' => array('type' => 'integer', 'null' => false, 'default' => 0, 'length' => 8),
-					)
 				),
+			),
 			'drop_field' => array(
 				'tags' => array('weight')
 			),
@@ -60,26 +60,4 @@ class M8d01880f01c11e0be500800200c9a66 extends CakeMigration {
 		),
 	);
 
-/**
- * Before migration callback
- *
- * @param string $direction, up or down direction of migration process
- * @return boolean Should process continue
- * @access public
- */
-	public function before($direction) {
-		return true;
-	}
-
-/**
- * After migration callback
- *
- * @param string $direction, up or down direction of migration process
- * @return boolean Should process continue
- * @access public
- */
-	public function after($direction) {
-		return true;
-	}
 }
-?>

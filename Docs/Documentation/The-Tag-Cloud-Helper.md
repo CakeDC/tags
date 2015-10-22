@@ -44,5 +44,6 @@ The second param for the ```display()``` method is an array of options. The avai
 * **after:** string to be displayed after each generated link. %size% will be replaced with tag size calculated from the weight. (Default: ```empty```)
 * **maxSize:** size of the heaviest tag. (Default: ```160```)
 * **minSize:** size of the lightest tag. (Default: ```80```)
-* **url:** an array containing the default url. (Default: ```array('controller' => 'search'```))
+* **url:** an array containing the default URL. (Default: ```array('controller' => 'search'```))
 * **named**: the named parameter used to send the tag keyname. (Default: ```by```)
+* **paramType**: the type of URL parameters used (```named``` or ```querystring```). (Default: ```named```)

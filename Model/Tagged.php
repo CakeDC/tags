@@ -50,14 +50,14 @@ class Tagged extends TagsAppModel {
  * Returns a tag cloud
  *
  * The result contains a "weight" field which has a normalized size of the tag
- * occurrence set. The min and max size can be set by passing 'minSize" and
- * 'maxSize' to the query. This value can be used in the view to controll the
+ * occurrence set. The min and max size can be set by passing 'minSize' and
+ * 'maxSize' to the query. This value can be used in the view to control the
  * size of the tag font.
  *
+ * @param string $state State string ('before' or 'after')
+ * @param array $query Query array
+ * @param array $results Result set for 'after' state
  * @todo Ideas to improve this are welcome
- * @param string $state
- * @param array $query
- * @param array $results
  * @return array
  * @link https://github.com/CakeDC/tags/issues/10
  */
@@ -135,16 +135,18 @@ class Tagged extends TagsAppModel {
  * Find all the Model entries tagged with a given tag
  *
  * The query must contain a Model name, and can contain a 'by' key with the Tag keyname to filter the results
+ *
  * <code>
  * $this->Article->Tagged->find('tagged', array(
  *		'by' => 'cakephp',
  *		'model' => 'Article'));
- * </code
+ * </code>
  *
- * @TODO Find a way to populate the "magic" field Article.tags
- * @param string $state
- * @param array $query
- * @param array $results
+ * @param string $state State string ('before' or 'after')
+ * @param array $query Query array
+ * @param array $results Result set for 'after' state
+ * @todo Find a way to populate the "magic" field Article.tags
+ * @throws InvalidArgumentException if recursive setting is -1
  * @return mixed Query array if state is before, array of results or integer (count) if state is after
  */
 	public function _findTagged($state, $query, $results = array()) {
@@ -157,7 +159,11 @@ class Tagged extends TagsAppModel {
 							'foreignKey' => 'foreign_key',
 							'type' => 'INNER',
 							'conditions' => array(
-								$this->alias . '.model' => $Model->alias)))), false);
+								$this->alias . '.model' => $Model->alias
+							)
+						)
+					)
+				), false);
 
 				if (!isset($query['recursive'])) {
 					$query['recursive'] = 0;

@@ -58,7 +58,8 @@ class TagFixture extends CakeTestFixture {
 			'occurrence' => 1,
 			'article_occurrence' => 1,
 			'created' => '2008-06-02 18:18:11',
-			'modified' => '2008-06-02 18:18:37'),
+			'modified' => '2008-06-02 18:18:37'
+		),
 		array(
 			'id' => 'tag-2',
 			'identifier' => null,
@@ -67,7 +68,8 @@ class TagFixture extends CakeTestFixture {
 			'occurrence' => 1,
 			'article_occurrence' => 1,
 			'created' => '2008-06-01 18:18:15',
-			'modified' => '2008-06-01 18:18:15'),
+			'modified' => '2008-06-01 18:18:15'
+		),
 		array(
 			'id' => 'tag-3',
 			'identifier' => null,

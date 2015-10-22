@@ -42,8 +42,8 @@ class M4c0d42bcd12c4db099c105f40e8f3d6d extends CakeMigration {
 			'create_field' => array(
 				'tagged' => array(
 					'times_tagged' => array('type' => 'integer', 'null' => false, 'default' => 1),
-					)
 				),
+			),
 		),
 		'down' => array(
 			'drop_field' => array(
@@ -52,26 +52,4 @@ class M4c0d42bcd12c4db099c105f40e8f3d6d extends CakeMigration {
 		),
 	);
 
-/**
- * Before migration callback
- *
- * @param string $direction, up or down direction of migration process
- * @return boolean Should process continue
- * @access public
- */
-	public function before($direction) {
-		return true;
-	}
-
-/**
- * After migration callback
- *
- * @param string $direction, up or down direction of migration process
- * @return boolean Should process continue
- * @access public
- */
-	public function after($direction) {
-		return true;
-	}
 }
-?>

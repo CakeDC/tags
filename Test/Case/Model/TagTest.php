@@ -76,14 +76,16 @@ class TagTest extends CakeTestCase {
 
 		$expected = array(
 			'Tag' => array(
-				'id'  => 'tag-1',
-				'identifier'  => null,
-				'name'  => 'CakePHP',
-				'keyname'  => 'cakephp',
+				'id' => 'tag-1',
+				'identifier' => null,
+				'name' => 'CakePHP',
+				'keyname' => 'cakephp',
 				'occurrence' => 1,
 				'article_occurrence' => 1,
-				'created'  => '2008-06-02 18:18:11',
-				'modified'  => '2008-06-02 18:18:37'));
+				'created' => '2008-06-02 18:18:11',
+				'modified' => '2008-06-02 18:18:37'
+			)
+		);
 		$this->assertEquals($results, $expected);
 	}
 
@@ -107,23 +109,29 @@ class TagTest extends CakeTestCase {
  * @return void
  */
 	public function testAdd() {
-		$result = $this->Tag->add(
-			array('Tag' => array(
-				'tags' => 'tag1, tag2, tag3')));
+		$result = $this->Tag->add(array(
+			'Tag' => array(
+				'tags' => 'tag1, tag2, tag3'
+			)
+		));
 		$this->assertTrue($result);
 		$result = $this->Tag->find('all', array(
 			'recursive' => -1,
 			'fields' => array(
-				'Tag.name')));
+				'Tag.name'
+			)
+		));
 		$result = Set::extract($result, '{n}.Tag.name');
 		$this->assertTrue(in_array('tag1', $result));
 		$this->assertTrue(in_array('tag2', $result));
 		$this->assertTrue(in_array('tag3', $result));
 
 		// adding same tags again.
-		$result = $this->Tag->add(
-			array('Tag' => array(
-				'tags' => 'tag1, tag2, tag3')));
+		$result = $this->Tag->add(array(
+			'Tag' => array(
+				'tags' => 'tag1, tag2, tag3'
+			)
+		));
 		$this->assertTrue($result);
 	}
 
@@ -139,20 +147,26 @@ class TagTest extends CakeTestCase {
 		$data = array(
 			'Tag' => array(
 				'id' => 'tag-1',
-				'name' => 'CAKEPHP'));
+				'name' => 'CAKEPHP'
+			)
+		);
 		$this->assertTrue($this->Tag->edit('tag-1', $data));
 
 		$data = array(
 			'Tag' => array(
 				'id' => 'tag-1',
-				'name' => 'CAKEPHP111'));
+				'name' => 'CAKEPHP111'
+			)
+		);
 		$this->assertFalse($this->Tag->edit('tag-1', $data));
 
 		$data = array(
 			'Tag' => array(
 				'id' => 'tag-1',
 				'name' => 'CAKEPHP',
-				'keyname' => ''));
+				'keyname' => ''
+			)
+		);
 		$this->assertEquals($this->Tag->edit('tag-1', $data), $data);
 
 		$this->expectException('CakeException');
