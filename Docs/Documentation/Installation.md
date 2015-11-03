@@ -49,7 +49,7 @@ The recommended way to install and maintain the database is using the [CakeDC Mi
 To set up the **Tags** plugin tables run this command:
 
 ```
-.\Console\cake migrations.migration run all -p Tags
+./Console/cake migrations.migration run all -p Tags
 ```
 
 Alternately you can use the build in [Schema Shell](http://book.cakephp.org/2.0/en/console-and-shells/schema-management-and-migrations.html) of CakePHP:
