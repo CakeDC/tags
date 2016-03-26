@@ -1,0 +1,140 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: CakePHP Tags Plugin\n"
+"POT-Creation-Date: 2016-01-13 23:09+0200\n"
+"PO-Revision-Date: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Last-Translator: Essam Ay <ayariissam@gmail.com>\n"
+"Plural-Forms: nplurals=6; plural=(n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n"
+"%100>=3 && n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5);\n"
+"Language: ar_SA\n"
+
+# LANGUAGE translation of the CakePHP Tags plugin
+#
+# Copyright 2010, Cake Development Corporation (http://cakedc.com)
+#
+# Licensed under The MIT License
+# Redistributions of files must retain the above copyright notice.
+#
+# @copyright Copyright 2010, Cake Development Corporation (http://cakedc.com)
+# @license MIT License (http://www.opensource.org/licenses/mit-license.php)
+#
+#
+#: /controllers/tags_controller.php:105
+msgid "The Tags has been saved."
+msgstr "لقد تم حفظ الوسم"
+
+#: /controllers/tags_controller.php:122
+msgid "Tag saved."
+msgstr "تم حفظ الوسم"
+
+#: /controllers/tags_controller.php:146
+msgid "Tag deleted."
+msgstr "تم حذف الوسم"
+
+#: /controllers/tags_controller.php:148 /models/tag.php:77;119
+msgid "Invalid Tag."
+msgstr "وسم غير صالح"
+
+#: /views/tags/admin_add.ctp:16
+msgid "Add %s"
+msgstr "إضافة وسم"
+
+#: /views/tags/admin_add.ctp:16 /views/tags/admin_edit.ctp:16
+#: /views/tags/admin_index.ctp:78 /views/tags/admin_view.ctp:14;55;56;58
+#: /views/tags/view.ctp:14
+msgid "Tag"
+msgstr "وسم"
+
+#: /views/tags/admin_add.ctp:21 /views/tags/admin_edit.ctp:24
+msgid "Submit"
+msgstr "إرسال"
+
+#: /views/tags/admin_add.ctp:25 /views/tags/admin_edit.ctp:29
+#: /views/tags/admin_view.ctp:57 /views/tags/view.ctp:55
+msgid "List %s"
+msgstr "قائمة %s"
+
+#: /views/tags/admin_add.ctp:25 /views/tags/admin_edit.ctp:29
+#: /views/tags/admin_index.ctp:14 /views/tags/admin_view.ctp:57
+#: /views/tags/index.ctp:14 /views/tags/view.ctp:55
+msgid "Tags"
+msgstr "وسوم"
+
+#: /views/tags/admin_edit.ctp:16 /views/tags/admin_view.ctp:55
+msgid "Edit %s"
+msgstr "تعديل %s"
+
+#: /views/tags/admin_edit.ctp:28 /views/tags/admin_index.ctp:65
+msgid "Delete"
+msgstr "حذف"
+
+#: /views/tags/admin_edit.ctp:28 /views/tags/admin_index.ctp:65
+#: /views/tags/admin_view.ctp:56
+msgid "Are you sure you want to delete # %s?"
+msgstr "هل أنت متأكد من حذف #%s؟"
+
+#: /views/tags/admin_index.ctp:18 /views/tags/index.ctp:18
+msgid ""
+"Page %page% of %pages%, showing %current% records out of %count% total, "
+"starting on record %start%, ending on %end%"
+msgstr ""
+
+#: /views/tags/admin_index.ctp:30 /views/tags/index.ctp:30
+msgid "Actions"
+msgstr "الإجراءات"
+
+#: /views/tags/admin_index.ctp:63 /views/tags/index.ctp:63
+msgid "View"
+msgstr "المظهر"
+
+#: /views/tags/admin_index.ctp:64
+msgid "Edit"
+msgstr "تعديل"
+
+#: /views/tags/admin_index.ctp:72 /views/tags/index.ctp:70
+msgid "previous"
+msgstr "السابق"
+
+#: /views/tags/admin_index.ctp:74 /views/tags/index.ctp:72
+msgid "next"
+msgstr "التالي"
+
+#: /views/tags/admin_index.ctp:78 /views/tags/admin_view.ctp:58
+msgid "New %s"
+msgstr "%s جديد"
+
+#: /views/tags/admin_view.ctp:16 /views/tags/view.ctp:16
+msgid "Id"
+msgstr "معرف"
+
+#: /views/tags/admin_view.ctp:21 /views/tags/view.ctp:21
+msgid "Identifier"
+msgstr "معرف"
+
+#: /views/tags/admin_view.ctp:26 /views/tags/view.ctp:26
+msgid "Name"
+msgstr "اسم"
+
+#: /views/tags/admin_view.ctp:31 /views/tags/view.ctp:31
+msgid "Keyname"
+msgstr "اسم مفتاحي"
+
+#: /views/tags/admin_view.ctp:36 /views/tags/view.ctp:36
+msgid "Weight"
+msgstr "الوزن"
+
+#: /views/tags/admin_view.ctp:41 /views/tags/view.ctp:41
+msgid "Created"
+msgstr "تم"
+
+#: /views/tags/admin_view.ctp:46 /views/tags/view.ctp:46
+msgid "Modified"
+msgstr "تم التعديل"
+
+#: /views/tags/admin_view.ctp:56
+msgid "Delete %s"
+msgstr "حذف %s"
