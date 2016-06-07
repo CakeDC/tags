@@ -23,7 +23,7 @@ For documentation, as well as tutorials, see the [Docs](Docs/Home.md) directory 
 Support
 -------
 
-For bugs and feature requests, please use the [issues](https://github.com/CakeDC/migrations/issues) section of this repository.
+For bugs and feature requests, please use the [issues](https://github.com/CakeDC/tags/issues) section of this repository.
 
 Commercial support is also available, [contact us](http://cakedc.com/contact) for more information.
 
