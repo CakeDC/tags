@@ -57,7 +57,7 @@ foreach ($tags as $tag):
 		<td class="actions">
 			<?php echo $this->Html->link(__d('tags', 'View'), array('action' => 'view', $tag['Tag']['keyname'])); ?>
 			<?php echo $this->Html->link(__d('tags', 'Edit'), array('action' => 'edit', $tag['Tag']['id'])); ?>
-			<?php echo $this->Html->link(__d('tags', 'Delete'), array('action' => 'delete', $tag['Tag']['id']), null, sprintf(__d('tags', 'Are you sure you want to delete # %s?'), $tag['Tag']['id'])); ?>
+			<?php echo $this->Html->postLink(__d('tags', 'Delete'), array('action' => 'delete', $tag['Tag']['id']), null, sprintf(__d('tags', 'Are you sure you want to delete # %s?'), $tag['Tag']['id'])); ?>
 		</td>
 	</tr>
 <?php endforeach; ?>

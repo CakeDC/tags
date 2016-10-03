@@ -183,6 +183,7 @@ class TagsControllerTest extends CakeTestCase {
 			->with($this->equalTo(__d('tags', 'Tag deleted.')))
 			->will($this->returnValue(true));
 
+		$_SERVER['REQUEST_METHOD'] = 'POST';
 		$this->Tags->admin_delete('WRONG-ID!!!');
 		$this->assertEquals($this->Tags->redirectUrl, array('action' => 'index'));
 
