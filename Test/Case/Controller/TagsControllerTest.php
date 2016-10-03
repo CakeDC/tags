@@ -65,7 +65,7 @@ class TestTagsController extends TagsController {
  * @package tags
  * @subpackage tags.tests.cases.controllers
  */
-class TagsControllerTest extends CakeTestCase {
+class TagsControllerTest extends ControllerTestCase {
 
 /**
  * Fixtures
@@ -183,10 +183,10 @@ class TagsControllerTest extends CakeTestCase {
 			->with($this->equalTo(__d('tags', 'Tag deleted.')))
 			->will($this->returnValue(true));
 
-		$this->Tags->admin_delete('WRONG-ID!!!');
+		$this->testAction('/tags/tags/admin_delete', array('method' => 'post'));
 		$this->assertEquals($this->Tags->redirectUrl, array('action' => 'index'));
 
-		$this->Tags->admin_delete('tag-1');
+		$this->testAction('/tags/tags/admin_delete/tag-1', array('method' => 'post'));
 		$this->assertEquals($this->Tags->redirectUrl, array('action' => 'index'));
 	}
 
