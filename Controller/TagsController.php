@@ -142,6 +142,7 @@ class TagsController extends TagsAppController {
  * @return void
  */
 	public function admin_delete($tagId = null) {
+		$this->request->allowMethod('post', 'delete');
 		if ($this->{$this->modelClass}->delete($tagId)) {
 			$this->Session->setFlash(__d('tags', 'Tag deleted.'));
 		} else {

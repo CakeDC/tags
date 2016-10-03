@@ -47,7 +47,7 @@
 <div class="actions">
 	<ul>
 		<li><?php echo $this->Html->link(sprintf(__d('tags', 'Edit %s'), __d('tags', 'Tag')), array('action' => 'edit', $tag['Tag']['id'])); ?> </li>
-		<li><?php echo $this->Html->link(sprintf(__d('tags', 'Delete %s'), __d('tags', 'Tag')), array('action' => 'delete', $tag['Tag']['id']), null, sprintf(__d('tags', 'Are you sure you want to delete # %s?'), $tag['Tag']['id'])); ?> </li>
+		<li><?php echo $this->Html->postLink(sprintf(__d('tags', 'Delete %s'), __d('tags', 'Tag')), array('action' => 'delete', $tag['Tag']['id']), null, sprintf(__d('tags', 'Are you sure you want to delete # %s?'), $tag['Tag']['id'])); ?> </li>
 		<li><?php echo $this->Html->link(sprintf(__d('tags', 'List %s'), __d('tags', 'Tags')), array('action' => 'index')); ?> </li>
 		<li><?php echo $this->Html->link(sprintf(__d('tags', 'New %s'), __d('tags', 'Tag')), array('action' => 'add')); ?> </li>
 	</ul>

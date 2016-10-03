@@ -24,7 +24,7 @@
 </div>
 <div class="actions">
 	<ul>
-		<li><?php echo $this->Html->link(__d('tags', 'Delete'), array('action' => 'delete', $this->Form->value('Tag.id')), null, sprintf(__d('tags', 'Are you sure you want to delete # %s?'), $this->Form->value('Tag.id'))); ?></li>
+		<li><?php echo $this->Html->postLink(__d('tags', 'Delete'), array('action' => 'delete', $this->Form->value('Tag.id')), null, sprintf(__d('tags', 'Are you sure you want to delete # %s?'), $this->Form->value('Tag.id'))); ?></li>
 		<li><?php echo $this->Html->link(sprintf(__d('tags', 'List %s'), __d('tags', 'Tags')), array('action' => 'index'));?></li>
 	</ul>
 </div>
