@@ -22,7 +22,8 @@ public function index() {
 		$this->paginate['Tagged'] = array(
 			'tagged',
 			'model' => 'Recipe',
-			'by' => $this->passedArgs['by']);
+			'by' => $this->passedArgs['by']
+		);
 		$recipes = $this->paginate('Tagged');
 	} else {
 		$this->Recipe->recursive = 1;
@@ -30,5 +31,23 @@ public function index() {
 	}
 	$this->set('recipes', $recipes);
 	$this->set('tags', $this->Recipe->Tagged->find('cloud', array('limit' => 10)));
+}
+```
+
+You also may achieve the same result directly through the **PaginatorComponent**:
+
+```php
+public function index() {
+    if (isset($this->passedArgs['by'])) {
+        $recipes = $this->Paginator->paginate('Tagged', array(
+            'Tagged.model' => 'Recipe',
+            'Tag.keyname' => $this->passedArgs['by']
+        ));
+    } else {
+        $this->Recipe->recursive = 1;
+        $recipes = $this->paginate();
+    }
+
+    $this->set('recipes', $recipes);
 }
 ```
