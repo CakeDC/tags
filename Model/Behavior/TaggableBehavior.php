@@ -173,7 +173,7 @@ class TaggableBehavior extends ModelBehavior {
 				foreach ($tags as $tag) {
 					$conditions['OR'][] = array(
 						$tagModel->alias . '.identifier' => $tag['identifier'],
-						$tagModel->alias . '.keyname' => $tag['keyname'],
+						$tagModel->alias . '.keyname' => 'COLLATE Latin1_General_CI_AI Like %'.$tag['keyname'].'% COLLATE Latin1_General_CI_AI',
 					);
 				}
 				$existingTags = $tagModel->find('all', array(
