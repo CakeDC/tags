@@ -33,7 +33,7 @@ class TagsController extends TagsAppController {
  * @var array
  */
 	public $components = array(
-		'Session',
+		'Flash',
 		'Paginator'
 	);
 
