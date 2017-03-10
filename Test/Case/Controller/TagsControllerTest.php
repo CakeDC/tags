@@ -97,7 +97,7 @@ class TagsControllerTest extends CakeTestCase {
 			'url' => array()
 		);
 		$this->Tags->constructClasses();
-		$this->Tags->Session = $this->getMock('SessionComponent', array(), array(), '', false);
+		$this->Tags->Flash = $this->getMock('FlashComponent', array(), array(), '', false);
 	}
 
 /**
@@ -173,13 +173,13 @@ class TagsControllerTest extends CakeTestCase {
  * @return void
  */
 	public function testAdminDelete() {
-		$this->Tags->Session->expects($this->at(0))
-			->method('setFlash')
+		$this->Tags->Flash->expects($this->at(0))
+			->method('warning')
 			->with($this->equalTo(__d('tags', 'Invalid Tag.')))
 			->will($this->returnValue(true));
 
-		$this->Tags->Session->expects($this->at(1))
-			->method('setFlash')
+		$this->Tags->Flash->expects($this->at(1))
+			->method('success')
 			->with($this->equalTo(__d('tags', 'Tag deleted.')))
 			->will($this->returnValue(true));
 
