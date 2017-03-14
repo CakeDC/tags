@@ -33,7 +33,7 @@ class TagsController extends TagsAppController {
  * @var array
  */
 	public $components = array(
-		'Session',
+		'Flash',
 		'Paginator'
 	);
 
@@ -66,7 +66,7 @@ class TagsController extends TagsAppController {
 		try {
 			$this->set('tag', $this->{$this->modelClass}->view($keyName));
 		} catch (Exception $e) {
-			$this->Session->setFlash($e->getMessage());
+			$this->Flash->warning($e->getMessage());
 			$this->redirect('/');
 		}
 	}
@@ -91,7 +91,7 @@ class TagsController extends TagsAppController {
 		try {
 			$this->set('tag', $this->{$this->modelClass}->view($keyName));
 		} catch (Exception $e) {
-			$this->Session->setFlash($e->getMessage());
+			$this->Flash->warning($e->getMessage());
 			$this->redirect('/');
 		}
 	}
@@ -104,7 +104,7 @@ class TagsController extends TagsAppController {
 	public function admin_add() {
 		if (!empty($this->request->data)) {
 			if ($this->{$this->modelClass}->add($this->request->data)) {
-				$this->Session->setFlash(__d('tags', 'The Tags has been saved.'));
+				$this->Flash->success(__d('tags', 'The Tags has been saved.'));
 				$this->redirect(array('action' => 'index'));
 			}
 		}
@@ -120,13 +120,13 @@ class TagsController extends TagsAppController {
 		try {
 			$result = $this->{$this->modelClass}->edit($tagId, $this->request->data);
 			if ($result === true) {
-				$this->Session->setFlash(__d('tags', 'Tag saved.'));
+				$this->Flash->success(__d('tags', 'Tag saved.'));
 				$this->redirect(array('action' => 'index'));
 			} else {
 				$this->request->data = $result;
 			}
 		} catch (Exception $e) {
-			$this->Session->setFlash($e->getMessage());
+			$this->Flash->warning($e->getMessage());
 			$this->redirect(array('action' => 'index'));
 		}
 
@@ -143,9 +143,9 @@ class TagsController extends TagsAppController {
  */
 	public function admin_delete($tagId = null) {
 		if ($this->{$this->modelClass}->delete($tagId)) {
-			$this->Session->setFlash(__d('tags', 'Tag deleted.'));
+			$this->Flash->success(__d('tags', 'Tag deleted.'));
 		} else {
-			$this->Session->setFlash(__d('tags', 'Invalid Tag.'));
+			$this->Flash->warning(__d('tags', 'Invalid Tag.'));
 		}
 		$this->redirect(array('action' => 'index'));
 	}
