@@ -2,33 +2,23 @@ language: php
 
 php:
   - 5.6
-  - 7.0
-  - 7.1
 
 env:
   global:
     - PLUGIN_NAME=Tags
-    - REQUIRE="phpunit/phpunit:6.3.0"
-    - DB=mysql CAKE_VERSION=master
-
+    - REQUIRE=""
+    - DB=mysql CAKE_VERSION=3.4
 
   matrix:
-    - DB=mysql CAKE_VERSION=master
+    - DB=mysql CAKE_VERSION=3.4
 
 matrix:
   include:
     - php: 5.6
       env:
-        - CAKE_VERSION=master
-    - php: 7.0
-      env:
-        - CAKE_VERSION=master
-    - php: 7.1
-      env:
-        - CAKE_VERSION=master
+        - PHPCS=1
 
 before_script:
-  - cp -R tags ../tags && cd ../tags
   - ../travis/before_script.sh
 
 script:
