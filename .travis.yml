@@ -8,8 +8,9 @@ php:
 env:
   global:
     - PLUGIN_NAME=Tags
-    - DB=mysql
-    - REQUIRE="phpunit/phpunit:3.7.31"
+    - REQUIRE=""
+    - DB=mysql CAKE_VERSION=master
+
 
   matrix:
     - DB=mysql CAKE_VERSION=master
@@ -27,7 +28,6 @@ matrix:
         - CAKE_VERSION=master
 
 before_script:
-  - git clone https://github.com/burzum/travis.git --depth 1 ../travis
   - ../travis/before_script.sh
 
 script:
