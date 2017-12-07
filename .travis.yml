@@ -2,6 +2,8 @@ language: php
 
 php:
   - 5.6
+  - 7.0
+  - 7.1
 
 env:
   global:
@@ -16,6 +18,12 @@ env:
 matrix:
   include:
     - php: 5.6
+      env:
+        - CAKE_VERSION=2.9
+    - php: 7.0
+      env:
+        - CAKE_VERSION=2.9
+    - php: 7.1
       env:
         - CAKE_VERSION=2.9
 
