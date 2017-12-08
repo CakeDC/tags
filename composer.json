@@ -13,12 +13,10 @@
 		}
 	],
 	"require": {
-		"php": ">=5.4",
-		"cakephp/plugin-installer": "*",
-		"cakephp/cakephp": "~3.2"
+		"cakephp/cakephp": "^3.5.0"
 	},
 	"require-dev": {
-		"phpunit/phpunit": "*"
+		"phpunit/phpunit": "^5.0"
 	},
 	"autoload": {
 		"psr-4": {

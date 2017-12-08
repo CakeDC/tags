@@ -1,45 +1,44 @@
 language: php
 
 php:
-  - 5.3
-  - 5.4
-  - 5.5
+  - 5.6
+  - 7.0
+  - 7.1
+
+sudo: false
 
 env:
-  global:
-    - PLUGIN_NAME=Tags
-    - DB=mysql
-    - REQUIRE="phpunit/phpunit:3.7.31"
-
   matrix:
-    - DB=mysql CAKE_VERSION=master
+    - DB=mysql db_dsn='mysql://travis@0.0.0.0/cakephp_test'
+    - DB=pgsql db_dsn='postgres://postgres@127.0.0.1/cakephp_test'
+    - DB=sqlite db_dsn='sqlite:///:memory:'
+
+  global:
+    - DEFAULT=1
 
 matrix:
+  fast_finish: true
+
   include:
-    - php: 5.3
-      env:
-        - CAKE_VERSION=master
-    - php: 5.4
-      env:
-        - CAKE_VERSION=master
-    - php: 5.5
-      env:
-        - CAKE_VERSION=master
+    - php: 5.6
+      env: PHPCS=1 DEFAULT=0
+
+    - php: 5.6
+      env: COVERALLS=1 DEFAULT=0 DB=mysql db_dsn='mysql://travis@0.0.0.0/cakephp_test'
 
 before_script:
-  - git clone https://github.com/burzum/travis.git --depth 1 ../travis
-  - ../travis/before_script.sh
-  - if [ "$PHPCS" != 1 ]; then
-            echo "
-                require_once APP . DS . 'vendor' . DS . 'phpunit' . DS . 'phpunit' . DS . 'PHPUnit' . DS . 'Autoload.php';
-            " >> ../cakephp/app/Config/bootstrap.php;
-    fi
+  - composer self-update
+  - composer install --prefer-dist --no-interaction
+
+  - sh -c "if [ '$DB' = 'mysql' ]; then mysql -e 'CREATE DATABASE cakephp_test; GRANT ALL PRIVILEGES ON cakephp_test.* TO travis@localhost;'; fi"
+  - sh -c "if [ '$DB' = 'pgsql' ]; then psql -c 'CREATE DATABASE cakephp_test;' -U postgres; fi"
+
+  - sh -c "if [ '$PHPCS' = '1' ]; then composer require 'cakephp/cakephp-codesniffer:@stable'; fi"
+
+  - sh -c "if [ '$COVERALLS' = '1' ]; then composer require --dev 'satooshi/php-coveralls:@stable'; fi"
+  - sh -c "if [ '$COVERALLS' = '1' ]; then mkdir -p build/logs; fi"
 
 script:
-  - ../travis/script.sh
-
-after_success:
-  - ../travis/after_success.sh
 
 notifications:
   email: false
