@@ -12,8 +12,8 @@ It saves all tags in a single tags table and connects any kind of records to the
 Requirements
 ------------
 
-* CakePHP 2.5+
-* PHP 5.2.8+
+* CakePHP 3.4+
+* PHP 5.6+
 
 Documentation
 -------------
